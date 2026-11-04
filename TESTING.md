@@ -64,3 +64,4 @@ Use this test matrix during your pre-service rehearsal. Check each box and recor
 - **Date Tested:** ___________________________
 - **Church / Venue:** ___________________________
 - **Verdict:** [ ] APPROVED FOR LIVE SERVICE / [ ] REVISIONS REQUIRED
+
