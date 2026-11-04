@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Next.js Build Outputs
+.next/
+out/
+build/
+dist/
+
+# Local Environment Variables & Secrets (NEVER COMMIT)
+.env
+.env*.local
+.env.development
+.env.production
+.env.staging
+
+# Convex Generated Files & Deploy Keys
+.convex/
+*.pem
+*.key
+
+# Vercel
+.vercel/
+
+# Logs & Temporary Scratch Files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS Artifacts
+.DS_Store
+Thumbs.db

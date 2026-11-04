@@ -1,0 +1,17 @@
+/**
+ * Image Protection Defaults
+ * Modular protection styles for casual-copy deterrence on images only.
+ * Text selection, links, forms, inputs remain completely normal and accessible.
+ */
+img,
+svg.protected-image {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+

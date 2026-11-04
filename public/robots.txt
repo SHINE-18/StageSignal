@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /room/
+Disallow: /join
+Disallow: /create-room
+Allow: /
