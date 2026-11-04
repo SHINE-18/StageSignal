@@ -47,11 +47,11 @@ export function PipAlertButton({
     const height = canvas.height;
 
     // Background
-    ctx.fillStyle = hasSos ? "#450a0a" : "#090d18";
+    ctx.fillStyle = hasSos ? "#450a0a" : "#0C0D0E";
     ctx.fillRect(0, 0, width, height);
 
     // Border
-    ctx.strokeStyle = hasSos ? "#ef4444" : "#3b82f6";
+    ctx.strokeStyle = hasSos ? "#DC143C" : "#F97316";
     ctx.lineWidth = 4;
     ctx.strokeRect(2, 2, width - 4, height - 4);
 
@@ -140,8 +140,8 @@ export function PipAlertButton({
         title="Pop out a floating Picture-in-Picture badge (Experimental)"
         className={`flex items-center gap-1.5 rounded-lg border px-2.5 py-1 text-xs font-medium transition-all ${
           isPipActive
-            ? "border-blue-500/50 bg-blue-500/20 text-blue-300"
-            : "border-white/10 bg-[#151D2D] text-slate-300 hover:border-white/25 hover:text-white"
+            ? "border-orange-500/50 bg-orange-500/20 text-[#FFA726]"
+            : "border-white/10 bg-[#1E1815] text-slate-300 hover:border-orange-500/40 hover:text-white"
         }`}
       >
         <PictureInPicture size={13} />

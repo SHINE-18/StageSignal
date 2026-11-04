@@ -11,16 +11,17 @@ const config: Config = {
     extend: {
       colors: {
         brand: {
-          bg: "#090D18",
-          surface: "#111827",
-          card: "#151D2D",
-          border: "rgba(255, 255, 255, 0.08)",
-          blue: "#3B82F6",
+          bg: "#0C0D0E",
+          surface: "#14100D",
+          card: "#1E1815",
+          border: "rgba(249, 115, 22, 0.12)",
+          crimson: "#DC143C",
+          flame: "#F97316",
+          amber: "#FFA726",
           green: "#22C55E",
-          amber: "#F59E0B",
           red: "#EF4444",
           text: "#F8FAFC",
-          muted: "#94A3B8",
+          muted: "#A8A29E",
         },
       },
       fontFamily: {

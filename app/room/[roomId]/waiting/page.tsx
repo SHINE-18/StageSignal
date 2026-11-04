@@ -67,8 +67,8 @@ function WaitingContent() {
   // Missing session / credentials
   if (!token) {
     return (
-      <main className="grid min-h-screen place-items-center bg-[#090d18] p-5 text-[#f8fafc]">
-        <div className="w-full max-w-md rounded-2xl border border-red-500/30 bg-[#111827] p-8 text-center shadow-2xl">
+      <main className="grid min-h-screen place-items-center bg-[#0C0D0E] bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:32px_32px] p-5 text-[#f8fafc]">
+        <div className="w-full max-w-md rounded-2xl border border-red-500/30 bg-[#14100D] p-8 text-center shadow-2xl">
           <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-red-950/60 text-red-400 border border-red-500/30">
             <ShieldAlert size={28} />
           </div>
@@ -78,7 +78,7 @@ function WaitingContent() {
           </p>
           <Link
             href="/join"
-            className="mt-6 inline-block rounded-xl bg-blue-600 px-5 py-3 text-sm font-bold text-white hover:bg-blue-500 transition shadow-lg shadow-blue-500/20"
+            className="mt-6 inline-block rounded-xl bg-gradient-to-r from-[#DC143C] to-[#EA580C] px-5 py-3 text-sm font-bold text-white shadow-lg shadow-[#DC143C]/20 hover:from-[#B80F32] hover:to-[#C2410C] transition"
           >
             Go to Join Screen
           </Link>
@@ -90,10 +90,10 @@ function WaitingContent() {
   // Loading state while connecting
   if (statusData === undefined) {
     return (
-      <main className="grid min-h-screen place-items-center bg-[#090d18] p-5 text-[#f8fafc]">
+      <main className="grid min-h-screen place-items-center bg-[#0C0D0E] bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:32px_32px] p-5 text-[#f8fafc]">
         <div className="flex flex-col items-center gap-3 text-center">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-500/15 text-blue-400 border border-blue-500/30">
-            <Radio size={24} className="animate-spin" />
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#DC143C]/15 to-[#F97316]/15 text-[#FFA726] border border-orange-500/30 shadow-lg shadow-orange-500/10">
+            <Radio size={24} className="animate-spin text-[#FFA726]" />
           </div>
           <h2 className="text-base font-bold text-white">Connecting to Stage...</h2>
           <p className="text-xs text-slate-400 font-mono">
@@ -107,8 +107,8 @@ function WaitingContent() {
   // Session Not Found / Invalid Token
   if (statusData.state !== "found") {
     return (
-      <main className="grid min-h-screen place-items-center bg-[#090d18] p-5 text-[#f8fafc]">
-        <div className="w-full max-w-md rounded-2xl border border-amber-500/30 bg-[#111827] p-8 text-center shadow-2xl">
+      <main className="grid min-h-screen place-items-center bg-[#0C0D0E] bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:32px_32px] p-5 text-[#f8fafc]">
+        <div className="w-full max-w-md rounded-2xl border border-amber-500/30 bg-[#14100D] p-8 text-center shadow-2xl">
           <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-950/60 text-amber-400 border border-amber-500/30">
             <AlertTriangle size={28} />
           </div>
@@ -118,7 +118,7 @@ function WaitingContent() {
           </p>
           <Link
             href="/join"
-            className="mt-6 inline-block rounded-xl bg-blue-600 px-5 py-3 text-sm font-bold text-white hover:bg-blue-500 transition shadow-lg shadow-blue-500/20"
+            className="mt-6 inline-block rounded-xl bg-gradient-to-r from-[#DC143C] to-[#EA580C] px-5 py-3 text-sm font-bold text-white shadow-lg shadow-[#DC143C]/20 hover:from-[#B80F32] hover:to-[#C2410C] transition"
           >
             Rejoin Stage Room
           </Link>
@@ -134,14 +134,14 @@ function WaitingContent() {
   const isEnded = statusData.roomStatus === "ended" || statusData.isExpired;
 
   return (
-    <main className="grid min-h-screen place-items-center bg-[#090d18] px-4 py-8 text-[#f8fafc]">
-      <div className="w-full max-w-md rounded-2xl border border-white/10 bg-[#111827] p-6 sm:p-8 text-center shadow-2xl backdrop-blur-sm">
+    <main className="grid min-h-screen place-items-center bg-[#0C0D0E] bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:32px_32px] px-4 py-8 text-[#f8fafc]">
+      <div className="w-full max-w-md rounded-2xl border border-white/10 bg-[#14100D] p-6 sm:p-8 text-center shadow-2xl backdrop-blur-sm">
         {/* Beacon / Status Icon */}
         <div className="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-3xl">
           {isPending && (
-            <div className="relative flex h-20 w-20 items-center justify-center rounded-2xl bg-blue-500/10 text-blue-400 border border-blue-500/30">
-              <span className="absolute inline-flex h-full w-full rounded-2xl bg-blue-400 opacity-20 animate-ping" />
-              <Clock size={36} className="animate-spin text-blue-400" />
+            <div className="relative flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-[#DC143C]/15 to-[#F97316]/15 text-[#FFA726] border border-orange-500/30">
+              <span className="absolute inline-flex h-full w-full rounded-2xl bg-orange-500 opacity-20 animate-ping" />
+              <Clock size={36} className="animate-spin text-[#FFA726]" />
             </div>
           )}
 
@@ -165,10 +165,10 @@ function WaitingContent() {
         </div>
 
         {/* Musician Badge */}
-        <div className="mx-auto mb-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-[#151d2d] px-3.5 py-1 text-xs font-semibold text-slate-300">
+        <div className="mx-auto mb-3 inline-flex items-center gap-2 rounded-full border border-orange-500/20 bg-[#1E1815] px-3.5 py-1 text-xs font-semibold text-slate-300">
           <span className="text-white font-bold">{statusData.name}</span>
           <span className="text-slate-500">•</span>
-          <span className="text-blue-400">{statusData.instrument}</span>
+          <span className="text-[#FFA726] font-medium">{statusData.instrument}</span>
         </div>
 
         {/* Room Headline */}
@@ -196,8 +196,8 @@ function WaitingContent() {
         {/* Pulsing Beacon Indicator for Pending */}
         {isPending && (
           <div className="mt-6 flex flex-col items-center gap-2">
-            <div className="h-1.5 w-full overflow-hidden rounded-full bg-[#151d2d]">
-              <div className="h-full w-1/2 animate-pulse-subtle rounded-full bg-blue-500" />
+            <div className="h-1.5 w-full overflow-hidden rounded-full bg-[#1E1815]">
+              <div className="h-full w-1/2 animate-pulse-subtle rounded-full bg-gradient-to-r from-[#DC143C] to-[#F97316]" />
             </div>
             <span className="text-[11px] font-mono text-slate-500">
               Live subscription active · No refresh needed
@@ -227,7 +227,7 @@ function WaitingContent() {
           {(isRejected || isRemoved) && (
             <Link
               href="/join"
-              className="flex w-full min-h-[52px] items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3.5 font-bold text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-500 active:scale-98"
+              className="flex w-full min-h-[52px] items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#DC143C] to-[#EA580C] px-5 py-3.5 font-bold text-white shadow-lg shadow-[#DC143C]/20 transition hover:from-[#B80F32] hover:to-[#C2410C] active:scale-98"
             >
               <ArrowLeft size={16} />
               <span>Back to Join</span>
@@ -250,9 +250,9 @@ export default function WaitingPage() {
   return (
     <Suspense
       fallback={
-        <div className="grid min-h-screen place-items-center bg-[#090d18] text-[#f8fafc]">
+        <div className="grid min-h-screen place-items-center bg-[#0C0D0E] text-[#f8fafc]">
           <div className="flex items-center gap-2 text-sm text-slate-400">
-            <Loader2 size={18} className="animate-spin text-blue-400" />
+            <Loader2 size={18} className="animate-spin text-[#FFA726]" />
             <span>Connecting to StageSignal...</span>
           </div>
         </div>

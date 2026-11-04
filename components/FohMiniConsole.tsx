@@ -209,9 +209,9 @@ export function FohMiniConsole({
 
   if (!room) {
     return (
-      <div className="grid min-h-screen place-items-center bg-[#090D18] p-4 text-[#F8FAFC]">
+      <div className="grid min-h-screen place-items-center bg-[#0C0D0E] p-4 text-[#F8FAFC]">
         <div className="flex flex-col items-center gap-3">
-          <Loader2 className="animate-spin text-blue-400" size={28} />
+          <Loader2 className="animate-spin text-[#FFA726]" size={28} />
           <p className="text-xs text-slate-400 font-mono">Loading Mini Console...</p>
         </div>
       </div>
@@ -222,7 +222,7 @@ export function FohMiniConsole({
 
   return (
     <div
-      className={`min-h-screen bg-[#090D18] text-[#F8FAFC] flex flex-col no-overscroll transition-all duration-300 ${
+      className={`min-h-screen bg-[#0C0D0E] text-[#F8FAFC] flex flex-col no-overscroll transition-all duration-300 ${
         hasPersistentSos
           ? "border-2 border-red-500/80 shadow-[inset_0_0_20px_rgba(239,68,68,0.3)]"
           : "border-x border-white/5"
@@ -237,17 +237,17 @@ export function FohMiniConsole({
       <OfflineBanner role="foh" />
 
       {/* Slim Mini Header */}
-      <header className="sticky top-0 z-30 border-b border-white/10 bg-[#090D18]/95 backdrop-blur-md px-3 py-2.5">
+      <header className="sticky top-0 z-30 border-b border-white/10 bg-[#0C0D0E]/95 backdrop-blur-md px-3 py-2.5">
         <div className="flex items-center justify-between gap-2">
           {/* Left: Radio + Code */}
           <div className="flex items-center gap-2 min-w-0">
-            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-blue-500/15 text-blue-400 border border-blue-400/30">
+            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[#DC143C]/15 to-[#F97316]/15 text-[#FFA726] border border-orange-500/30">
               <Radio size={15} className={isOnline ? "animate-pulse" : "text-slate-500"} />
             </div>
             <button
               onClick={handleCopyCode}
               title="Click to copy room code"
-              className="flex items-center gap-1 font-mono text-xs font-black tracking-wider text-white hover:text-blue-400 transition-colors"
+              className="flex items-center gap-1 font-mono text-xs font-black tracking-wider text-white hover:text-[#FFA726] transition-colors"
             >
               <span>{room.code}</span>
               {copiedCode ? (
@@ -272,7 +272,7 @@ export function FohMiniConsole({
               <button
                 onClick={onSwitchToFull}
                 title="Expand to Full FOH Dashboard"
-                className="flex items-center gap-1 rounded-lg border border-white/10 bg-[#151D2D] px-2 py-1 text-xs font-semibold text-slate-300 hover:border-blue-500/40 hover:text-white transition-all"
+                className="flex items-center gap-1 rounded-lg border border-white/10 bg-[#1E1815] px-2 py-1 text-xs font-semibold text-slate-300 hover:border-orange-500/40 hover:text-white transition-all"
               >
                 <Maximize2 size={13} />
                 <span className="hidden xs:inline">Full</span>
@@ -281,7 +281,7 @@ export function FohMiniConsole({
               <Link
                 href={`/room/${roomId}/foh`}
                 title="Expand to Full FOH Dashboard"
-                className="flex items-center gap-1 rounded-lg border border-white/10 bg-[#151D2D] px-2 py-1 text-xs font-semibold text-slate-300 hover:border-blue-500/40 hover:text-white transition-all"
+                className="flex items-center gap-1 rounded-lg border border-white/10 bg-[#1E1815] px-2 py-1 text-xs font-semibold text-slate-300 hover:border-orange-500/40 hover:text-white transition-all"
               >
                 <Maximize2 size={13} />
                 <span className="hidden xs:inline">Full</span>
@@ -297,7 +297,7 @@ export function FohMiniConsole({
             <span
               className={`inline-flex items-center gap-1 rounded-md px-2 py-0.5 font-bold ${
                 openRequests.length > 0
-                  ? "bg-blue-500/20 text-blue-300 border border-blue-500/30"
+                  ? "bg-orange-500/20 text-[#FFA726] border border-orange-500/30"
                   : "bg-slate-800 text-slate-400"
               }`}
             >
@@ -366,13 +366,13 @@ export function FohMiniConsole({
                   {sos.status === "pending" ? (
                     <button
                       onClick={() => handleAcknowledge(sos._id)}
-                      className="min-h-[48px] rounded-lg border border-blue-400 bg-blue-600 px-3 py-2 text-xs font-bold text-white shadow hover:bg-blue-500 active:scale-98 transition-all flex items-center justify-center gap-1.5"
+                      className="min-h-[48px] rounded-lg border border-orange-400 bg-gradient-to-r from-[#DC143C] to-[#EA580C] hover:from-[#B80F32] hover:to-[#C2410C] px-3 py-2 text-xs font-bold text-white shadow active:scale-98 transition-all flex items-center justify-center gap-1.5"
                     >
                       <CheckCircle2 size={16} />
                       <span>Acknowledge</span>
                     </button>
                   ) : (
-                    <div className="min-h-[48px] rounded-lg border border-blue-500/40 bg-blue-500/20 px-3 py-2 text-xs font-bold text-blue-300 flex items-center justify-center gap-1.5">
+                    <div className="min-h-[48px] rounded-lg border border-orange-500/40 bg-orange-500/20 px-3 py-2 text-xs font-bold text-[#FFA726] flex items-center justify-center gap-1.5">
                       <Volume2 size={16} className="animate-pulse" />
                       <span>FOH Adjusting</span>
                     </div>
@@ -393,7 +393,7 @@ export function FohMiniConsole({
 
         {/* 2. Join Requests Tray (If any pending) */}
         {pendingParticipants.length > 0 && (
-          <section className="rounded-xl border border-amber-500/30 bg-[#151D2D] p-3 space-y-2">
+          <section className="rounded-xl border border-amber-500/30 bg-[#1E1815] p-3 space-y-2">
             <div className="flex items-center justify-between text-xs font-bold text-amber-300">
               <span className="flex items-center gap-1.5">
                 <span className="h-2 w-2 rounded-full bg-amber-400 animate-ping" />
@@ -438,7 +438,7 @@ export function FohMiniConsole({
           </div>
 
           {openRequests.length === 0 ? (
-            <div className="rounded-2xl border border-white/5 bg-[#111827]/60 p-6 text-center space-y-2">
+            <div className="rounded-2xl border border-white/5 bg-[#14100D]/60 p-6 text-center space-y-2">
               <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
                 <CheckCircle size={24} />
               </div>
@@ -459,8 +459,8 @@ export function FohMiniConsole({
                     isUrgent
                       ? "border-red-500/50 bg-red-950/40"
                       : isAck
-                      ? "border-blue-500/40 bg-blue-950/30"
-                      : "border-white/10 bg-[#151D2D] hover:border-white/20"
+                      ? "border-orange-500/40 bg-orange-950/20"
+                      : "border-white/10 bg-[#1E1815] hover:border-orange-500/30"
                   }`}
                 >
                   {/* Top: Name, Instrument, Time */}
@@ -469,7 +469,7 @@ export function FohMiniConsole({
                       <span className="font-extrabold text-sm text-white truncate">
                         {req.musicianName}
                       </span>
-                      <span className="rounded bg-white/10 px-1.5 py-0.5 text-[10px] font-bold text-blue-300 truncate">
+                      <span className="rounded bg-white/10 px-1.5 py-0.5 text-[10px] font-bold text-[#FFA726] truncate">
                         {req.instrument}
                       </span>
                     </div>
@@ -487,7 +487,7 @@ export function FohMiniConsole({
                   {/* Status Indicator */}
                   <div className="mt-2.5 flex items-center gap-2">
                     {isAck ? (
-                      <span className="inline-flex items-center gap-1 rounded bg-blue-500/20 px-2 py-0.5 text-[10px] font-bold text-blue-300 border border-blue-500/30">
+                      <span className="inline-flex items-center gap-1 rounded bg-orange-500/20 px-2 py-0.5 text-[10px] font-bold text-[#FFA726] border border-orange-500/30">
                         <Volume2 size={12} className="animate-pulse" />
                         <span>FOH Adjusting</span>
                       </span>
@@ -504,7 +504,7 @@ export function FohMiniConsole({
                     {!isAck && (
                       <button
                         onClick={() => handleAcknowledge(req._id)}
-                        className="min-h-[48px] rounded-lg border border-blue-500/40 bg-blue-600/30 text-blue-300 font-bold text-xs hover:bg-blue-600 hover:text-white active:scale-98 transition-all flex items-center justify-center gap-1.5"
+                        className="min-h-[48px] rounded-lg border border-orange-500/40 bg-gradient-to-r from-[#DC143C] to-[#EA580C] hover:from-[#B80F32] hover:to-[#C2410C] text-white font-bold text-xs active:scale-98 transition-all flex items-center justify-center gap-1.5"
                       >
                         <CheckCircle2 size={16} />
                         <span>Acknowledge</span>

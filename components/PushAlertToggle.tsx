@@ -62,7 +62,7 @@ export function PushAlertToggle({
             ? "border-red-500/30 bg-red-500/10 text-red-400"
             : needsInstallGuide
             ? "border-amber-500/30 bg-amber-500/10 text-amber-300 hover:bg-amber-500/20"
-            : "border-white/10 bg-[#151D2D] text-slate-300 hover:border-blue-500/40 hover:text-white"
+            : "border-white/10 bg-[#1E1815] text-slate-300 hover:border-orange-500/40 hover:text-white"
         }`}
       >
         {isLoading ? (
@@ -95,11 +95,11 @@ export function PushAlertToggle({
       {/* Modal Dialog */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm animate-in fade-in duration-150">
-          <div className="w-full max-w-sm rounded-2xl border border-white/10 bg-[#111827] p-5 shadow-2xl text-[#F8FAFC]">
+          <div className="w-full max-w-sm rounded-2xl border border-white/10 bg-[#14100D] p-5 shadow-2xl text-[#F8FAFC]">
             {/* Header */}
             <div className="flex items-center justify-between border-b border-white/10 pb-3">
               <div className="flex items-center gap-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-500/20 text-blue-400">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-[#DC143C]/15 to-[#F97316]/15 text-[#FFA726] border border-orange-500/20">
                   {needsInstallGuide ? <Smartphone size={18} /> : <BellRing size={18} />}
                 </div>
                 <h3 className="text-sm font-bold text-white">
@@ -123,7 +123,7 @@ export function PushAlertToggle({
                   </p>
                   <ol className="list-decimal pl-4 space-y-2 text-slate-200">
                     <li>
-                      Tap the <strong>Share</strong> button <span className="text-blue-400 font-mono">(square with arrow)</span> in iPad Safari.
+                      Tap the <strong>Share</strong> button <span className="text-[#FFA726] font-mono">(square with arrow)</span> in iPad Safari.
                     </li>
                     <li>
                       Scroll down and tap <strong>&ldquo;Add to Home Screen&rdquo;</strong>.
@@ -179,7 +179,7 @@ export function PushAlertToggle({
                     if (success) setShowModal(false);
                   }}
                   disabled={isLoading}
-                  className="rounded-lg bg-blue-600 px-4 py-1.5 text-xs font-semibold text-white hover:bg-blue-500"
+                  className="rounded-lg bg-gradient-to-r from-[#DC143C] to-[#EA580C] hover:from-[#B80F32] hover:to-[#C2410C] px-4 py-1.5 text-xs font-semibold text-white shadow-sm shadow-[#DC143C]/20"
                 >
                   {isLoading ? "Enabling..." : "Allow Alerts"}
                 </button>
@@ -187,7 +187,7 @@ export function PushAlertToggle({
 
               <button
                 onClick={() => setShowModal(false)}
-                className="rounded-lg border border-white/10 bg-[#151D2D] px-3 py-1.5 text-xs font-semibold text-slate-300 hover:bg-white/5"
+                className="rounded-lg border border-white/10 bg-[#1E1815] px-3 py-1.5 text-xs font-semibold text-slate-300 hover:bg-white/5"
               >
                 Close
               </button>

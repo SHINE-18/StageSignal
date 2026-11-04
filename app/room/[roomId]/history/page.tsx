@@ -196,10 +196,10 @@ function HistoryContent() {
 
   if (!hasCheckedToken || (hostToken && room === undefined)) {
     return (
-      <main className="grid min-h-screen place-items-center bg-[#090d18] text-[#f8fafc] px-4">
+      <main className="grid min-h-screen place-items-center bg-[#0C0D0E] bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:32px_32px] text-[#f8fafc] px-4">
         <div className="flex flex-col items-center gap-3 text-center">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-500/15 text-blue-400 border border-blue-500/30">
-            <History size={24} className="animate-spin" />
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#DC143C]/15 to-[#F97316]/15 text-[#FFA726] border border-orange-500/30 shadow-lg shadow-orange-500/10">
+            <History size={24} className="animate-spin text-[#FFA726]" />
           </div>
           <h2 className="text-lg font-bold">Verifying FOH Session...</h2>
           <p className="text-xs text-slate-400 font-mono">Loading service history</p>
@@ -210,8 +210,8 @@ function HistoryContent() {
 
   if (!hostToken || !room) {
     return (
-      <main className="grid min-h-screen place-items-center bg-[#090d18] p-5 text-[#f8fafc]">
-        <div className="w-full max-w-md rounded-2xl border border-red-500/30 bg-[#111827] p-8 text-center shadow-2xl">
+      <main className="grid min-h-screen place-items-center bg-[#0C0D0E] bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:32px_32px] p-5 text-[#f8fafc]">
+        <div className="w-full max-w-md rounded-2xl border border-red-500/30 bg-[#14100D] p-8 text-center shadow-2xl">
           <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-red-950/60 text-red-400 border border-red-500/30">
             <AlertTriangle size={32} />
           </div>
@@ -222,7 +222,7 @@ function HistoryContent() {
           <div className="mt-6 flex flex-col gap-2.5">
             <Link
               href="/"
-              className="rounded-xl bg-blue-600 px-5 py-3 text-sm font-bold text-white hover:bg-blue-500 transition"
+              className="rounded-xl bg-gradient-to-r from-[#DC143C] to-[#EA580C] px-5 py-3 text-sm font-bold text-white shadow-lg shadow-[#DC143C]/20 hover:from-[#B80F32] hover:to-[#C2410C] transition"
             >
               Return Home
             </Link>
@@ -233,24 +233,24 @@ function HistoryContent() {
   }
 
   return (
-    <div className="min-h-screen bg-[#090d18] text-[#f8fafc] px-4 py-6 sm:px-8">
+    <div className="min-h-screen bg-[#0C0D0E] text-[#f8fafc] px-4 py-6 sm:px-8">
       <div className="mx-auto max-w-7xl space-y-6">
         {/* Top Header & Navigation */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
           <div className="flex items-center gap-3">
             <Link
               href={`/room/${roomId}/foh`}
-              className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-[#151d2d] text-slate-300 hover:bg-white/10 hover:text-white transition"
+              className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-[#1E1815] text-slate-300 hover:border-orange-500/40 hover:text-white transition"
               title="Return to FOH Console"
             >
               <ArrowLeft size={18} />
             </Link>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-xs font-bold uppercase tracking-widest text-blue-400 flex items-center gap-1.5">
+                <span className="text-xs font-bold uppercase tracking-widest text-[#FFA726] flex items-center gap-1.5">
                   <History size={14} /> Service Audit &amp; Debrief
                 </span>
-                <span className="rounded-md border border-white/10 bg-[#151d2d] px-2 py-0.5 text-[10px] font-mono text-slate-400">
+                <span className="rounded-md border border-orange-500/20 bg-[#1E1815] px-2 py-0.5 text-[10px] font-mono text-[#FFA726]">
                   {room.code}
                 </span>
               </div>
@@ -264,7 +264,7 @@ function HistoryContent() {
             <button
               onClick={exportCSV}
               disabled={filtered.length === 0}
-              className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-xs font-bold text-white shadow-lg shadow-blue-500/20 hover:bg-blue-500 transition disabled:opacity-40 min-h-[44px]"
+              className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#DC143C] to-[#EA580C] px-4 py-2.5 text-xs font-bold text-white shadow-lg shadow-[#DC143C]/20 hover:from-[#B80F32] hover:to-[#C2410C] transition disabled:opacity-40 min-h-[44px]"
             >
               <FileSpreadsheet size={16} />
               <span>Export CSV ({filtered.length})</span>
@@ -274,7 +274,7 @@ function HistoryContent() {
 
         {/* 5-Card Operational Metrics Overview */}
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
-          <div className="rounded-xl border border-white/10 bg-[#111827] p-4 shadow-sm">
+          <div className="rounded-xl border border-white/10 bg-[#14100D] p-4 shadow-sm">
             <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
               Total Requests
             </span>
@@ -284,7 +284,7 @@ function HistoryContent() {
             <span className="text-[10px] text-slate-500">Service lifetime</span>
           </div>
 
-          <div className="rounded-xl border border-white/10 bg-[#111827] p-4 shadow-sm">
+          <div className="rounded-xl border border-white/10 bg-[#14100D] p-4 shadow-sm">
             <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
               Resolved
             </span>
@@ -296,27 +296,27 @@ function HistoryContent() {
             </span>
           </div>
 
-          <div className="rounded-xl border border-white/10 bg-[#111827] p-4 shadow-sm">
+          <div className="rounded-xl border border-white/10 bg-[#14100D] p-4 shadow-sm">
             <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
               Urgent SOS
             </span>
-            <div className="mt-1 text-2xl sm:text-3xl font-extrabold text-red-400 font-mono">
+            <div className="mt-1 text-2xl sm:text-3xl font-extrabold text-[#FF6B81] font-mono">
               {urgentCount}
             </div>
             <span className="text-[10px] text-slate-500">Emergency cues</span>
           </div>
 
-          <div className="rounded-xl border border-white/10 bg-[#111827] p-4 shadow-sm">
+          <div className="rounded-xl border border-white/10 bg-[#14100D] p-4 shadow-sm">
             <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
               Avg Acknowledge
             </span>
-            <div className="mt-1 text-2xl sm:text-3xl font-extrabold text-blue-400 font-mono">
+            <div className="mt-1 text-2xl sm:text-3xl font-extrabold text-[#FFA726] font-mono">
               {formatSeconds(avgAckDurationSeconds)}
             </div>
             <span className="text-[10px] text-slate-500">FOH reaction time</span>
           </div>
 
-          <div className="rounded-xl border border-white/10 bg-[#111827] p-4 shadow-sm col-span-2 sm:col-span-1">
+          <div className="rounded-xl border border-white/10 bg-[#14100D] p-4 shadow-sm col-span-2 sm:col-span-1">
             <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
               Avg Resolution
             </span>
@@ -328,17 +328,17 @@ function HistoryContent() {
         </div>
 
         {/* Multi-Parameter Filters: Musician, Instrument, Status, Date, Text Search */}
-        <div className="rounded-2xl border border-white/10 bg-[#111827] p-4 shadow-sm space-y-3">
+        <div className="rounded-2xl border border-white/10 bg-[#14100D] p-4 shadow-sm space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-400">
-              <Filter size={14} className="text-blue-400" />
+              <Filter size={14} className="text-[#FFA726]" />
               <span>Filter Service History</span>
             </div>
             {hasActiveFilters && (
               <button
                 type="button"
                 onClick={resetFilters}
-                className="text-xs text-blue-400 hover:text-white flex items-center gap-1 font-semibold"
+                className="text-xs text-[#FFA726] hover:text-white flex items-center gap-1 font-semibold"
               >
                 <X size={13} /> Reset Filters
               </button>
@@ -357,7 +357,7 @@ function HistoryContent() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search text..."
-                className="w-full rounded-xl border border-white/10 bg-[#151d2d] py-2 pl-8 pr-3 text-xs text-white placeholder-slate-500 focus:border-blue-500 focus:outline-none"
+                className="w-full rounded-xl border border-white/10 bg-[#1E1815] py-2 pl-8 pr-3 text-xs text-white placeholder-slate-500 focus:border-orange-500 focus:outline-none"
               />
             </div>
 
@@ -366,7 +366,7 @@ function HistoryContent() {
               <select
                 value={selectedMusician}
                 onChange={(e) => setSelectedMusician(e.target.value)}
-                className="w-full rounded-xl border border-white/10 bg-[#151d2d] px-3 py-2 text-xs text-white focus:border-blue-500 focus:outline-none"
+                className="w-full rounded-xl border border-white/10 bg-[#1E1815] px-3 py-2 text-xs text-white focus:border-orange-500 focus:outline-none"
               >
                 <option value="all">All Musicians ({musicians.length})</option>
                 {musicians.map((m) => (
@@ -382,7 +382,7 @@ function HistoryContent() {
               <select
                 value={selectedInstrument}
                 onChange={(e) => setSelectedInstrument(e.target.value)}
-                className="w-full rounded-xl border border-white/10 bg-[#151d2d] px-3 py-2 text-xs text-white focus:border-blue-500 focus:outline-none"
+                className="w-full rounded-xl border border-white/10 bg-[#1E1815] px-3 py-2 text-xs text-white focus:border-orange-500 focus:outline-none"
               >
                 <option value="all">All Instruments ({instruments.length})</option>
                 {instruments.map((i) => (
@@ -398,7 +398,7 @@ function HistoryContent() {
               <select
                 value={selectedStatus}
                 onChange={(e) => setSelectedStatus(e.target.value)}
-                className="w-full rounded-xl border border-white/10 bg-[#151d2d] px-3 py-2 text-xs text-white focus:border-blue-500 focus:outline-none"
+                className="w-full rounded-xl border border-white/10 bg-[#1E1815] px-3 py-2 text-xs text-white focus:border-orange-500 focus:outline-none"
               >
                 <option value="all">All Statuses</option>
                 <option value="pending">Pending</option>
@@ -412,7 +412,7 @@ function HistoryContent() {
               <select
                 value={selectedDate}
                 onChange={(e) => setSelectedDate(e.target.value)}
-                className="w-full rounded-xl border border-white/10 bg-[#151d2d] px-3 py-2 text-xs text-white focus:border-blue-500 focus:outline-none"
+                className="w-full rounded-xl border border-white/10 bg-[#1E1815] px-3 py-2 text-xs text-white focus:border-orange-500 focus:outline-none"
               >
                 <option value="all">All Dates ({dates.length})</option>
                 {dates.map((d) => (
@@ -426,10 +426,10 @@ function HistoryContent() {
         </div>
 
         {/* History Table */}
-        <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#111827] shadow-sm">
+        <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#14100D] shadow-sm">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead className="border-b border-white/10 bg-[#151d2d] uppercase tracking-wider text-slate-400 font-bold">
+              <thead className="border-b border-white/10 bg-[#1E1815] uppercase tracking-wider text-slate-400 font-bold">
                 <tr>
                   <th className="px-4 py-3.5">Musician</th>
                   <th className="px-4 py-3.5">Category</th>
@@ -454,7 +454,7 @@ function HistoryContent() {
                       <tr key={req._id} className="hover:bg-white/5 transition">
                         <td className="px-4 py-3.5 whitespace-nowrap">
                           <div className="font-bold text-white flex items-center gap-1.5">
-                            {isUrgent && <Flame size={13} className="text-red-400 shrink-0" />}
+                            {isUrgent && <Flame size={13} className="text-[#FF6B81] shrink-0" />}
                             <span>{req.musicianName}</span>
                           </div>
                           <div className="text-[11px] text-slate-400 font-medium">
@@ -467,7 +467,7 @@ function HistoryContent() {
                             className={`rounded-md px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider ${
                               isUrgent
                                 ? "bg-red-500/20 text-red-300 border border-red-500/30"
-                                : "bg-blue-500/10 text-blue-400 border border-blue-500/20"
+                                : "bg-orange-500/10 text-[#FFA726] border border-orange-500/20"
                             }`}
                           >
                             {req.category}
@@ -494,7 +494,7 @@ function HistoryContent() {
                         <td className="px-4 py-3.5 text-slate-400 font-mono whitespace-nowrap">
                           {req.acknowledgedAt ? (
                             <div>
-                              <span className="text-blue-300">
+                              <span className="text-[#FFA726]">
                                 {new Date(req.acknowledgedAt).toLocaleTimeString([], {
                                   hour: "2-digit",
                                   minute: "2-digit",
@@ -539,7 +539,7 @@ function HistoryContent() {
                               req.status === "resolved"
                                 ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/30"
                                 : req.status === "acknowledged"
-                                ? "bg-blue-500/10 text-blue-400 border border-blue-500/30"
+                                ? "bg-orange-500/10 text-[#FFA726] border border-orange-500/30"
                                 : "bg-amber-500/10 text-amber-400 border border-amber-500/30"
                             }`}
                           >
@@ -563,7 +563,7 @@ export default function HistoryPage() {
   return (
     <Suspense
       fallback={
-        <div className="grid min-h-screen place-items-center bg-[#090d18] text-[#f8fafc]">
+        <div className="grid min-h-screen place-items-center bg-[#0C0D0E] text-[#f8fafc]">
           <div className="text-center text-sm text-slate-400">Loading Service History...</div>
         </div>
       }

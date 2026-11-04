@@ -32,7 +32,7 @@ export function QRCodeModal({
           width: 280,
           margin: 2,
           color: {
-            dark: "#090d18",
+            dark: "#0C0D0E",
             light: "#ffffff",
           },
         },
@@ -76,7 +76,7 @@ export function QRCodeModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="relative w-full max-w-md rounded-2xl border border-white/10 bg-[#111827] p-6 sm:p-8 text-[#f8fafc] shadow-2xl">
+      <div className="relative w-full max-w-md rounded-2xl border border-white/10 bg-[#14100D] p-6 sm:p-8 text-[#f8fafc] shadow-2xl">
         <button
           onClick={onClose}
           className="absolute right-4 top-4 rounded-xl border border-white/10 bg-white/5 p-2 text-slate-400 hover:bg-white/10 hover:text-white transition"
@@ -86,10 +86,10 @@ export function QRCodeModal({
         </button>
 
         <div className="text-center">
-          <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-blue-500/15 text-blue-400 border border-blue-500/25">
+          <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-[#DC143C]/15 to-[#F97316]/15 text-[#FFA726] border border-orange-500/25">
             <QrCode size={24} />
           </div>
-          <p className="text-xs font-bold uppercase tracking-wider text-blue-400">
+          <p className="text-xs font-bold uppercase tracking-wider text-[#FFA726]">
             Musician Invitation QR
           </p>
           <h2 className="mt-1 text-2xl font-extrabold text-white">{roomName}</h2>
@@ -107,7 +107,7 @@ export function QRCodeModal({
             <span className="text-[11px] uppercase tracking-wider text-slate-400 font-semibold">
               Stage Room Code
             </span>
-            <div className="font-mono text-3xl font-extrabold tracking-[0.2em] text-blue-400 mt-0.5">
+            <div className="font-mono text-3xl font-extrabold tracking-[0.2em] text-[#FFA726] mt-0.5">
               {roomCode}
             </div>
           </div>
@@ -118,7 +118,7 @@ export function QRCodeModal({
           <button
             type="button"
             onClick={handleCopyLink}
-            className="flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-[#151d2d] py-3 text-xs font-semibold text-slate-200 hover:bg-white/10 transition active:scale-95"
+            className="flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-[#1E1815] py-3 text-xs font-semibold text-slate-200 hover:bg-white/10 transition active:scale-95"
           >
             {copiedLink ? <Check size={16} className="text-emerald-400" /> : <Copy size={16} />}
             {copiedLink ? "Link Copied" : "Copy Link"}
@@ -126,7 +126,7 @@ export function QRCodeModal({
           <button
             type="button"
             onClick={handleCopyCode}
-            className="flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-[#151d2d] py-3 text-xs font-semibold text-slate-200 hover:bg-white/10 transition active:scale-95"
+            className="flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-[#1E1815] py-3 text-xs font-semibold text-slate-200 hover:bg-white/10 transition active:scale-95"
           >
             {copiedCode ? <Check size={16} className="text-emerald-400" /> : <Copy size={16} />}
             {copiedCode ? "Code Copied" : "Copy Code"}
@@ -136,7 +136,7 @@ export function QRCodeModal({
         <button
           type="button"
           onClick={handleDownload}
-          className="mt-2.5 flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 py-3 text-xs font-bold text-white shadow-md shadow-blue-500/20 hover:bg-blue-500 transition active:scale-95"
+          className="mt-2.5 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#DC143C] to-[#EA580C] py-3 text-xs font-bold text-white shadow-md shadow-[#DC143C]/20 hover:from-[#B80F32] hover:to-[#C2410C] transition active:scale-95"
         >
           <Download size={16} /> Save QR Image (PNG)
         </button>

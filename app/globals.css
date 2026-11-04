@@ -6,16 +6,17 @@
 
 :root {
   color-scheme: dark;
-  --bg-primary: #090d18;
-  --bg-secondary: #111827;
-  --bg-card: #151d2d;
+  --bg-primary: #0c0d0e;
+  --bg-secondary: #14100d;
+  --bg-card: #1e1815;
   --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --color-blue: #3b82f6;
+  --text-secondary: #a8a29e;
+  --color-crimson: #dc143c;
+  --color-flame: #f97316;
+  --color-amber: #ffa726;
   --color-green: #22c55e;
-  --color-amber: #f59e0b;
   --color-red: #ef4444;
-  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-subtle: rgba(249, 115, 22, 0.12);
 }
 
 * {
@@ -24,13 +25,13 @@
 }
 
 ::selection {
-  background-color: #3b82f6;
+  background-color: #dc143c;
   color: #ffffff;
 }
 
 body {
   margin: 0;
-  background-color: #090d18;
+  background-color: #0c0d0e;
   color: #f8fafc;
   min-height: 100vh;
   /* Safe-area insets for iPhone notches and iPad Home Indicator */
@@ -85,12 +86,12 @@ button, input, select, textarea {
   0% {
     opacity: 0;
     transform: translateY(-8px) scale(0.98);
-    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.6), 0 0 20px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.6), 0 0 20px rgba(249, 115, 22, 0.3);
   }
   50% {
     opacity: 1;
     transform: translateY(0) scale(1);
-    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5), 0 0 15px rgba(59, 130, 246, 0.2);
+    box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.5), 0 0 15px rgba(249, 115, 22, 0.2);
   }
   100% {
     opacity: 1;
@@ -104,14 +105,14 @@ button, input, select, textarea {
 }
 
 @keyframes edge-glow-blue {
-  0% { box-shadow: inset 0 0 0 3px rgba(59, 130, 246, 0.9), inset 0 0 25px rgba(59, 130, 246, 0.5); }
-  50% { box-shadow: inset 0 0 0 4px rgba(59, 130, 246, 0.7), inset 0 0 35px rgba(59, 130, 246, 0.4); }
+  0% { box-shadow: inset 0 0 0 3px rgba(249, 115, 22, 0.9), inset 0 0 25px rgba(249, 115, 22, 0.5); }
+  50% { box-shadow: inset 0 0 0 4px rgba(249, 115, 22, 0.7), inset 0 0 35px rgba(249, 115, 22, 0.4); }
   100% { box-shadow: none; }
 }
 
 @keyframes edge-glow-red {
-  0% { box-shadow: inset 0 0 0 4px rgba(239, 68, 68, 1), inset 0 0 30px rgba(239, 68, 68, 0.6); }
-  50% { box-shadow: inset 0 0 0 5px rgba(239, 68, 68, 0.8), inset 0 0 40px rgba(239, 68, 68, 0.5); }
+  0% { box-shadow: inset 0 0 0 4px rgba(220, 20, 60, 1), inset 0 0 30px rgba(220, 20, 60, 0.6); }
+  50% { box-shadow: inset 0 0 0 5px rgba(220, 20, 60, 0.8), inset 0 0 40px rgba(220, 20, 60, 0.5); }
   100% { box-shadow: none; }
 }
 
