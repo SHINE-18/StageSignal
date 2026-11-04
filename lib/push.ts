@@ -30,3 +30,4 @@ export function isIosDevice(): boolean {
   const ua = window.navigator.userAgent.toLowerCase();
   return /iphone|ipad|ipod/.test(ua) || (window.navigator.platform === "MacIntel" && window.navigator.maxTouchPoints > 1);
 }
+
