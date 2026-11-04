@@ -47,32 +47,32 @@ export function PipAlertButton({
     const height = canvas.height;
 
     // Background
-    ctx.fillStyle = hasSos ? "#fef2f2" : "#FFFFFF";
+    ctx.fillStyle = hasSos ? "#3b0b0b" : "#000000";
     ctx.fillRect(0, 0, width, height);
 
     // Border
-    ctx.strokeStyle = hasSos ? "#DC143C" : "#EA580C";
+    ctx.strokeStyle = hasSos ? "#FC3B00" : "#FF6129";
     ctx.lineWidth = 4;
     ctx.strokeRect(2, 2, width - 4, height - 4);
 
     // Header: Room Code
-    ctx.fillStyle = "#78716C";
+    ctx.fillStyle = "#A8A29E";
     ctx.font = "bold 13px system-ui, sans-serif";
     ctx.fillText(`STAGE: ${roomCode}`, 14, 24);
 
     // SOS or Normal Banner
     if (hasSos) {
-      ctx.fillStyle = "#DC143C";
+      ctx.fillStyle = "#FC3B00";
       ctx.font = "bold 20px system-ui, sans-serif";
       ctx.fillText("🚨 URGENT SOS", 14, 56);
-      ctx.fillStyle = "#1C1917";
+      ctx.fillStyle = "#FFFFFF";
       ctx.font = "14px system-ui, sans-serif";
       ctx.fillText("Check mixing booth now", 14, 80);
     } else {
-      ctx.fillStyle = "#1C1917";
+      ctx.fillStyle = "#FFFFFF";
       ctx.font = "bold 28px system-ui, sans-serif";
       ctx.fillText(`${openCount} OPEN`, 14, 62);
-      ctx.fillStyle = "#16a34a";
+      ctx.fillStyle = "#22C55E";
       ctx.font = "12px system-ui, sans-serif";
       ctx.fillText(openCount === 0 ? "✓ Queue all clear" : "Live stage cues waiting", 14, 82);
     }
@@ -140,10 +140,10 @@ export function PipAlertButton({
       <button
         onClick={togglePip}
         title="Pop out a floating Picture-in-Picture badge (Experimental)"
-        className={`flex items-center gap-1.5 rounded-lg border px-2.5 py-1 text-xs font-medium transition-all shadow-sm ${
+        className={`flex items-center gap-1.5 rounded-xl border px-3 py-1.5 text-xs font-medium transition-all shadow-sm ${
           isPipActive
-            ? "border-orange-300 bg-orange-50 text-[#EA580C]"
-            : "border-stone-200 bg-white text-stone-700 hover:border-[#EA580C] hover:text-[#EA580C]"
+            ? "border-[#FF6129]/50 bg-[#FF6129]/20 text-[#FF7145]"
+            : "border-white/15 bg-white/5 text-stone-200 hover:border-white/30 hover:text-white"
         }`}
       >
         <PictureInPicture size={13} />
@@ -153,7 +153,7 @@ export function PipAlertButton({
       {errorMessage && (
         <span
           title={errorMessage}
-          className="ml-1.5 text-amber-600 hover:text-amber-700 cursor-pointer"
+          className="ml-1.5 text-amber-400 hover:text-amber-300 cursor-pointer"
         >
           <AlertCircle size={14} />
         </span>

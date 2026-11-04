@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
-    statusBarStyle: "default",
+    statusBarStyle: "black-translucent",
     title: "StageSignal",
   },
   icons: {
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#FAF8F5",
+  themeColor: "#000000",
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
@@ -51,7 +51,7 @@ export default function RootLayout({
     <html lang="en" className={inter.variable} suppressHydrationWarning>
       <body
         suppressHydrationWarning
-        className={`${inter.className} min-h-screen bg-[#FAF8F5] text-[#1C1917] antialiased`}
+        className={`${inter.className} min-h-screen bg-[#000000] text-[#FFFFFF] bg-arounda-glow antialiased selection:bg-[#FC3B00] selection:text-white`}
       >
         <Providers>
           <ImageProtection />

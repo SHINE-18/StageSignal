@@ -103,34 +103,36 @@ export default function CreateRoomPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#FAF8F5] text-stone-900 flex flex-col selection:bg-[#DC143C] selection:text-white">
+    <div className="min-h-screen bg-[#000000] text-white flex flex-col selection:bg-[#FC3B00] selection:text-white bg-arounda-glow">
       <Navbar />
 
       <main className="flex-1 mx-auto w-full max-w-2xl px-4 py-8 sm:py-12 flex flex-col justify-center">
         <Link
           href="/"
-          className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-stone-500 hover:text-stone-900 transition w-fit"
+          className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-stone-400 hover:text-white transition w-fit"
         >
           <ArrowLeft size={16} /> Back to Overview
         </Link>
 
-        <div className="rounded-3xl border border-stone-200/90 bg-white p-6 sm:p-8 shadow-xl">
+        <div className="rounded-3xl border border-white/10 bg-black/50 backdrop-blur-xl p-6 sm:p-8 shadow-2xl">
           {/* Header */}
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#EA580C]">
-            <Flame size={14} className="text-[#DC143C] animate-pulse" />
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-semibold text-stone-200">
+            <span className="h-2 w-2 rounded-full bg-[#FC3B00] animate-pulse" />
+            <Flame size={14} className="text-[#FC3B00]" />
             <span>FOH Sound Engineer Setup</span>
           </div>
-          <h1 className="mt-2 text-2xl sm:text-3xl font-extrabold tracking-tight text-stone-900">
+
+          <h1 className="mt-3 text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
             Create Live Stage Room
           </h1>
-          <p className="mt-1.5 text-sm text-stone-600 leading-relaxed">
+          <p className="mt-1.5 text-sm text-stone-400 leading-relaxed">
             Launch a real-time communication room for worship musicians and FOH. Room codes are automatically generated with active collision prevention.
           </p>
 
           {/* Error Banner */}
           {error && (
-            <div className="mt-5 rounded-xl border border-red-200 bg-red-50 p-3.5 text-sm font-medium text-red-700 flex items-start gap-2.5">
-              <AlertCircle size={18} className="shrink-0 text-red-500 mt-0.5" />
+            <div className="mt-5 rounded-xl border border-red-500/30 bg-red-950/40 p-3.5 text-sm font-medium text-red-200 flex items-start gap-2.5">
+              <AlertCircle size={18} className="shrink-0 text-red-400 mt-0.5" />
               <span>{error}</span>
             </div>
           )}
@@ -139,10 +141,10 @@ export default function CreateRoomPage() {
             {/* Room Name */}
             <div>
               <div className="flex items-center justify-between">
-                <label className="block text-xs font-bold uppercase tracking-wider text-stone-700">
+                <label className="block text-xs font-bold uppercase tracking-wider text-stone-300">
                   Room / Service Name
                 </label>
-                <span className="text-[11px] text-stone-400 font-mono">
+                <span className="text-[11px] text-stone-500 font-mono">
                   {roomName.length}/60
                 </span>
               </div>
@@ -154,13 +156,13 @@ export default function CreateRoomPage() {
                 required
                 disabled={busy}
                 placeholder="e.g. Sunday Morning Service"
-                className="mt-1.5 w-full rounded-xl border border-stone-300 bg-stone-50 px-4 py-3 text-sm text-stone-900 placeholder-stone-400 outline-none transition focus:bg-white focus:border-[#EA580C] focus:ring-1 focus:ring-[#EA580C] disabled:opacity-50"
+                className="mt-1.5 w-full rounded-xl border border-white/15 bg-white/[0.04] px-4 py-3.5 text-sm text-white placeholder-stone-600 outline-none transition focus:border-[#FC3B00] focus:ring-1 focus:ring-[#FC3B00] disabled:opacity-50"
               />
             </div>
 
             {/* Session Type */}
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-stone-700 mb-2">
+              <label className="block text-xs font-bold uppercase tracking-wider text-stone-300 mb-2">
                 Session Type
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -173,24 +175,24 @@ export default function CreateRoomPage() {
                       type="button"
                       disabled={busy}
                       onClick={() => setSessionType(opt.id)}
-                      className={`rounded-xl border p-3.5 text-left transition flex flex-col justify-between ${
+                      className={`rounded-xl border p-4 text-left transition flex flex-col justify-between ${
                         isSelected
-                          ? "border-[#DC143C] bg-red-50/70 text-stone-900 shadow-sm ring-1 ring-[#DC143C]/40"
-                          : "border-stone-200 bg-stone-50/60 text-stone-700 hover:border-stone-300 hover:bg-stone-50"
+                          ? "border-[#FC3B00] bg-[#FC3B00]/15 text-white shadow-lg shadow-[#FC3B00]/10 ring-1 ring-[#FC3B00]"
+                          : "border-white/10 bg-white/[0.03] text-stone-300 hover:border-white/20 hover:bg-white/[0.06]"
                       }`}
                     >
                       <div className="flex items-center justify-between w-full mb-2">
                         <Icon
                           size={18}
-                          className={isSelected ? "text-[#DC143C]" : "text-stone-400"}
+                          className={isSelected ? "text-[#FC3B00]" : "text-stone-400"}
                         />
                         {isSelected && (
-                          <div className="h-2 w-2 rounded-full bg-[#EA580C] animate-ping" />
+                          <div className="h-2 w-2 rounded-full bg-[#FF6129] animate-ping" />
                         )}
                       </div>
                       <div>
-                        <span className="block text-sm font-semibold">{opt.title}</span>
-                        <span className="mt-1 block text-[11px] text-stone-500 leading-snug">
+                        <span className="block text-sm font-semibold text-white">{opt.title}</span>
+                        <span className="mt-1 block text-[11px] text-stone-400 leading-snug">
                           {opt.description}
                         </span>
                       </div>
@@ -203,13 +205,14 @@ export default function CreateRoomPage() {
             {/* Capacity Management */}
             <div>
               <div className="flex items-center justify-between">
-                <label className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-stone-700">
+                <label className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-stone-300">
                   <Users size={14} className="text-stone-400" />
                   <span>Max Approved Musicians</span>
                 </label>
-                <span className="rounded-md bg-orange-50 px-2.5 py-0.5 text-xs font-bold text-[#EA580C] border border-orange-200 font-mono">
-                  {capacity} musicians
-                </span>
+                <div className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-3 py-0.5 text-xs font-bold text-[#FF7145] font-mono">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#FF6129]" />
+                  <span>{capacity} musicians</span>
+                </div>
               </div>
               <input
                 type="range"
@@ -219,9 +222,9 @@ export default function CreateRoomPage() {
                 value={capacity}
                 disabled={busy}
                 onChange={(e) => setCapacity(Number(e.target.value))}
-                className="mt-2.5 w-full accent-[#DC143C] cursor-pointer"
+                className="mt-3 w-full accent-[#FC3B00] cursor-pointer"
               />
-              <div className="flex justify-between text-[11px] text-stone-400 font-mono mt-1">
+              <div className="flex justify-between text-[11px] text-stone-500 font-mono mt-1">
                 <span>2 min</span>
                 <span>8 default</span>
                 <span>24 max</span>
@@ -229,10 +232,10 @@ export default function CreateRoomPage() {
             </div>
 
             {/* Host Security Assurance */}
-            <div className="rounded-xl border border-orange-200 bg-orange-50/60 p-3.5 text-xs text-stone-700 flex items-start gap-2.5">
-              <ShieldCheck size={18} className="text-[#EA580C] shrink-0 mt-0.5" />
+            <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4 text-xs text-stone-300 flex items-start gap-3">
+              <ShieldCheck size={18} className="text-[#FF6129] shrink-0 mt-0.5" />
               <div className="leading-relaxed">
-                <span className="font-semibold text-stone-900 block mb-0.5">
+                <span className="font-semibold text-white block mb-0.5">
                   Secure Host Token Protection
                 </span>
                 A 64-character cryptographic token will be created on this device. Only its SHA-256 hash is stored on Convex Cloud. Raw tokens never touch server logs or URLs.
@@ -244,7 +247,7 @@ export default function CreateRoomPage() {
               <button
                 type="submit"
                 disabled={busy || !roomName.trim()}
-                className="w-full min-h-[56px] flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#DC143C] to-[#EA580C] px-6 py-4 font-bold text-white shadow-md shadow-[#DC143C]/20 transition hover:from-[#B80F32] hover:to-[#C2410C] active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full min-h-[56px] flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#FC3B00] to-[#FF6129] px-6 py-4 font-bold text-white shadow-lg shadow-[#FC3B00]/25 transition hover:from-[#E03500] hover:to-[#F2551D] active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {busy ? (
                   <>

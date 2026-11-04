@@ -24,16 +24,16 @@ export function LiveClock() {
 
   if (!time) {
     return (
-      <div className="inline-flex items-center gap-1.5 rounded-lg border border-stone-200 bg-white px-2.5 py-1 text-xs font-mono text-stone-400 shadow-sm">
-        <Clock size={12} className="text-[#EA580C] animate-spin" />
+      <div className="inline-flex items-center gap-1.5 rounded-xl border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-mono text-stone-400 shadow-sm">
+        <Clock size={12} className="text-[#FF6129] animate-spin" />
         <span>--:--:--</span>
       </div>
     );
   }
 
   return (
-    <div className="inline-flex items-center gap-1.5 rounded-lg border border-stone-200 bg-white px-2.5 py-1 text-xs font-mono text-stone-800 shadow-sm">
-      <Clock size={12} className="text-[#EA580C]" />
+    <div className="inline-flex items-center gap-1.5 rounded-xl border border-white/15 bg-white/5 px-3 py-1.5 text-xs font-mono text-white shadow-sm">
+      <Clock size={12} className="text-[#FF6129]" />
       <span>{time}</span>
     </div>
   );

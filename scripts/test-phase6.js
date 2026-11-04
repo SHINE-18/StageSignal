@@ -60,7 +60,7 @@ async function testPhase6ReliabilityPresencePWA() {
   const manifest = JSON.parse(manifestRaw);
   const hasIcons = manifest.icons && manifest.icons.length >= 2;
   const hasStandalone = manifest.display === 'standalone';
-  const hasDarkTheme = manifest.theme_color === '#FAF8F5' && manifest.background_color === '#FAF8F5';
+  const hasDarkTheme = manifest.theme_color === '#000000' && manifest.background_color === '#000000';
 
   const icon192Exists = fs.existsSync(path.join(process.cwd(), 'public', 'icons', 'icon-192.png'));
   const icon512Exists = fs.existsSync(path.join(process.cwd(), 'public', 'icons', 'icon-512.png'));
