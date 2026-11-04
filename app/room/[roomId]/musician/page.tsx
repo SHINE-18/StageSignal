@@ -314,7 +314,7 @@ function MusicianStageContent() {
     );
   }
 
-  if (!session.authorized) {
+  if (!session.authorized || !session.participant) {
     return (
       <main className="grid min-h-screen place-items-center bg-[#090d18] text-[#f8fafc] p-4">
         <div className="flex items-center gap-2 text-sm text-slate-400">

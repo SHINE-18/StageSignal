@@ -34,3 +34,4 @@ pnpm-debug.log*
 # OS Artifacts
 .DS_Store
 Thumbs.db
+*.tsbuildinfo
