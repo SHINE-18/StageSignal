@@ -14,8 +14,6 @@ import {
   ShieldAlert,
   PowerOff,
   QrCode,
-  Download,
-  Maximize2,
   AlertTriangle,
   Loader2,
   Volume2,
@@ -29,7 +27,6 @@ import {
   Search,
   CheckCircle,
   Flame,
-  ArrowUpRight,
   Minimize2,
 } from "lucide-react";
 import { getHostToken } from "../../../../lib/session";
@@ -380,15 +377,6 @@ function FohConsoleContent() {
     }
   }
 
-  function handleDownloadQr() {
-    if (!qrCanvasRef.current || !room?.code) return;
-    const dataUrl = qrCanvasRef.current.toDataURL("image/png");
-    const link = document.createElement("a");
-    link.download = `StageSignal-${room.code}-QR.png`;
-    link.href = dataUrl;
-    link.click();
-  }
-
   async function handleConfirmEndRoom() {
     if (!hostToken || !roomId) return;
     setEndingRoom(true);
@@ -557,113 +545,77 @@ function FohConsoleContent() {
     <div className="min-h-screen bg-[#000000] bg-arounda-glow text-white flex flex-col no-overscroll selection:bg-[#FC3B00] selection:text-white">
       <OfflineBanner role="foh" />
 
-      {/* Console Top Header */}
-      <header className="sticky top-0 z-30 border-b border-white/10 bg-[#000000] bg-arounda-glow/95 backdrop-blur-md px-4 py-3 sm:px-6">
+      {/* Console Top Header — Minimal & Sleek */}
+      <header className="sticky top-0 z-30 border-b border-white/[0.08] bg-black/60 backdrop-blur-xl px-4 py-3 sm:px-6">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
-          {/* Brand & Room Info */}
+          {/* Brand & Room Info with 1-Tap Copy Pill */}
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#FC3B00]/15 to-[#FF6129]/15 text-[#FF6129] border border-orange-500/30">
-              <Radio size={20} className={isReadOnly ? "text-stone-400" : "animate-pulse"} />
-            </div>
+            <Link href="/" className="flex items-center gap-2 group" title="Return to Overview">
+              <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-[#FC3B00]/25 to-[#FF6129]/20 text-[#FC3B00] border border-[#FC3B00]/30 shadow-md">
+                <Radio size={16} className={isReadOnly ? "text-stone-500" : "animate-pulse"} />
+              </div>
+            </Link>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-sm sm:text-base font-extrabold text-white tracking-tight">
+                <h1 className="text-sm sm:text-base font-extrabold text-white tracking-tight">
                   {room.name}
-                </span>
-                <span className="rounded-md border border-orange-500/20 bg-white/[0.04] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#FF6129]">
-                  {room.sessionType}
-                </span>
-              </div>
-              <div className="flex items-center gap-2 text-xs text-stone-500">
-                <span className="font-semibold text-stone-400">FOH Console</span>
-                <span>•</span>
-                <span>Max {maxCapacity} musicians</span>
+                </h1>
+                <button
+                  type="button"
+                  onClick={handleCopyCode}
+                  title="Click to copy room code"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-2.5 py-0.5 text-xs text-white hover:bg-white/10 transition"
+                >
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <span className="font-mono font-bold tracking-widest text-[#FF7145]">{room.code}</span>
+                  {copiedCode ? <Check size={11} className="text-emerald-400" /> : <Copy size={11} className="text-stone-400" />}
+                </button>
               </div>
             </div>
           </div>
 
-          {/* Center: Monospace Room Code & Copy */}
-          <div className="flex items-center gap-2">
-            <div className="flex items-center gap-2 rounded-xl border border-white/10 bg-black/50 backdrop-blur-xl px-3.5 py-1.5 shadow-sm">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-stone-500 hidden sm:inline">
-                Code
-              </span>
-              <span className="font-mono text-base sm:text-lg font-extrabold tracking-widest text-[#FF6129]">
-                {room.code}
-              </span>
-              <button
-                type="button"
-                onClick={handleCopyCode}
-                title="Copy Room Code"
-                className="ml-1 rounded-lg p-1 text-stone-500 hover:bg-black/50 backdrop-blur-xl/10 hover:text-white transition"
-              >
-                {copiedCode ? (
-                  <Check size={14} className="text-emerald-400" />
-                ) : (
-                  <Copy size={14} />
-                )}
-              </button>
-            </div>
-          </div>
-
-          {/* Right: Clock & Room Controls */}
+          {/* Right: Minimal Utilities */}
           <div className="flex items-center gap-2.5 sm:gap-3">
             <LiveClock />
 
-            {/* Picture-in-Picture Floating Alert Badge (Experimental) */}
-            <PipAlertButton
-              openCount={openRequests.length}
-              hasSos={urgentSosRequests.length > 0}
-              roomCode={room.code}
-            />
-
-            {/* Web Push Background Alerts Toggle */}
-            <PushAlertToggle roomId={roomId} hostToken={hostToken} />
+            {/* QR Invite Button */}
+            <button
+              type="button"
+              onClick={() => setIsQrModalOpen(true)}
+              className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition"
+              title="Musician QR Invitation"
+            >
+              <QrCode size={13} className="text-[#FF6129]" />
+              <span className="hidden sm:inline">QR Invite</span>
+            </button>
 
             {/* Compact Mini-Console View Toggle */}
             <button
               type="button"
               onClick={() => setIsCompactView(true)}
-              className="flex items-center gap-1.5 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-semibold text-stone-400 hover:border-orange-500/40 hover:text-white transition active:scale-95"
-              title="Switch to Compact Mini-Console (optimized for iPad Slide Over / Split View)"
+              className="p-1.5 rounded-lg text-stone-400 hover:text-white hover:bg-white/5 transition"
+              title="Compact View"
             >
-              <Minimize2 size={14} className="text-[#FF6129]" />
-              <span className="hidden lg:inline">Compact View</span>
+              <Minimize2 size={16} />
             </button>
 
             {/* Service History Link */}
             <Link
               href={`/room/${roomId}/history`}
-              className="flex items-center gap-1.5 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-semibold text-stone-400 hover:border-orange-500/40 hover:text-white transition active:scale-95"
-              title="View Service History & Audit"
+              className="p-1.5 rounded-lg text-stone-400 hover:text-white hover:bg-white/5 transition"
+              title="Service History"
             >
-              <History size={14} className="text-[#FF6129]" />
-              <span className="hidden md:inline">History</span>
+              <History size={16} />
             </Link>
-
-            {/* Active / Ended Status Badge */}
-            {isReadOnly ? (
-              <span className="inline-flex items-center gap-1.5 rounded-lg border border-amber-500/30 bg-amber-500/10 px-2.5 py-1 text-xs font-bold text-amber-400">
-                <span className="h-2 w-2 rounded-full bg-amber-400" />
-                <span>{isRoomEnded ? "ENDED" : "EXPIRED"}</span>
-              </span>
-            ) : (
-              <span className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-1 text-xs font-bold text-emerald-400">
-                <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="hidden sm:inline">LIVE ACTIVE</span>
-                <span className="sm:hidden">LIVE</span>
-              </span>
-            )}
 
             {/* End Room CTA */}
             {!isReadOnly && (
               <button
                 type="button"
                 onClick={() => setIsEndModalOpen(true)}
-                className="flex items-center gap-1.5 rounded-xl border border-red-500/30 bg-red-950/40 px-3 py-1.5 text-xs font-bold text-red-400 hover:bg-red-900/50 hover:text-red-300 transition active:scale-95"
+                className="rounded-full border border-red-500/30 bg-red-950/40 px-3 py-1 text-xs font-semibold text-red-300 hover:bg-red-900/50 transition active:scale-95"
               >
-                <PowerOff size={14} />
-                <span className="hidden md:inline">End Session</span>
+                End
               </button>
             )}
           </div>
@@ -808,84 +760,33 @@ function FohConsoleContent() {
           </div>
         )}
 
-        {/* Statistics Bar (PRD Section 6.2) */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          <div className="rounded-xl border border-white/10 bg-black/50 backdrop-blur-xl p-3.5">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-stone-500">
-              Stage Roster
+        {/* Minimal Overview Strip */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/[0.08] pb-3 text-xs text-stone-400">
+          <div className="flex items-center gap-3 flex-wrap">
+            <span className="text-stone-300">
+              Queue: <strong className="text-white font-mono">{openRequests.length}</strong> active
             </span>
-            <div className="mt-1 flex items-baseline gap-1.5">
-              <span
-                className={`font-mono text-2xl font-extrabold ${
-                  isRoomFull ? "text-[#FF6129]" : "text-emerald-400"
-                }`}
-              >
-                {approvedParticipants.length}
-              </span>
-              <span className="text-xs text-stone-400">/ {maxCapacity}</span>
-            </div>
-            <span className="mt-1 block text-[10px] text-stone-400">
-              {isRoomFull ? "At capacity limit" : "Approved musicians"}
+            <span className="text-stone-600">•</span>
+            <span className="text-stone-300">
+              Stage: <strong className="text-white font-mono">{approvedParticipants.length}</strong> / {maxCapacity}
             </span>
+            {pendingParticipants.length > 0 && (
+              <>
+                <span className="text-stone-600">•</span>
+                <span className="text-[#FF7145] font-semibold">
+                  {pendingParticipants.length} waiting to join
+                </span>
+              </>
+            )}
           </div>
 
-          <div className="rounded-xl border border-white/10 bg-black/50 backdrop-blur-xl p-3.5">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-stone-500">
-              Join Queue
-            </span>
-            <div className="mt-1 flex items-baseline gap-1.5">
-              <span className="font-mono text-2xl font-extrabold text-[#FF6129]">
-                {pendingParticipants.length}
-              </span>
-              <span className="text-xs text-stone-400">waiting</span>
-            </div>
-            <span className="mt-1 block text-[10px] text-stone-400">
-              Awaiting FOH approval
-            </span>
-          </div>
-
-          <div className="rounded-xl border border-white/10 bg-black/50 backdrop-blur-xl p-3.5">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-stone-500">
-              Open Requests
-            </span>
-            <div className="mt-1 flex items-baseline gap-1.5">
-              <span
-                className={`font-mono text-2xl font-extrabold ${
-                  openRequests.length > 0 ? "text-[#FF6129]" : "text-white"
-                }`}
-              >
-                {openRequests.length}
-              </span>
-              <span className="text-xs text-stone-400">active</span>
-            </div>
-            <span className="mt-1 block text-[10px] text-stone-400">
-              Pending + in progress
-            </span>
-          </div>
-
-          <div
-            className={`rounded-xl border p-3.5 transition ${
-              urgentSosRequests.length > 0
-                ? "border-red-500/50 bg-red-950/40"
-                : "border-white/10 bg-black/50 backdrop-blur-xl"
-            }`}
-          >
-            <span className="text-[11px] font-bold uppercase tracking-wider text-stone-500">
-              SOS Alerts
-            </span>
-            <div className="mt-1 flex items-baseline gap-1.5">
-              <span
-                className={`font-mono text-2xl font-extrabold ${
-                  urgentSosRequests.length > 0 ? "text-[#FF6B81] animate-pulse" : "text-stone-500"
-                }`}
-              >
-                {urgentSosRequests.length}
-              </span>
-              <span className="text-xs text-stone-400">urgent</span>
-            </div>
-            <span className="mt-1 block text-[10px] text-stone-400">
-              {urgentSosRequests.length > 0 ? "Requires immediate FOH attention" : "All clear"}
-            </span>
+          <div className="flex items-center gap-2">
+            <PushAlertToggle roomId={roomId} hostToken={hostToken} compact />
+            <PipAlertButton
+              openCount={openRequests.length}
+              hasSos={urgentSosRequests.length > 0}
+              roomCode={room.code}
+            />
           </div>
         </div>
 
@@ -910,16 +811,14 @@ function FohConsoleContent() {
                   </span>
                 </div>
 
-                {/* Filter Tabs */}
-                <div className="flex items-center gap-1 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
+                {/* Minimal Filter Tabs */}
+                <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
                   {(
                     [
-                      { id: "open" as const, label: "Open", count: openRequests.length, isSos: false },
-                      { id: "sos" as const, label: "SOS", count: urgentSosRequests.length, isSos: true },
-                      { id: "pending" as const, label: "Pending", count: pendingRequests.length, isSos: false },
-                      { id: "acknowledged" as const, label: "In Progress", count: acknowledgedRequests.length, isSos: false },
-                      { id: "resolved" as const, label: "Resolved", count: resolvedRequests.length, isSos: false },
-                      { id: "all" as const, label: "All", count: allRequests.length, isSos: false },
+                      { id: "open" as const, label: "Open", count: openRequests.length },
+                      { id: "acknowledged" as const, label: "In Progress", count: acknowledgedRequests.length },
+                      { id: "resolved" as const, label: "Resolved", count: resolvedRequests.length },
+                      { id: "all" as const, label: "All", count: allRequests.length },
                     ]
                   ).map((tab) => {
                     const isActive = requestFilter === tab.id;
@@ -928,29 +827,33 @@ function FohConsoleContent() {
                         key={tab.id}
                         type="button"
                         onClick={() => setRequestFilter(tab.id as RequestFilter)}
-                        className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-semibold whitespace-nowrap transition ${
+                        className={`flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium transition ${
                           isActive
-                            ? tab.isSos && tab.count > 0
-                              ? "bg-[#FC3B00] text-white font-bold"
-                              : "bg-gradient-to-r from-[#FC3B00] to-[#FF6129] text-white font-bold"
-                            : tab.isSos && tab.count > 0
-                            ? "bg-red-950/50 text-red-300 border border-red-500/30 hover:bg-red-900/40"
-                            : "bg-white/[0.04] text-stone-400 hover:bg-black/50 backdrop-blur-xl/10 hover:text-white"
+                            ? "bg-white/10 text-white font-semibold"
+                            : "text-stone-400 hover:text-white hover:bg-white/5"
                         }`}
                       >
                         <span>{tab.label}</span>
-                        <span
-                          className={`rounded-full px-1.5 py-0.2 text-[10px] font-mono ${
-                            isActive
-                              ? "bg-black/50 backdrop-blur-xl/20 text-white"
-                              : "bg-black/50 backdrop-blur-xl/5 text-stone-500"
-                          }`}
-                        >
-                          {tab.count}
+                        <span className="text-[10px] font-mono text-stone-500">
+                          ({tab.count})
                         </span>
                       </button>
                     );
                   })}
+                  {urgentSosRequests.length > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => setRequestFilter("sos")}
+                      className={`flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold transition ${
+                        requestFilter === "sos"
+                          ? "bg-[#FC3B00] text-white"
+                          : "bg-red-950/60 text-red-400 border border-red-500/30"
+                      }`}
+                    >
+                      <span>SOS</span>
+                      <span>({urgentSosRequests.length})</span>
+                    </button>
+                  )}
                 </div>
               </div>
 
@@ -966,7 +869,7 @@ function FohConsoleContent() {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Search by musician, instrument, or message..."
-                    className="w-full rounded-xl border border-white/10 bg-white/[0.04] py-2 pl-9 pr-3 text-xs text-white placeholder-slate-500 focus:border-orange-500 focus:outline-none"
+                    className="w-full rounded-xl border border-white/10 bg-white/[0.04] py-2 pl-9 pr-3 text-xs text-white placeholder-stone-500 focus:border-[#FC3B00] focus:outline-none"
                   />
                   {searchQuery && (
                     <button
@@ -1369,122 +1272,42 @@ function FohConsoleContent() {
               )}
             </section>
 
-            {/* QR Invitation Card */}
+            {/* Minimal Stage Access Card */}
             <section
-              aria-label="Stage Invitation"
-              className="rounded-2xl border border-white/10 bg-black/50 backdrop-blur-xl p-5 shadow-sm"
+              aria-label="Stage Access"
+              className="rounded-3xl border border-white/[0.08] bg-black/40 backdrop-blur-xl p-5 shadow-xl space-y-3"
             >
-              <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                <div className="flex items-center gap-2">
-                  <QrCode size={18} className="text-[#FF6129]" />
-                  <h3 className="font-bold text-white text-sm">Stage Invitation</h3>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setIsQrModalOpen(true)}
-                  className="flex items-center gap-1 text-xs font-semibold text-[#FF6129] hover:text-orange-300 transition"
-                >
-                  <Maximize2 size={12} />
-                  <span>Fullscreen</span>
-                </button>
-              </div>
-
-              {/* QR Code Canvas */}
-              <div className="mt-5 flex flex-col items-center">
-                <div className="rounded-xl border border-white/10 bg-black/50 backdrop-blur-xl p-3 shadow-md">
-                  <canvas ref={qrCanvasRef} className="rounded-md" />
-                </div>
-
-                <div className="mt-3 text-center">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-stone-500">
-                    Room Code
+              <div className="flex items-center justify-between">
+                <div>
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-stone-500 block">
+                    Musician Stage Code
                   </span>
-                  <div className="font-mono text-2xl font-extrabold tracking-widest text-[#FF6129]">
+                  <div className="font-mono text-2xl font-black tracking-widest text-[#FF7145] mt-0.5">
                     {room.code}
                   </div>
                 </div>
-              </div>
 
-              {/* Action Buttons */}
-              <div className="mt-4 grid grid-cols-2 gap-2">
-                <button
-                  type="button"
-                  onClick={handleCopyLink}
-                  className="flex items-center justify-center gap-1.5 rounded-xl border border-white/10 bg-white/[0.04] py-2.5 text-xs font-semibold text-stone-100 hover:bg-black/50 backdrop-blur-xl/10 transition active:scale-95"
-                >
-                  {copiedLink ? <Check size={14} className="text-emerald-400" /> : <Copy size={14} />}
-                  <span>{copiedLink ? "Copied" : "Copy Link"}</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={handleDownloadQr}
-                  className="flex items-center justify-center gap-1.5 rounded-xl border border-white/10 bg-white/[0.04] py-2.5 text-xs font-semibold text-stone-100 hover:bg-black/50 backdrop-blur-xl/10 transition active:scale-95"
-                >
-                  <Download size={14} />
-                  <span>Download</span>
-                </button>
-              </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={handleCopyLink}
+                    className="inline-flex items-center gap-1.5 rounded-xl border border-white/15 bg-white/5 px-3 py-2 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition active:scale-95"
+                    title="Copy join link to clipboard"
+                  >
+                    {copiedLink ? <Check size={13} className="text-emerald-400" /> : <Copy size={13} />}
+                    <span>{copiedLink ? "Copied" : "Link"}</span>
+                  </button>
 
-              <div className="mt-3 rounded-lg bg-white/[0.04]/60 p-2.5 text-[11px] text-stone-500 font-mono break-all border border-white/10">
-                {joinUrl}
-              </div>
-            </section>
-
-            {/* Room Metadata & Security Overview */}
-            <section
-              aria-label="Session Metadata"
-              className="rounded-2xl border border-white/10 bg-black/50 backdrop-blur-xl p-5 space-y-4 shadow-sm"
-            >
-              <div className="flex items-center justify-between">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-stone-500">
-                  Session Information
-                </h4>
-                <Link
-                  href={`/room/${roomId}/history`}
-                  className="flex items-center gap-1 text-[11px] font-semibold text-[#FF6129] hover:text-orange-300 transition"
-                >
-                  <span>Audit History</span>
-                  <ArrowUpRight size={12} />
-                </Link>
-              </div>
-
-              <div className="space-y-2.5 text-xs">
-                <div className="flex items-center justify-between py-1 border-b border-white/10">
-                  <span className="text-stone-500">Session Type</span>
-                  <span className="font-semibold text-white capitalize">{room.sessionType}</span>
+                  <button
+                    type="button"
+                    onClick={() => setIsQrModalOpen(true)}
+                    className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-[#FC3B00] to-[#FF6129] px-3.5 py-2 text-xs font-bold text-white shadow-md shadow-[#FC3B00]/25 hover:from-[#E03500] hover:to-[#F2551D] transition active:scale-95"
+                    title="Open Fullscreen QR Invitation"
+                  >
+                    <QrCode size={13} />
+                    <span>QR Code</span>
+                  </button>
                 </div>
-                <div className="flex items-center justify-between py-1 border-b border-white/10">
-                  <span className="text-stone-500">Capacity Limit</span>
-                  <span className="font-semibold text-[#FF6129] font-mono">
-                    {maxCapacity} Approved Musicians
-                  </span>
-                </div>
-                <div className="flex items-center justify-between py-1 border-b border-white/10">
-                  <span className="text-stone-500">Room Status</span>
-                  <span className="font-semibold uppercase text-emerald-400">
-                    {room.status}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between py-1 border-b border-white/10">
-                  <span className="text-stone-500">Duration Limit</span>
-                  <span className="text-stone-400">12 Hours (Auto-expiry)</span>
-                </div>
-                <div className="flex items-center justify-between py-1">
-                  <span className="text-stone-500">Expires At</span>
-                  <span className="font-mono text-stone-400">
-                    {new Date(room.expiresAt).toLocaleTimeString([], {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
-                  </span>
-                </div>
-              </div>
-
-              <div className="rounded-xl border border-orange-200 bg-orange-50 p-3 text-[11px] text-stone-300 flex items-start gap-2">
-                <CheckCircle2 size={16} className="text-[#FF6129] shrink-0 mt-0.5" />
-                <span>
-                  Host token verified. Only this device holds the cryptographic authorization to approve musicians, resolve cues, and manage this stage session.
-                </span>
               </div>
             </section>
           </div>
