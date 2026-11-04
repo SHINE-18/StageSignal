@@ -106,3 +106,62 @@ self.addEventListener("fetch", (event) => {
   // All other requests: default browser fetch
   event.respondWith(fetch(event.request));
 });
+
+// ==========================================
+// Web Push Event Handlers (iOS 16.4+ & PWA)
+// ==========================================
+
+self.addEventListener("push", (event) => {
+  let data = {};
+  if (event.data) {
+    try {
+      data = event.data.json();
+    } catch {
+      data = { title: "StageSignal", body: event.data.text() };
+    }
+  }
+
+  const title = data.title || "StageSignal Alert";
+  const options = {
+    body: data.body || "New stage request received.",
+    icon: "/icons/icon-192.png",
+    badge: "/icons/icon-192.png",
+    tag: data.tag || "stagesignal-alert",
+    data: {
+      url: data.url || "/",
+      timestamp: data.timestamp || Date.now(),
+    },
+    silent: true, // Visual-only: strictly zero sound playback
+    renotify: true,
+  };
+
+  // iOS 16.4+ strictly requires every push event to show a notification,
+  // otherwise it revokes the push subscription.
+  event.waitUntil(self.registration.showNotification(title, options));
+});
+
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+
+  const targetUrl = event.notification.data?.url || "/";
+
+  event.waitUntil(
+    self.clients
+      .matchAll({ type: "window", includeUncontrolled: true })
+      .then((clientList) => {
+        // Look for an existing StageSignal window to focus
+        for (const client of clientList) {
+          if (client.url && client.url.includes("/room/") && "focus" in client) {
+            if ("navigate" in client && targetUrl !== "/") {
+              client.navigate(targetUrl);
+            }
+            return client.focus();
+          }
+        }
+        // If no matching window is open, launch a new window
+        if (self.clients.openWindow) {
+          return self.clients.openWindow(targetUrl);
+        }
+      })
+  );
+});

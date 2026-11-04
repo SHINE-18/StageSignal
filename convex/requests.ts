@@ -1,4 +1,5 @@
 import { mutation, query } from "./_generated/server";
+import { internal } from "./_generated/api";
 import { v } from "convex/values";
 import {
   assertTokenFormat,
@@ -202,6 +203,26 @@ export const createRequest = mutation({
     await ctx.db.patch(participant._id, {
       lastSeenAt: now,
     });
+
+    // 10. Schedule push notification asynchronously without blocking request creation
+    const isSos = finalPriority === "urgent";
+    const notificationTitle = isSos
+      ? `SOS — ${participant.name} (${participant.instrument})`
+      : `${preset ? preset.label : "Stage Request"} — ${participant.name} (${participant.instrument})`;
+
+    try {
+      await ctx.scheduler.runAfter(0, internal.pushNode.sendPushNotification, {
+        roomId: args.roomId,
+        title: notificationTitle,
+        body: finalMessage,
+        tag: isSos ? `sos-${args.roomId}` : `request-${requestId}`,
+        url: `/room/${args.roomId}/foh`,
+        priority: finalPriority,
+      });
+    } catch (schedErr) {
+      // Scheduling failure must NEVER block request creation
+      console.error("Non-fatal: failed to schedule push notification:", schedErr);
+    }
 
     return { requestId, status: "pending" as const };
   },

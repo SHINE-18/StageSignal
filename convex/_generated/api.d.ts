@@ -11,6 +11,8 @@
 import type * as crons from "../crons.js";
 import type * as participants from "../participants.js";
 import type * as presence from "../presence.js";
+import type * as push from "../push.js";
+import type * as pushNode from "../pushNode.js";
 import type * as requests from "../requests.js";
 import type * as rooms from "../rooms.js";
 import type * as security from "../security.js";
@@ -25,6 +27,8 @@ declare const fullApi: ApiFromModules<{
   crons: typeof crons;
   participants: typeof participants;
   presence: typeof presence;
+  push: typeof push;
+  pushNode: typeof pushNode;
   requests: typeof requests;
   rooms: typeof rooms;
   security: typeof security;

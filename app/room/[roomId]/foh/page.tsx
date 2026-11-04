@@ -30,12 +30,16 @@ import {
   CheckCircle,
   Flame,
   ArrowUpRight,
+  Minimize2,
 } from "lucide-react";
 import { getHostToken } from "../../../../lib/session";
 import { LiveClock } from "../../../../components/LiveClock";
 import { QRCodeModal } from "../../../../components/QRCodeModal";
 import { OfflineBanner } from "../../../../components/OfflineBanner";
 import { useConnectionState } from "../../../../hooks/useConnectionState";
+import { FohMiniConsole } from "../../../../components/FohMiniConsole";
+import { PushAlertToggle } from "../../../../components/PushAlertToggle";
+import { PipAlertButton } from "../../../../components/PipAlertButton";
 
 type RequestFilter = "open" | "sos" | "pending" | "acknowledged" | "resolved" | "all";
 
@@ -96,6 +100,21 @@ function FohConsoleContent() {
 
   // Live ticker for relative timestamps
   const [currentTime, setCurrentTime] = useState<number>(() => Date.now());
+
+  // Compact Mini-Console View (for iPad Slide Over / Split Views < 600px)
+  const [isCompactView, setIsCompactView] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    function checkViewport() {
+      if (window.innerWidth < 600) {
+        setIsCompactView(true);
+      }
+    }
+    checkViewport();
+    window.addEventListener("resize", checkViewport);
+    return () => window.removeEventListener("resize", checkViewport);
+  }, []);
 
   const qrCanvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -520,6 +539,16 @@ function FohConsoleContent() {
     );
   }
 
+  if (isCompactView && hostToken && roomId) {
+    return (
+      <FohMiniConsole
+        roomId={roomId}
+        hostToken={hostToken}
+        onSwitchToFull={() => setIsCompactView(false)}
+      />
+    );
+  }
+
   const isRoomEnded = room.status === "ended";
   const isRoomExpired = room.isExpired;
   const isReadOnly = isRoomEnded || isRoomExpired;
@@ -580,6 +609,27 @@ function FohConsoleContent() {
           {/* Right: Clock & Room Controls */}
           <div className="flex items-center gap-2.5 sm:gap-3">
             <LiveClock />
+
+            {/* Picture-in-Picture Floating Alert Badge (Experimental) */}
+            <PipAlertButton
+              openCount={openRequests.length}
+              hasSos={urgentSosRequests.length > 0}
+              roomCode={room.code}
+            />
+
+            {/* Web Push Background Alerts Toggle */}
+            <PushAlertToggle roomId={roomId} hostToken={hostToken} />
+
+            {/* Compact Mini-Console View Toggle */}
+            <button
+              type="button"
+              onClick={() => setIsCompactView(true)}
+              className="flex items-center gap-1.5 rounded-xl border border-white/10 bg-[#151d2d] px-3 py-1.5 text-xs font-semibold text-slate-300 hover:border-blue-500/40 hover:text-white transition active:scale-95"
+              title="Switch to Compact Mini-Console (optimized for iPad Slide Over / Split View)"
+            >
+              <Minimize2 size={14} className="text-blue-400" />
+              <span className="hidden lg:inline">Compact View</span>
+            </button>
 
             {/* Service History Link */}
             <Link

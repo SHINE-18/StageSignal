@@ -103,6 +103,26 @@ button, input, select, textarea {
   animation: request-entrance 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+@keyframes edge-glow-blue {
+  0% { box-shadow: inset 0 0 0 3px rgba(59, 130, 246, 0.9), inset 0 0 25px rgba(59, 130, 246, 0.5); }
+  50% { box-shadow: inset 0 0 0 4px rgba(59, 130, 246, 0.7), inset 0 0 35px rgba(59, 130, 246, 0.4); }
+  100% { box-shadow: none; }
+}
+
+@keyframes edge-glow-red {
+  0% { box-shadow: inset 0 0 0 4px rgba(239, 68, 68, 1), inset 0 0 30px rgba(239, 68, 68, 0.6); }
+  50% { box-shadow: inset 0 0 0 5px rgba(239, 68, 68, 0.8), inset 0 0 40px rgba(239, 68, 68, 0.5); }
+  100% { box-shadow: none; }
+}
+
+.animate-edge-glow-blue {
+  animation: edge-glow-blue 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-edge-glow-red {
+  animation: edge-glow-red 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
 /* Touch and accidental-gesture hardening */
 .no-overscroll {
   overscroll-behavior: none;
@@ -122,8 +142,11 @@ button {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  .animate-request-entrance {
+  .animate-request-entrance,
+  .animate-edge-glow-blue,
+  .animate-edge-glow-red {
     animation: none !important;
+    box-shadow: none !important;
     opacity: 1 !important;
     transform: none !important;
   }

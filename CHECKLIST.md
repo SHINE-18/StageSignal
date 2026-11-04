@@ -175,6 +175,25 @@
 
 ---
 
+### Phase 8: Compact Mini-Console & Web Push Alerts [READY FOR DEVICE TESTING]
+- [x] Dedicated route `/room/[roomId]/foh/mini`: host-token verified server-side, purpose-built for ~320–420px width (iPad Slide Over / Split View).
+- [x] Auto-switch main FOH dashboard to compact mini-console when viewport width < 600px, with a manual "Compact view" / "Full view" toggle.
+- [x] Slim header with room code, one-click copy, connection dot, count badges (Open, SOS, Join requests), PiP button, and Push alerts toggle.
+- [x] Urgent SOS priority: full-width red pulsing banner with musician name, instrument, message, and large (min 48px) Acknowledge & Resolve buttons.
+- [x] Live request queue: newest first, status indicators, and large (min 48px) touch targets.
+- [x] Join requests tray: compact approve/reject rows with count badge.
+- [x] Visual-only alerts: window edge-glow animation (blue for normal, red for SOS) on incoming requests; persistent red window border on unacknowledged SOS; `document.title` dynamic badge count (`(3) StageSignal`); `navigator.setAppBadge` when supported. Respects `prefers-reduced-motion`.
+- [x] Screen wake lock & host heartbeat active in mini-console with `OfflineBanner role="foh"`.
+- [x] Convex `pushSubscriptions` table with indexes (`by_room`, `by_endpoint`) and server-side host token verification on registration.
+- [x] Convex `"use node"` action (`sendPushNotification`) using `web-push` and VAPID keys; scheduled asynchronously from `createRequest` and `requestJoin` (push failure never blocks request creation).
+- [x] Automatic cleanup: 404/410 dead endpoint removal, and complete deletion of push subscriptions when a room ends or expires.
+- [x] PWA Service Worker (`public/sw.js`): `push` and `notificationclick` handlers; silent visual-only banners; window focusing. Never caches Convex traffic.
+- [x] Frontend `usePushAlerts` and `<PushAlertToggle />` component: user-gesture permission prompt; iOS Home Screen install guide modal when not in standalone mode; clear permission states.
+- [x] Experimental Canvas-to-Video Picture-in-Picture alert button (`<PipAlertButton />`) with live status rendering.
+- [x] Verified via `npx tsc --noEmit` (0 errors), `npm run lint` (0 errors, 0 warnings), `npm run build` (0 errors, all 9 routes compiled), and 4/4 security assertions in `scripts/test-phase8.js`.
+
+---
+
 ## Acceptance Criteria Status (PRD Section 18)
 
 | Category | Requirement | Local Verification | Production / Device Test |

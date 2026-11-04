@@ -202,6 +202,15 @@ export const endRoom = mutation({
       endedAt: now,
     });
 
+    // Clean up push subscriptions for the ended room
+    const subs = await ctx.db
+      .query("pushSubscriptions")
+      .withIndex("by_room", (q) => q.eq("roomId", args.roomId))
+      .collect();
+    for (const sub of subs) {
+      await ctx.db.delete(sub._id);
+    }
+
     return { success: true, alreadyEnded: false };
   },
 });
@@ -218,6 +227,13 @@ export const expireRoom = mutation({
         status: "ended",
         endedAt: Date.now(),
       });
+      const subs = await ctx.db
+        .query("pushSubscriptions")
+        .withIndex("by_room", (q) => q.eq("roomId", args.roomId))
+        .collect();
+      for (const sub of subs) {
+        await ctx.db.delete(sub._id);
+      }
       return true;
     }
     return false;
@@ -243,6 +259,13 @@ export const sweepOverdueRooms = mutation({
           status: "ended",
           endedAt: now,
         });
+        const subs = await ctx.db
+          .query("pushSubscriptions")
+          .withIndex("by_room", (q) => q.eq("roomId", room._id))
+          .collect();
+        for (const sub of subs) {
+          await ctx.db.delete(sub._id);
+        }
         count++;
       }
     }

@@ -55,4 +55,14 @@ export default defineSchema({
   })
     .index("by_request", ["requestId"])
     .index("by_room", ["roomId"]),
+
+  pushSubscriptions: defineTable({
+    roomId: v.id("rooms"),
+    endpoint: v.string(),
+    p256dh: v.string(),
+    auth: v.string(),
+    createdAt: v.number(),
+  })
+    .index("by_room", ["roomId"])
+    .index("by_endpoint", ["endpoint"]),
 });

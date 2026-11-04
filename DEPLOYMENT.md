@@ -74,6 +74,7 @@ In the **Environment Variables** section, add the following variables:
 |---|---|---|---|
 | `NEXT_PUBLIC_CONVEX_URL` | Production & Preview | `https://<prod-deployment-name>.convex.cloud` | Public URL for the Next.js client to establish WebSocket & HTTP subscriptions |
 | `CONVEX_DEPLOY_KEY` | Production & Preview | `prod:...` | Secret production deployment key generated in Step 1.2 |
+| `NEXT_PUBLIC_VAPID_PUBLIC_KEY` | Production & Preview | *(public VAPID key from Step 2.5 below)* | Public VAPID key enabling browser push subscriptions |
 
 > ⚠️ **DO NOT** commit `.env.local` to git. Ensure `NEXT_PUBLIC_CONVEX_URL` uses `https://` and targets your production Convex deployment.
 
@@ -89,6 +90,43 @@ In Vercel **Project Settings -> General -> Build & Development Settings**:
 
 ### 2.4 Deploy
 Click **"Deploy"**. Vercel will build the Next.js routes and bundle the PWA assets.
+
+---
+
+### 2.5 Configure Web Push Alerts (VAPID Keys)
+To enable FOH background alert banners when the sound engineer switches to a digital mixing app (e.g. Yamaha DM3 / Behringer X32):
+
+1. **Generate VAPID Keys locally in your terminal:**
+   ```bash
+   npx web-push generate-vapid-keys
+   ```
+   This outputs:
+   - **Public Key:** 87-character base64 string
+   - **Private Key:** 43-character base64 string
+
+2. **Set Convex Environment Variables (Convex Dashboard):**
+   In [Convex Dashboard](https://dashboard.convex.dev) -> **Settings** -> **Environment Variables**:
+   - `VAPID_PUBLIC_KEY`: *(paste the Public Key)*
+   - `VAPID_PRIVATE_KEY`: *(paste the Private Key)*
+   - `VAPID_SUBJECT`: `mailto:foh@yourchurch.org` *(or your email)*
+
+3. **Set Vercel Environment Variable (Vercel Dashboard):**
+   In [Vercel Dashboard](https://vercel.com) -> **Settings** -> **Environment Variables**:
+   - `NEXT_PUBLIC_VAPID_PUBLIC_KEY`: *(paste the same Public Key)*
+
+4. **iPad OS Notification Configuration:**
+   On the FOH iPad:
+   - Open **Settings** → **Notifications** → **StageSignal**.
+   - **Allow Notifications:** Toggle ON.
+   - **Alerts:** Check **Banners** and **Notification Center**. Banner Style: **Persistent** (recommended).
+   - **Sounds:** Keep **OFF** (to stay visual-only per non-negotiables).
+   - **Badges:** Toggle ON.
+   - **Focus / Do Not Disturb:** If the iPad uses a Sunday Service Focus mode, add **StageSignal** to Allowed Notifications.
+
+5. **iPad Slide Over / Split View (Mini-Console):**
+   - Swipe up from the bottom of the iPad screen to open the Dock.
+   - Drag StageSignal to the left or right side of the screen over your mixing app to enter **Slide Over** (~320px floating window) or **Split View**.
+   - StageSignal automatically switches to the compact **Mini-Console** with 48px action targets, edge-glow alerts, and persistent SOS warnings!
 
 ---
 

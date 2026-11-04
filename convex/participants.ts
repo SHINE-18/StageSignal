@@ -1,4 +1,5 @@
 import { mutation, query } from "./_generated/server";
+import { internal } from "./_generated/api";
 import { v } from "convex/values";
 import {
   assertTokenFormat,
@@ -121,6 +122,20 @@ export const requestJoin = mutation({
       joinedAt: now,
       lastSeenAt: now,
     });
+
+    // 9. Schedule low-priority push notification to FOH
+    try {
+      await ctx.scheduler.runAfter(0, internal.pushNode.sendPushNotification, {
+        roomId: room._id,
+        title: `Stage Join: ${trimmedName} (${args.instrument})`,
+        body: "Waiting for stage access approval.",
+        tag: `join-${participantId}`,
+        url: `/room/${room._id}/foh`,
+        priority: "normal",
+      });
+    } catch (schedErr) {
+      console.error("Non-fatal: failed to schedule join push alert:", schedErr);
+    }
 
     return {
       participantId,
