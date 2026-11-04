@@ -25,7 +25,7 @@ export default function FohMiniPage() {
 
   if (!checkedToken) {
     return (
-      <main className="grid min-h-screen place-items-center bg-[#0C0D0E] text-[#F8FAFC]">
+      <main className="grid min-h-screen place-items-center bg-[#FAF8F5] text-stone-900">
         <Loader2 className="animate-spin text-[#FFA726]" size={32} />
       </main>
     );
@@ -33,14 +33,14 @@ export default function FohMiniPage() {
 
   if (!roomId || !hostToken) {
     return (
-      <main className="grid min-h-screen place-items-center bg-[#0C0D0E] bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:32px_32px] p-4 text-[#F8FAFC]">
-        <div className="w-full max-w-sm rounded-2xl border border-red-500/30 bg-[#14100D] p-6 text-center space-y-4 shadow-xl">
-          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-red-500/15 text-red-400 border border-red-500/30">
+      <main className="grid min-h-screen place-items-center bg-[#FAF8F5] bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:32px_32px] p-4 text-stone-900">
+        <div className="w-full max-w-sm rounded-2xl border border-stone-200 bg-white p-6 text-center space-y-4 shadow-xl">
+          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-red-50 text-[#DC143C] border border-red-200">
             <ShieldAlert size={26} />
           </div>
           <div>
-            <h2 className="text-base font-bold text-white">Access Denied</h2>
-            <p className="mt-1 text-xs text-slate-400">
+            <h2 className="text-base font-bold text-stone-900">Access Denied</h2>
+            <p className="mt-1 text-xs text-stone-500">
               Host authentication token is missing or invalid on this device.
             </p>
           </div>
@@ -57,7 +57,7 @@ export default function FohMiniPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0C0D0E]">
+    <div className="min-h-screen bg-[#FAF8F5]">
       <FohMiniConsole
         roomId={roomId}
         hostToken={hostToken}

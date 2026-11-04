@@ -32,7 +32,7 @@ export function QRCodeModal({
           width: 280,
           margin: 2,
           color: {
-            dark: "#0C0D0E",
+            dark: "#1C1917",
             light: "#ffffff",
           },
         },
@@ -75,39 +75,39 @@ export function QRCodeModal({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="relative w-full max-w-md rounded-2xl border border-white/10 bg-[#14100D] p-6 sm:p-8 text-[#f8fafc] shadow-2xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-stone-900/50 p-4 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="relative w-full max-w-md rounded-2xl border border-stone-200/90 bg-white p-6 sm:p-8 text-[#1C1917] shadow-2xl">
         <button
           onClick={onClose}
-          className="absolute right-4 top-4 rounded-xl border border-white/10 bg-white/5 p-2 text-slate-400 hover:bg-white/10 hover:text-white transition"
+          className="absolute right-4 top-4 rounded-xl border border-stone-200 bg-stone-50 p-2 text-stone-500 hover:bg-stone-100 hover:text-stone-900 transition"
           aria-label="Close dialog"
         >
           <X size={18} />
         </button>
 
         <div className="text-center">
-          <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-[#DC143C]/15 to-[#F97316]/15 text-[#FFA726] border border-orange-500/25">
+          <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-orange-50 text-[#EA580C] border border-orange-200">
             <QrCode size={24} />
           </div>
-          <p className="text-xs font-bold uppercase tracking-wider text-[#FFA726]">
+          <p className="text-xs font-bold uppercase tracking-wider text-[#EA580C]">
             Musician Invitation QR
           </p>
-          <h2 className="mt-1 text-2xl font-extrabold text-white">{roomName}</h2>
-          <p className="mt-1 text-xs text-slate-400">
+          <h2 className="mt-1 text-2xl font-extrabold text-[#1C1917]">{roomName}</h2>
+          <p className="mt-1 text-xs text-stone-500">
             Musicians can scan this code with their smartphone camera to connect to the stage queue.
           </p>
         </div>
 
         {/* QR Code Canvas */}
         <div className="mt-6 flex flex-col items-center justify-center">
-          <div className="rounded-xl border border-white/10 bg-white p-3 shadow-xl">
+          <div className="rounded-xl border border-stone-200 bg-white p-3 shadow-md">
             <canvas ref={canvasRef} className="rounded-lg" />
           </div>
           <div className="mt-4 text-center">
-            <span className="text-[11px] uppercase tracking-wider text-slate-400 font-semibold">
+            <span className="text-[11px] uppercase tracking-wider text-stone-500 font-semibold">
               Stage Room Code
             </span>
-            <div className="font-mono text-3xl font-extrabold tracking-[0.2em] text-[#FFA726] mt-0.5">
+            <div className="font-mono text-3xl font-extrabold tracking-[0.2em] text-[#EA580C] mt-0.5">
               {roomCode}
             </div>
           </div>
@@ -118,17 +118,17 @@ export function QRCodeModal({
           <button
             type="button"
             onClick={handleCopyLink}
-            className="flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-[#1E1815] py-3 text-xs font-semibold text-slate-200 hover:bg-white/10 transition active:scale-95"
+            className="flex items-center justify-center gap-2 rounded-xl border border-stone-200 bg-stone-50 py-3 text-xs font-semibold text-stone-700 hover:bg-stone-100 hover:text-stone-900 transition active:scale-95"
           >
-            {copiedLink ? <Check size={16} className="text-emerald-400" /> : <Copy size={16} />}
+            {copiedLink ? <Check size={16} className="text-emerald-600" /> : <Copy size={16} />}
             {copiedLink ? "Link Copied" : "Copy Link"}
           </button>
           <button
             type="button"
             onClick={handleCopyCode}
-            className="flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-[#1E1815] py-3 text-xs font-semibold text-slate-200 hover:bg-white/10 transition active:scale-95"
+            className="flex items-center justify-center gap-2 rounded-xl border border-stone-200 bg-stone-50 py-3 text-xs font-semibold text-stone-700 hover:bg-stone-100 hover:text-stone-900 transition active:scale-95"
           >
-            {copiedCode ? <Check size={16} className="text-emerald-400" /> : <Copy size={16} />}
+            {copiedCode ? <Check size={16} className="text-emerald-600" /> : <Copy size={16} />}
             {copiedCode ? "Code Copied" : "Copy Code"}
           </button>
         </div>
@@ -141,9 +141,9 @@ export function QRCodeModal({
           <Download size={16} /> Save QR Image (PNG)
         </button>
 
-        <div className="mt-4 rounded-lg bg-black/40 px-3 py-2 border border-white/5 flex items-center justify-between text-[11px] text-slate-400 font-mono">
+        <div className="mt-4 rounded-lg bg-stone-50 px-3 py-2 border border-stone-200 flex items-center justify-between text-[11px] text-stone-600 font-mono">
           <span className="truncate mr-2">{joinUrl}</span>
-          <ExternalLink size={12} className="shrink-0 text-slate-500" />
+          <ExternalLink size={12} className="shrink-0 text-stone-400" />
         </div>
       </div>
     </div>

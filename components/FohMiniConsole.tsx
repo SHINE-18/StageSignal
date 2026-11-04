@@ -209,10 +209,10 @@ export function FohMiniConsole({
 
   if (!room) {
     return (
-      <div className="grid min-h-screen place-items-center bg-[#0C0D0E] p-4 text-[#F8FAFC]">
+      <div className="grid min-h-screen place-items-center bg-[#FAF8F5] p-4 text-stone-900">
         <div className="flex flex-col items-center gap-3">
-          <Loader2 className="animate-spin text-[#FFA726]" size={28} />
-          <p className="text-xs text-slate-400 font-mono">Loading Mini Console...</p>
+          <Loader2 className="animate-spin text-[#EA580C]" size={28} />
+          <p className="text-xs text-stone-500 font-mono">Loading Mini Console...</p>
         </div>
       </div>
     );
@@ -222,10 +222,10 @@ export function FohMiniConsole({
 
   return (
     <div
-      className={`min-h-screen bg-[#0C0D0E] text-[#F8FAFC] flex flex-col no-overscroll transition-all duration-300 ${
+      className={`min-h-screen bg-[#FAF8F5] text-stone-900 flex flex-col no-overscroll transition-all duration-300 ${
         hasPersistentSos
           ? "border-2 border-red-500/80 shadow-[inset_0_0_20px_rgba(239,68,68,0.3)]"
-          : "border-x border-white/5"
+          : "border-x border-stone-100"
       } ${
         edgeGlow === "red"
           ? "animate-edge-glow-red"
@@ -237,23 +237,23 @@ export function FohMiniConsole({
       <OfflineBanner role="foh" />
 
       {/* Slim Mini Header */}
-      <header className="sticky top-0 z-30 border-b border-white/10 bg-[#0C0D0E]/95 backdrop-blur-md px-3 py-2.5">
+      <header className="sticky top-0 z-30 border-b border-stone-200 bg-[#FAF8F5]/95 backdrop-blur-md px-3 py-2.5">
         <div className="flex items-center justify-between gap-2">
           {/* Left: Radio + Code */}
           <div className="flex items-center gap-2 min-w-0">
-            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[#DC143C]/15 to-[#F97316]/15 text-[#FFA726] border border-orange-500/30">
+            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[#DC143C]/15 to-[#F97316]/15 text-[#EA580C] border border-orange-500/30">
               <Radio size={15} className={isOnline ? "animate-pulse" : "text-slate-500"} />
             </div>
             <button
               onClick={handleCopyCode}
               title="Click to copy room code"
-              className="flex items-center gap-1 font-mono text-xs font-black tracking-wider text-white hover:text-[#FFA726] transition-colors"
+              className="flex items-center gap-1 font-mono text-xs font-black tracking-wider text-stone-900 hover:text-[#EA580C] transition-colors"
             >
               <span>{room.code}</span>
               {copiedCode ? (
                 <Check size={12} className="text-emerald-400" />
               ) : (
-                <Copy size={11} className="text-slate-400" />
+                <Copy size={11} className="text-stone-500" />
               )}
             </button>
           </div>
@@ -272,7 +272,7 @@ export function FohMiniConsole({
               <button
                 onClick={onSwitchToFull}
                 title="Expand to Full FOH Dashboard"
-                className="flex items-center gap-1 rounded-lg border border-white/10 bg-[#1E1815] px-2 py-1 text-xs font-semibold text-slate-300 hover:border-orange-500/40 hover:text-white transition-all"
+                className="flex items-center gap-1 rounded-lg border border-stone-200 bg-white px-2 py-1 text-xs font-semibold text-stone-600 hover:border-orange-500/40 hover:text-stone-900 transition-all"
               >
                 <Maximize2 size={13} />
                 <span className="hidden xs:inline">Full</span>
@@ -281,7 +281,7 @@ export function FohMiniConsole({
               <Link
                 href={`/room/${roomId}/foh`}
                 title="Expand to Full FOH Dashboard"
-                className="flex items-center gap-1 rounded-lg border border-white/10 bg-[#1E1815] px-2 py-1 text-xs font-semibold text-slate-300 hover:border-orange-500/40 hover:text-white transition-all"
+                className="flex items-center gap-1 rounded-lg border border-stone-200 bg-white px-2 py-1 text-xs font-semibold text-stone-600 hover:border-orange-500/40 hover:text-stone-900 transition-all"
               >
                 <Maximize2 size={13} />
                 <span className="hidden xs:inline">Full</span>
@@ -291,14 +291,14 @@ export function FohMiniConsole({
         </div>
 
         {/* Status Bar */}
-        <div className="mt-2 flex items-center justify-between border-t border-white/5 pt-2 text-[11px]">
+        <div className="mt-2 flex items-center justify-between border-t border-stone-100 pt-2 text-[11px]">
           <div className="flex items-center gap-2">
             {/* Open Badge */}
             <span
               className={`inline-flex items-center gap-1 rounded-md px-2 py-0.5 font-bold ${
                 openRequests.length > 0
-                  ? "bg-orange-500/20 text-[#FFA726] border border-orange-500/30"
-                  : "bg-slate-800 text-slate-400"
+                  ? "bg-orange-500/20 text-[#EA580C] border border-orange-500/30"
+                  : "bg-slate-800 text-stone-500"
               }`}
             >
               <span>{openRequests.length} Open</span>
@@ -306,20 +306,20 @@ export function FohMiniConsole({
 
             {/* SOS Badge */}
             {activeSos.length > 0 && (
-              <span className="inline-flex items-center gap-1 rounded-md border border-red-500/40 bg-red-500/20 px-2 py-0.5 font-bold text-red-300 animate-pulse">
+              <span className="inline-flex items-center gap-1 rounded-md border border-red-500/40 bg-red-500/20 px-2 py-0.5 font-bold text-red-700 animate-pulse">
                 <span>🚨 {activeSos.length} SOS</span>
               </span>
             )}
 
             {/* Join Queue Badge */}
             {pendingParticipants.length > 0 && (
-              <span className="inline-flex items-center gap-1 rounded-md border border-amber-500/40 bg-amber-500/20 px-2 py-0.5 font-bold text-amber-300">
+              <span className="inline-flex items-center gap-1 rounded-md border border-amber-500/40 bg-amber-500/20 px-2 py-0.5 font-bold text-amber-800">
                 <span>{pendingParticipants.length} Waiting</span>
               </span>
             )}
           </div>
 
-          <div className="text-slate-400 font-mono text-[10px]">
+          <div className="text-stone-500 font-mono text-[10px]">
             <LiveClock />
           </div>
         </div>
@@ -327,9 +327,9 @@ export function FohMiniConsole({
 
       {/* Action Error Banner */}
       {actionError && (
-        <div className="mx-3 mt-2 flex items-center justify-between rounded-lg border border-red-500/40 bg-red-950/70 p-2 text-xs text-red-200">
+        <div className="mx-3 mt-2 flex items-center justify-between rounded-lg border border-red-500/40 bg-red-950/70 p-2 text-xs text-red-800">
           <span>{actionError}</span>
-          <button onClick={() => setActionError(null)} className="text-red-400 hover:text-white">
+          <button onClick={() => setActionError(null)} className="text-red-400 hover:text-stone-900">
             ✕
           </button>
         </div>
@@ -343,14 +343,14 @@ export function FohMiniConsole({
             {activeSos.map((sos) => (
               <div
                 key={sos._id}
-                className="rounded-xl border-2 border-red-500 bg-red-950/70 p-3 shadow-lg shadow-red-950/50 animate-pulse-subtle"
+                className="rounded-xl border-2 border-red-300 bg-red-50 p-3.5 shadow-sm animate-pulse-subtle"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-1.5">
                     <span className="inline-flex items-center gap-1 rounded bg-red-600 px-1.5 py-0.5 text-[10px] font-black tracking-wider uppercase text-white">
                       🚨 URGENT SOS
                     </span>
-                    <span className="font-bold text-white text-sm">{sos.musicianName}</span>
+                    <span className="font-bold text-stone-900 text-sm">{sos.musicianName}</span>
                   </div>
                   <span className="text-[11px] font-mono text-red-300">
                     {formatRelativeTime(sos.createdAt, currentTime)}
@@ -372,7 +372,7 @@ export function FohMiniConsole({
                       <span>Acknowledge</span>
                     </button>
                   ) : (
-                    <div className="min-h-[48px] rounded-lg border border-orange-500/40 bg-orange-500/20 px-3 py-2 text-xs font-bold text-[#FFA726] flex items-center justify-center gap-1.5">
+                    <div className="min-h-[48px] rounded-lg border border-orange-500/40 bg-orange-500/20 px-3 py-2 text-xs font-bold text-[#EA580C] flex items-center justify-center gap-1.5">
                       <Volume2 size={16} className="animate-pulse" />
                       <span>FOH Adjusting</span>
                     </div>
@@ -393,7 +393,7 @@ export function FohMiniConsole({
 
         {/* 2. Join Requests Tray (If any pending) */}
         {pendingParticipants.length > 0 && (
-          <section className="rounded-xl border border-amber-500/30 bg-[#1E1815] p-3 space-y-2">
+          <section className="rounded-xl border border border-amber-200 bg-amber-50/60 p-3.5 space-y-2">
             <div className="flex items-center justify-between text-xs font-bold text-amber-300">
               <span className="flex items-center gap-1.5">
                 <span className="h-2 w-2 rounded-full bg-amber-400 animate-ping" />
@@ -406,20 +406,20 @@ export function FohMiniConsole({
                 <div key={p._id} className="pt-2 first:pt-0 flex items-center justify-between gap-2">
                   <div className="min-w-0">
                     <div className="font-bold text-xs text-white truncate">{p.name}</div>
-                    <div className="text-[10px] text-slate-400">{p.instrument}</div>
+                    <div className="text-[10px] text-stone-500">{p.instrument}</div>
                   </div>
                   <div className="flex items-center gap-1.5 shrink-0">
                     <button
                       onClick={() => handleApproveJoin(p._id)}
                       title="Approve musician"
-                      className="min-h-[38px] min-w-[38px] rounded-lg border border-emerald-500/40 bg-emerald-600/30 text-emerald-300 hover:bg-emerald-600 hover:text-white flex items-center justify-center transition-colors"
+                      className="min-h-[38px] min-w-[38px] rounded-lg border border-emerald-500/40 bg-emerald-600/30 text-emerald-300 hover:bg-emerald-600 hover:text-stone-900 flex items-center justify-center transition-colors"
                     >
                       <UserCheck size={16} />
                     </button>
                     <button
                       onClick={() => handleRejectJoin(p._id)}
                       title="Reject musician"
-                      className="min-h-[38px] min-w-[38px] rounded-lg border border-red-500/40 bg-red-600/20 text-red-300 hover:bg-red-600 hover:text-white flex items-center justify-center transition-colors"
+                      className="min-h-[38px] min-w-[38px] rounded-lg border border-red-500/40 bg-red-600/20 text-red-300 hover:bg-red-600 hover:text-stone-900 flex items-center justify-center transition-colors"
                     >
                       <UserX size={16} />
                     </button>
@@ -432,18 +432,18 @@ export function FohMiniConsole({
 
         {/* 3. Open Stage Requests List */}
         <section className="space-y-2.5">
-          <div className="flex items-center justify-between text-xs text-slate-400 font-bold uppercase tracking-wider px-1">
+          <div className="flex items-center justify-between text-xs text-stone-500 font-bold uppercase tracking-wider px-1">
             <span>Stage Request Queue</span>
             <span>{openRequests.length} active</span>
           </div>
 
           {openRequests.length === 0 ? (
-            <div className="rounded-2xl border border-white/5 bg-[#14100D]/60 p-6 text-center space-y-2">
+            <div className="rounded-2xl border border-stone-100 bg-white p-6 text-center space-y-2">
               <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
                 <CheckCircle size={24} />
               </div>
-              <h4 className="text-sm font-bold text-white">Queue Clear</h4>
-              <p className="text-xs text-slate-400 max-w-xs mx-auto">
+              <h4 className="text-sm font-bold text-stone-900">Queue Clear</h4>
+              <p className="text-xs text-stone-500 max-w-xs mx-auto">
                 No active stage requests. When musicians tap monitor buttons on stage, cues appear here instantly.
               </p>
             </div>
@@ -457,10 +457,10 @@ export function FohMiniConsole({
                   key={req._id}
                   className={`rounded-xl border p-3.5 transition-all animate-request-entrance ${
                     isUrgent
-                      ? "border-red-500/50 bg-red-950/40"
+                      ? "border-red-200 bg-red-50"
                       : isAck
-                      ? "border-orange-500/40 bg-orange-950/20"
-                      : "border-white/10 bg-[#1E1815] hover:border-orange-500/30"
+                      ? "border-orange-200 bg-orange-50"
+                      : "border-stone-200 bg-white hover:border-orange-500/30"
                   }`}
                 >
                   {/* Top: Name, Instrument, Time */}
@@ -469,25 +469,25 @@ export function FohMiniConsole({
                       <span className="font-extrabold text-sm text-white truncate">
                         {req.musicianName}
                       </span>
-                      <span className="rounded bg-white/10 px-1.5 py-0.5 text-[10px] font-bold text-[#FFA726] truncate">
+                      <span className="rounded bg-white/10 px-1.5 py-0.5 text-[10px] font-bold text-[#EA580C] truncate">
                         {req.instrument}
                       </span>
                     </div>
-                    <span className="shrink-0 text-[11px] font-mono text-slate-400 flex items-center gap-1">
+                    <span className="shrink-0 text-[11px] font-mono text-stone-500 flex items-center gap-1">
                       <Clock size={11} />
                       {formatRelativeTime(req.createdAt, currentTime)}
                     </span>
                   </div>
 
                   {/* Message */}
-                  <div className="mt-2 text-xs text-slate-200 font-medium leading-relaxed">
+                  <div className="mt-2 text-xs text-stone-800 font-medium leading-relaxed">
                     {req.message}
                   </div>
 
                   {/* Status Indicator */}
                   <div className="mt-2.5 flex items-center gap-2">
                     {isAck ? (
-                      <span className="inline-flex items-center gap-1 rounded bg-orange-500/20 px-2 py-0.5 text-[10px] font-bold text-[#FFA726] border border-orange-500/30">
+                      <span className="inline-flex items-center gap-1 rounded bg-orange-500/20 px-2 py-0.5 text-[10px] font-bold text-[#EA580C] border border-orange-500/30">
                         <Volume2 size={12} className="animate-pulse" />
                         <span>FOH Adjusting</span>
                       </span>
@@ -504,7 +504,7 @@ export function FohMiniConsole({
                     {!isAck && (
                       <button
                         onClick={() => handleAcknowledge(req._id)}
-                        className="min-h-[48px] rounded-lg border border-orange-500/40 bg-gradient-to-r from-[#DC143C] to-[#EA580C] hover:from-[#B80F32] hover:to-[#C2410C] text-white font-bold text-xs active:scale-98 transition-all flex items-center justify-center gap-1.5"
+                        className="min-h-[48px] rounded-lg border border-orange-500/40 bg-gradient-to-r from-[#DC143C] to-[#EA580C] hover:from-[#B80F32] hover:to-[#C2410C] text-stone-900 font-bold text-xs active:scale-98 transition-all flex items-center justify-center gap-1.5"
                       >
                         <CheckCircle2 size={16} />
                         <span>Acknowledge</span>
@@ -515,8 +515,8 @@ export function FohMiniConsole({
                       onClick={() => handleResolve(req._id)}
                       className={`min-h-[48px] rounded-lg font-bold text-xs active:scale-98 transition-all flex items-center justify-center gap-1.5 ${
                         isAck
-                          ? "col-span-2 border border-emerald-400 bg-emerald-600 text-white shadow-md hover:bg-emerald-500"
-                          : "border border-emerald-500/40 bg-emerald-600/20 text-emerald-300 hover:bg-emerald-600 hover:text-white"
+                          ? "col-span-2 border border-emerald-400 bg-emerald-600 text-stone-900 shadow-md hover:bg-emerald-500"
+                          : "border border-emerald-500/40 bg-emerald-600/20 text-emerald-300 hover:bg-emerald-600 hover:text-stone-900"
                       }`}
                     >
                       <Check size={18} />

@@ -300,13 +300,13 @@ function MusicianStageContent() {
   // Loading state
   if (!token || session === undefined) {
     return (
-      <main className="grid min-h-screen place-items-center bg-[#0C0D0E] bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:32px_32px] text-[#f8fafc] p-4">
+      <main className="grid min-h-screen place-items-center bg-[#FAF8F5] bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:32px_32px] text-stone-900 p-4">
         <div className="flex flex-col items-center gap-3 text-center">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#DC143C]/15 to-[#F97316]/15 text-[#FFA726] border border-orange-500/30 shadow-lg shadow-orange-500/10">
-            <Radio size={24} className="animate-spin text-[#FFA726]" />
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#DC143C]/15 to-[#F97316]/15 text-[#EA580C] border border-orange-200 shadow-lg shadow-orange-500/10">
+            <Radio size={24} className="animate-spin text-[#EA580C]" />
           </div>
           <h2 className="text-base font-bold">Connecting to Stage...</h2>
-          <p className="text-xs text-slate-400 font-mono">
+          <p className="text-xs text-stone-500 font-mono">
             Verifying approved musician session
           </p>
         </div>
@@ -316,9 +316,9 @@ function MusicianStageContent() {
 
   if (!session.authorized || !session.participant) {
     return (
-      <main className="grid min-h-screen place-items-center bg-[#0C0D0E] bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:32px_32px] text-[#f8fafc] p-4">
-        <div className="flex items-center gap-2 text-sm text-slate-400">
-          <Loader2 size={16} className="animate-spin text-[#FFA726]" />
+      <main className="grid min-h-screen place-items-center bg-[#FAF8F5] bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:32px_32px] text-stone-900 p-4">
+        <div className="flex items-center gap-2 text-sm text-stone-500">
+          <Loader2 size={16} className="animate-spin text-[#EA580C]" />
           <span>Redirecting to waiting room...</span>
         </div>
       </main>
@@ -333,26 +333,26 @@ function MusicianStageContent() {
   const isHostOnline = lastHostSeenAt ? (currentTime - lastHostSeenAt < 75_000) : true;
 
   return (
-    <div className="min-h-screen bg-[#0C0D0E] text-[#f8fafc] flex flex-col no-overscroll select-none">
+    <div className="min-h-screen bg-[#FAF8F5] text-stone-900 flex flex-col no-overscroll select-none">
       <OfflineBanner role="musician" />
 
       {/* Musician Top Bar */}
-      <header className="sticky top-0 z-30 border-b border-white/10 bg-[#0C0D0E]/95 backdrop-blur-md px-4 py-3">
+      <header className="sticky top-0 z-30 border-b border-stone-200 bg-[#FAF8F5]/95 backdrop-blur-md px-4 py-3">
         <div className="mx-auto flex max-w-lg items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[#DC143C]/15 to-[#F97316]/15 text-[#FFA726] border border-orange-500/30">
-              <Radio size={18} className={isOnline ? "animate-pulse" : "text-slate-500"} />
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[#DC143C]/15 to-[#F97316]/15 text-[#EA580C] border border-orange-200">
+              <Radio size={18} className={isOnline ? "animate-pulse" : "text-stone-400"} />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-sm font-extrabold text-white tracking-tight">
+                <span className="text-sm font-extrabold text-stone-900 tracking-tight">
                   {participant.name}
                 </span>
-                <span className="rounded-md border border-orange-500/30 bg-orange-500/10 px-2 py-0.5 text-[10px] font-bold text-[#FFA726]">
+                <span className="rounded-md border border-orange-200 bg-orange-50 px-2 py-0.5 text-[10px] font-bold text-[#EA580C]">
                   {participant.instrument}
                 </span>
               </div>
-              <div className="text-[11px] text-slate-400 font-mono">
+              <div className="text-[11px] text-stone-500 font-mono">
                 {participant.roomName} • {participant.roomCode}
               </div>
             </div>
@@ -361,12 +361,12 @@ function MusicianStageContent() {
           {/* Connection Chip */}
           <div>
             {isOnline ? (
-              <span className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-1 text-xs font-bold text-emerald-400">
+              <span className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-xs font-bold text-emerald-700">
                 <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
                 <span className="text-[11px]">Connected</span>
               </span>
             ) : (
-              <span className="inline-flex items-center gap-1.5 rounded-lg border border-red-500/30 bg-red-950/60 px-2.5 py-1 text-xs font-bold text-red-400">
+              <span className="inline-flex items-center gap-1.5 rounded-lg border border-red-200 bg-red-50 px-2.5 py-1 text-xs font-bold text-red-700">
                 <WifiOff size={12} />
                 <span className="text-[11px]">Offline</span>
               </span>
@@ -379,7 +379,7 @@ function MusicianStageContent() {
       <main className="flex-1 mx-auto w-full max-w-lg px-3.5 py-4 sm:px-4 sm:py-5 space-y-4">
         {/* Non-Blocking Host Presence Warning (PRD Section 8 & 16) */}
         {lastHostSeenAt && !isHostOnline && (
-          <div className="rounded-xl border border-amber-500/30 bg-amber-950/40 p-3 text-xs text-amber-200 flex items-start gap-2.5 shadow-sm animate-in fade-in">
+          <div className="rounded-xl border border-amber-500/30 bg-amber-50 p-3 text-xs text-amber-900 border-amber-200 flex items-start gap-2.5 shadow-sm animate-in fade-in">
             <AlertTriangle size={16} className="text-amber-400 shrink-0 mt-0.5" />
             <div>
               <span className="font-bold text-amber-300">FOH may be disconnected</span>
@@ -392,7 +392,7 @@ function MusicianStageContent() {
 
         {/* Offline Warning Banner (Disables all submissions) */}
         {!canSend && (
-          <div className="rounded-xl border border-red-500/30 bg-red-950/50 p-3 text-xs text-red-200 flex items-center gap-2">
+          <div className="rounded-xl border border-red-500/30 bg-red-50 p-3 text-xs text-red-800 border-red-200 flex items-center gap-2">
             <WifiOff size={16} className="text-red-400 shrink-0" />
             <span>
               <strong>Disconnected from network:</strong> Request submission is disabled until connection is restored.
@@ -402,14 +402,14 @@ function MusicianStageContent() {
 
         {/* Global Action Error Toast */}
         {actionError && (
-          <div className="rounded-xl border border-red-500/40 bg-red-950/60 p-3 text-xs text-red-200 flex items-center justify-between">
+          <div className="rounded-xl border border-red-500/40 bg-red-50 p-3 text-xs text-red-800 border-red-200 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <AlertTriangle size={15} className="text-red-400 shrink-0" />
               <span>{actionError}</span>
             </div>
             <button
               onClick={() => setActionError(null)}
-              className="text-red-400 hover:text-white"
+              className="text-red-400 hover:text-stone-900"
             >
               <X size={14} />
             </button>
@@ -421,10 +421,10 @@ function MusicianStageContent() {
           <div
             className={`rounded-2xl border p-4 shadow-lg transition-all ${
               activeRequest.status === "acknowledged"
-                ? "border-orange-500/40 bg-orange-950/30 text-orange-200"
+                ? "border-orange-300 bg-orange-50 text-orange-950"
                 : activeRequest.priority === "urgent"
-                ? "border-red-500/50 bg-red-950/40 text-red-200"
-                : "border-amber-500/40 bg-amber-950/30 text-amber-200"
+                ? "border-red-500/50 bg-red-50 text-red-900 border-red-200"
+                : "border-amber-500/40 bg-amber-50 text-amber-900 border-amber-200"
             }`}
           >
             <div className="flex items-center justify-between">
@@ -450,14 +450,14 @@ function MusicianStageContent() {
               </span>
             </div>
 
-            <p className="mt-1.5 text-sm font-semibold text-white">
+            <p className="mt-1.5 text-sm font-semibold text-stone-900">
               {activeRequest.category}: &ldquo;{activeRequest.message}&rdquo;
             </p>
 
             <div className="mt-2 text-xs font-medium">
               {activeRequest.status === "acknowledged" ? (
-                <span className="text-orange-300 flex items-center gap-1.5">
-                  <CheckCircle2 size={14} className="text-[#FFA726]" />
+                <span className="text-orange-900 flex items-center gap-1.5">
+                  <CheckCircle2 size={14} className="text-[#EA580C]" />
                   FOH engineer is adjusting your mix right now.
                 </span>
               ) : (
@@ -476,14 +476,14 @@ function MusicianStageContent() {
             type="button"
             disabled={controlsDisabled}
             onClick={() => setShowSosModal(true)}
-            className="w-full min-h-[58px] flex items-center justify-center gap-3 rounded-2xl border-2 border-red-500/60 bg-gradient-to-r from-red-950/80 to-red-900/80 px-4 py-3 text-white shadow-xl shadow-red-950/40 hover:from-red-900 hover:to-red-800 active:scale-[0.98] transition disabled:opacity-40 disabled:cursor-not-allowed"
+            className="w-full min-h-[58px] flex items-center justify-center gap-3 rounded-2xl border-2 border-red-500/60 bg-gradient-to-r from-red-950/80 to-red-900/80 px-4 py-3 text-stone-900 shadow-xl shadow-red-950/40 hover:from-red-900 hover:to-red-800 active:scale-[0.98] transition disabled:opacity-40 disabled:cursor-not-allowed"
           >
             <AlertTriangle size={24} className="text-red-400 animate-pulse" />
             <div className="text-left">
-              <div className="text-sm font-black tracking-wider uppercase text-red-200">
+              <div className="text-sm font-black tracking-wider uppercase text-[#DC143C]">
                 {successFeedbackId === "sos" ? "SOS Transmitted to FOH!" : "SOS Urgent Alert"}
               </div>
-              <div className="text-[11px] text-red-300/80 leading-tight">
+              <div className="text-[11px] text-red-700 leading-tight">
                 Immediate stage emergency • Tap for confirmation
               </div>
             </div>
@@ -493,10 +493,10 @@ function MusicianStageContent() {
         {/* PRESET REQUEST BUTTONS GRID (10 Preset Buttons) */}
         <div>
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
+            <span className="text-xs font-bold uppercase tracking-wider text-stone-500">
               One-Tap Monitor Presets
             </span>
-            <span className="text-[11px] text-slate-500 font-mono">1 tap = sent</span>
+            <span className="text-[11px] text-stone-400 font-mono">1 tap = sent</span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -514,7 +514,7 @@ function MusicianStageContent() {
                   className={`flex min-h-[56px] items-center justify-between rounded-xl border px-4 py-3 text-left transition active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed ${
                     isSent
                       ? "border-emerald-500 bg-emerald-950/40 text-emerald-300 ring-1 ring-emerald-500"
-                      : "border-white/10 bg-[#1E1815] text-slate-200 hover:border-orange-500/30 hover:bg-[#251E1A]"
+                      : "border-stone-200 bg-white text-stone-800 hover:border-orange-200 hover:bg-[#251E1A]"
                   }`}
                 >
                   <div className="flex items-center gap-3">
@@ -522,23 +522,23 @@ function MusicianStageContent() {
                       className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${
                         isSent
                           ? "bg-emerald-500/20 text-emerald-400"
-                          : "bg-white/5 text-[#FFA726]"
+                          : "bg-orange-50 text-[#EA580C]"
                       }`}
                     >
                       {isSent ? <Check size={18} /> : <Icon size={18} />}
                     </div>
                     <div>
-                      <div className="text-sm font-bold text-white leading-tight">
+                      <div className="text-sm font-bold text-stone-900 leading-tight">
                         {preset.label}
                       </div>
-                      <div className="text-[11px] text-slate-400 line-clamp-1 leading-snug">
+                      <div className="text-[11px] text-stone-500 line-clamp-1 leading-snug">
                         {isSent ? "Sent to FOH console" : preset.description}
                       </div>
                     </div>
                   </div>
 
                   {isSubmitting && (
-                    <Loader2 size={16} className="animate-spin text-[#FFA726] shrink-0 ml-2" />
+                    <Loader2 size={16} className="animate-spin text-[#EA580C] shrink-0 ml-2" />
                   )}
                   {isSent && (
                     <span className="text-[11px] font-bold text-emerald-400 font-mono ml-2">
@@ -552,12 +552,12 @@ function MusicianStageContent() {
         </div>
 
         {/* CUSTOM MESSAGE INPUT */}
-        <div className="rounded-2xl border border-white/10 bg-[#14100D] p-4 shadow-sm space-y-3">
+        <div className="rounded-2xl border border-stone-200 bg-white p-4 shadow-sm space-y-3">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-bold uppercase tracking-wider text-slate-300">
+            <label className="text-xs font-bold uppercase tracking-wider text-stone-700">
               Custom Monitor Request
             </label>
-            <span className="text-[11px] font-mono text-slate-500">
+            <span className="text-[11px] font-mono text-stone-400">
               {customText.length}/240
             </span>
           </div>
@@ -569,7 +569,7 @@ function MusicianStageContent() {
               disabled={controlsDisabled}
               placeholder="e.g. Please add a touch of reverb to acoustic guitar..."
               rows={2}
-              className="w-full rounded-xl border border-white/10 bg-[#1E1815] p-3 text-xs sm:text-sm text-white placeholder-slate-500 outline-none transition focus:border-orange-500 focus:ring-1 focus:ring-orange-500 disabled:opacity-50 resize-none"
+              className="w-full rounded-xl border border-stone-300 bg-stone-50 p-3 text-xs sm:text-sm text-stone-900 placeholder-stone-400 outline-none transition focus:bg-white focus:border-[#EA580C] focus:ring-1 focus:ring-[#EA580C] disabled:opacity-50 resize-none"
             />
 
             <div className="flex items-center justify-between">
@@ -578,7 +578,7 @@ function MusicianStageContent() {
                   <Check size={14} /> Request sent to FOH
                 </span>
               ) : (
-                <span className="text-[11px] text-slate-500">
+                <span className="text-[11px] text-stone-400">
                   Specific cue for sound engineer
                 </span>
               )}
@@ -600,36 +600,36 @@ function MusicianStageContent() {
         </div>
 
         {/* MY RECENT REQUEST HISTORY (Collapsible Drawer / Section) */}
-        <div className="rounded-2xl border border-white/10 bg-[#14100D] p-4 shadow-sm space-y-3">
+        <div className="rounded-2xl border border-stone-200 bg-white p-4 shadow-sm space-y-3">
           <button
             type="button"
             onClick={() => setIsHistoryExpanded(!isHistoryExpanded)}
             className="flex items-center justify-between w-full text-left"
           >
             <div className="flex items-center gap-2">
-              <History size={16} className="text-[#FFA726]" />
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-300">
+              <History size={16} className="text-[#EA580C]" />
+              <span className="text-xs font-bold uppercase tracking-wider text-stone-700">
                 My Request History
               </span>
-              <span className="rounded-full bg-white/5 px-2 py-0.5 text-[10px] font-mono text-slate-400">
+              <span className="rounded-full bg-stone-100 px-2 py-0.5 text-[10px] font-mono text-stone-500">
                 {myRequests?.length || 0}
               </span>
             </div>
-            <div className="text-slate-400">
+            <div className="text-stone-500">
               {isHistoryExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
             </div>
           </button>
 
           {isHistoryExpanded && (
-            <div className="pt-2 border-t border-white/5 space-y-2">
+            <div className="pt-2 border-t border-stone-100 space-y-2">
               {myRequests && myRequests.length > 0 ? (
                 myRequests.slice(0, 10).map((req) => (
                   <div
                     key={req._id}
-                    className="flex items-center justify-between rounded-xl border border-white/5 bg-[#1E1815] p-2.5 text-xs"
+                    className="flex items-center justify-between rounded-xl border border-stone-100 bg-white p-2.5 text-xs"
                   >
                     <div>
-                      <div className="font-semibold text-white flex items-center gap-1.5">
+                      <div className="font-semibold text-stone-900 flex items-center gap-1.5">
                         <span>{req.category}</span>
                         {req.priority === "urgent" && (
                           <span className="rounded bg-red-950 px-1 py-0.2 text-[9px] font-bold text-red-400">
@@ -637,10 +637,10 @@ function MusicianStageContent() {
                           </span>
                         )}
                       </div>
-                      <div className="text-[11px] text-slate-400 line-clamp-1">
+                      <div className="text-[11px] text-stone-500 line-clamp-1">
                         {req.message}
                       </div>
-                      <div className="text-[10px] text-slate-500 font-mono mt-0.5">
+                      <div className="text-[10px] text-stone-400 font-mono mt-0.5">
                         {new Date(req.createdAt).toLocaleTimeString([], {
                           hour: "2-digit",
                           minute: "2-digit",
@@ -652,10 +652,10 @@ function MusicianStageContent() {
                       <span
                         className={`rounded-md px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider ${
                           req.status === "resolved"
-                            ? "bg-emerald-950/60 text-emerald-400 border border-emerald-500/20"
+                            ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
                             : req.status === "acknowledged"
-                            ? "bg-orange-950/60 text-[#FFA726] border border-orange-500/20"
-                            : "bg-amber-950/60 text-amber-400 border border-amber-500/20"
+                            ? "bg-orange-100 text-[#EA580C] border border-orange-200"
+                            : "bg-amber-50 text-amber-800 border border-amber-200"
                         }`}
                       >
                         {req.status}
@@ -664,7 +664,7 @@ function MusicianStageContent() {
                   </div>
                 ))
               ) : (
-                <div className="py-4 text-center text-xs text-slate-500">
+                <div className="py-4 text-center text-xs text-stone-400">
                   No requests sent yet during this session.
                 </div>
               )}
@@ -675,15 +675,15 @@ function MusicianStageContent() {
 
       {/* SOS CONFIRMATION MODAL */}
       {showSosModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4 backdrop-blur-md animate-in fade-in duration-200">
-          <div className="w-full max-w-sm rounded-2xl border-2 border-red-500/50 bg-[#14100D] p-6 text-[#f8fafc] shadow-2xl text-center space-y-4">
-            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-red-950/70 text-red-400 border border-red-500/30">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="w-full max-w-sm rounded-2xl border border-stone-200 bg-white p-6 sm:p-7 rounded-3xl text-stone-900 shadow-2xl text-center space-y-4">
+            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-red-50 text-[#DC143C] border border-red-200">
               <AlertTriangle size={32} className="animate-pulse" />
             </div>
 
-            <h3 className="text-xl font-extrabold text-white">Send Urgent SOS?</h3>
-            <p className="text-xs text-slate-300 leading-relaxed">
-              This will trigger a persistent red emergency alert across the FOH sound engineer&apos;s console for <strong className="text-white">{participant.name}</strong> ({participant.instrument}).
+            <h3 className="text-xl font-extrabold text-stone-900">Send Urgent SOS?</h3>
+            <p className="text-xs text-stone-700 leading-relaxed">
+              This will trigger a persistent red emergency alert across the FOH sound engineer&apos;s console for <strong className="text-stone-900">{participant.name}</strong> ({participant.instrument}).
             </p>
 
             <div className="grid grid-cols-2 gap-3 pt-2">
@@ -691,7 +691,7 @@ function MusicianStageContent() {
                 type="button"
                 disabled={isSosSubmitting}
                 onClick={() => setShowSosModal(false)}
-                className="rounded-xl border border-white/10 bg-[#1E1815] py-3 text-xs font-semibold text-slate-300 hover:bg-white/10 hover:text-white transition"
+                className="rounded-xl border border-stone-200 bg-stone-100 py-3 text-xs font-semibold text-stone-700 hover:bg-stone-200 border border-stone-200 hover:text-stone-900 transition"
               >
                 Cancel
               </button>
@@ -699,7 +699,7 @@ function MusicianStageContent() {
                 type="button"
                 disabled={isSosSubmitting}
                 onClick={handleConfirmSos}
-                className="flex items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-[#DC143C] to-[#EA580C] py-3 text-xs font-bold text-white shadow-lg shadow-[#DC143C]/40 hover:from-[#B80F32] hover:to-[#C2410C] transition disabled:opacity-50"
+                className="flex items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-[#DC143C] to-[#EA580C] py-3 text-xs font-bold text-white shadow-md shadow-[#DC143C]/30 hover:from-[#B80F32] hover:to-[#C2410C] transition disabled:opacity-50"
               >
                 {isSosSubmitting ? (
                   <>
@@ -722,9 +722,9 @@ export default function MusicianPage() {
   return (
     <Suspense
       fallback={
-        <div className="grid min-h-screen place-items-center bg-[#0C0D0E] text-[#f8fafc]">
-          <div className="flex items-center gap-2 text-sm text-slate-400">
-            <Loader2 size={18} className="animate-spin text-[#FFA726]" />
+        <div className="grid min-h-screen place-items-center bg-[#FAF8F5] text-stone-900">
+          <div className="flex items-center gap-2 text-sm text-stone-500">
+            <Loader2 size={18} className="animate-spin text-[#EA580C]" />
             <span>Loading Stage Controls...</span>
           </div>
         </div>

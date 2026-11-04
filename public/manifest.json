@@ -5,8 +5,8 @@
   "start_url": "/",
   "display": "standalone",
   "orientation": "any",
-  "background_color": "#0C0D0E",
-  "theme_color": "#0C0D0E",
+  "background_color": "#FAF8F5",
+  "theme_color": "#FAF8F5",
   "categories": ["utilities", "music", "productivity"],
   "icons": [
     {

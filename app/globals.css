@@ -5,18 +5,18 @@
 @import "./image-protection.css";
 
 :root {
-  color-scheme: dark;
-  --bg-primary: #0c0d0e;
-  --bg-secondary: #14100d;
-  --bg-card: #1e1815;
-  --text-primary: #f8fafc;
-  --text-secondary: #a8a29e;
+  color-scheme: light;
+  --bg-primary: #faf8f5;
+  --bg-secondary: #ffffff;
+  --bg-card: #ffffff;
+  --text-primary: #1c1917;
+  --text-secondary: #78716c;
   --color-crimson: #dc143c;
-  --color-flame: #f97316;
-  --color-amber: #ffa726;
-  --color-green: #22c55e;
-  --color-red: #ef4444;
-  --border-subtle: rgba(249, 115, 22, 0.12);
+  --color-flame: #ea580c;
+  --color-amber: #f59e0b;
+  --color-green: #16a34a;
+  --color-red: #dc2626;
+  --border-subtle: #e7e2d9;
 }
 
 * {
@@ -31,8 +31,8 @@
 
 body {
   margin: 0;
-  background-color: #0c0d0e;
-  color: #f8fafc;
+  background-color: #faf8f5;
+  color: #1c1917;
   min-height: 100vh;
   /* Safe-area insets for iPhone notches and iPad Home Indicator */
   padding-top: env(safe-area-inset-top, 0px);
@@ -45,23 +45,23 @@ button, input, select, textarea {
   font: inherit;
 }
 
-/* Custom scrollbars for dark console environments */
+/* Custom scrollbars for clean light UI */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(0, 0, 0, 0.03);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.16);
+  background: rgba(0, 0, 0, 0.15);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.28);
+  background: rgba(0, 0, 0, 0.28);
 }
 
 @keyframes pulse-subtle {
