@@ -140,10 +140,10 @@ export function PipAlertButton({
       <button
         onClick={togglePip}
         title="Pop out a floating Picture-in-Picture badge"
-        className={`flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors ${
+        className={`flex items-center gap-1.5 rounded-xl border px-3 py-1.5 text-xs font-semibold transition-colors ${
           isPipActive
-            ? "border-[#fc3b00]/40 bg-[#fc3b00]/15 text-[#fc3b00]"
-            : "border-white/[0.08] bg-[#232325] text-[#ededed] hover:bg-[#2c2c2f]"
+            ? "border-[#FC3B00]/40 bg-[#FC3B00]/15 text-[#FF7145]"
+            : "border-white/15 bg-white/5 text-stone-200 hover:bg-white/10 hover:text-white"
         }`}
       >
         <PictureInPicture size={13} />

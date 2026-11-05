@@ -291,13 +291,13 @@ function MusicianStageContent() {
   // Loading state
   if (!token || session === undefined) {
     return (
-      <main className="grid min-h-screen place-items-center bg-[#141415] text-[#ededed] p-4">
+      <main className="grid min-h-screen place-items-center bg-[#000000] bg-arounda-glow text-white p-4">
         <div className="flex flex-col items-center gap-3 text-center">
-          <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#232325] text-[#fc3b00] border border-white/[0.08]">
-            <Radio size={22} className="animate-spin text-[#fc3b00]" />
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#FC3B00]/25 to-[#FF6129]/20 text-[#FC3B00] border border-[#FC3B00]/30 shadow-lg shadow-[#FC3B00]/10">
+            <Radio size={22} className="animate-spin text-[#FC3B00]" />
           </div>
-          <h2 className="text-sm font-semibold text-[#ededed]">Connecting to stage...</h2>
-          <p className="text-xs text-[#85858b] font-mono">
+          <h2 className="text-base font-bold text-white tracking-tight">Connecting to Stage...</h2>
+          <p className="text-xs text-stone-400 font-mono">
             Verifying approved musician session
           </p>
         </div>
@@ -307,9 +307,9 @@ function MusicianStageContent() {
 
   if (!session.authorized || !session.participant) {
     return (
-      <main className="grid min-h-screen place-items-center bg-[#141415] text-[#ededed] p-4">
-        <div className="flex items-center gap-2 text-sm text-[#85858b]">
-          <Loader2 size={16} className="animate-spin text-[#fc3b00]" />
+      <main className="grid min-h-screen place-items-center bg-[#000000] bg-arounda-glow text-white p-4">
+        <div className="flex items-center gap-2 text-sm text-stone-400">
+          <Loader2 size={16} className="animate-spin text-[#FC3B00]" />
           <span>Connecting to stage session...</span>
         </div>
       </main>
@@ -324,26 +324,26 @@ function MusicianStageContent() {
   const isHostOnline = lastHostSeenAt ? currentTime - lastHostSeenAt < 75_000 : true;
 
   return (
-    <div className="min-h-screen bg-[#141415] text-[#ededed] flex flex-col no-overscroll select-none">
+    <div className="min-h-screen bg-[#000000] bg-arounda-glow text-white flex flex-col no-overscroll select-none">
       <OfflineBanner role="musician" />
 
       {/* Musician Top Bar */}
-      <header className="sticky top-0 z-30 border-b border-white/[0.08] bg-[#0f0f10] px-4 py-3">
+      <header className="sticky top-0 z-30 border-b border-white/10 bg-black/75 backdrop-blur-md px-4 py-3">
         <div className="mx-auto flex max-w-lg items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#19191b] border border-white/[0.08] text-[#fc3b00]">
-              <Radio size={16} strokeWidth={1.5} />
+            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-[#FC3B00]/25 to-[#FF6129]/20 text-[#FC3B00] border border-[#FC3B00]/30 shadow-md shadow-[#FC3B00]/10">
+              <Radio size={16} strokeWidth={2} />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-sm font-semibold text-[#ededed]">
+                <span className="text-sm font-bold text-white tracking-tight">
                   {participant.name}
                 </span>
-                <span className="rounded border border-white/[0.08] bg-[#19191b] px-2 py-0.5 text-[10px] font-mono text-[#a1a1a6]">
+                <span className="rounded-full border border-white/15 bg-white/5 px-2.5 py-0.5 text-[10px] font-mono font-semibold text-[#FF7145]">
                   {participant.instrument}
                 </span>
               </div>
-              <div className="text-[11px] text-[#85858b] font-mono">
+              <div className="text-[11px] text-stone-400 font-mono">
                 {participant.roomName} • {participant.roomCode}
               </div>
             </div>
@@ -352,13 +352,13 @@ function MusicianStageContent() {
           {/* Connection Chip */}
           <div>
             {isOnline ? (
-              <span className="inline-flex items-center gap-1.5 rounded-md border border-[#4cc38a]/20 bg-[#4cc38a]/10 px-2.5 py-1 text-xs font-medium text-[#4cc38a]">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#4cc38a]" />
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-950/40 px-3 py-1 text-xs font-semibold text-emerald-300">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
                 <span className="text-[11px]">Connected</span>
               </span>
             ) : (
-              <span className="inline-flex items-center gap-1.5 rounded-md border border-[#e5484d]/20 bg-[#e5484d]/10 px-2.5 py-1 text-xs font-medium text-[#e5484d]">
-                <WifiOff size={12} strokeWidth={1.5} />
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-red-500/30 bg-red-950/40 px-3 py-1 text-xs font-semibold text-red-400">
+                <WifiOff size={12} strokeWidth={2} />
                 <span className="text-[11px]">Offline</span>
               </span>
             )}
@@ -370,11 +370,11 @@ function MusicianStageContent() {
       <main className="flex-1 mx-auto w-full max-w-lg px-4 py-5 space-y-4">
         {/* Non-Blocking Host Presence Warning */}
         {lastHostSeenAt && !isHostOnline && (
-          <div className="rounded-lg border border-[#f59e0b]/25 bg-[#19191b] p-3.5 text-xs text-[#f59e0b] flex items-start gap-2.5">
-            <AlertTriangle size={16} strokeWidth={1.5} className="shrink-0 mt-0.5" />
+          <div className="rounded-2xl border border-amber-500/30 bg-amber-950/40 p-3.5 text-xs text-amber-300 flex items-start gap-2.5">
+            <AlertTriangle size={16} className="shrink-0 mt-0.5 text-amber-400" />
             <div>
-              <span className="font-medium">FOH console may be offline</span>
-              <p className="mt-0.5 text-[11px] text-[#a1a1a6] leading-relaxed">
+              <span className="font-bold">FOH Console May Be Offline</span>
+              <p className="mt-0.5 text-[11px] text-stone-300 leading-relaxed">
                 The sound engineer hasn&apos;t checked in recently. Cues sent now will queue on the server for when FOH reconnects.
               </p>
             </div>
@@ -383,22 +383,22 @@ function MusicianStageContent() {
 
         {/* Offline Warning Banner */}
         {!canSend && (
-          <div className="rounded-lg border border-[#e5484d]/25 bg-[#19191b] p-3.5 text-xs text-[#e5484d] flex items-center gap-2">
-            <WifiOff size={16} strokeWidth={1.5} className="shrink-0" />
+          <div className="rounded-2xl border border-red-500/30 bg-red-950/40 p-3.5 text-xs text-red-300 flex items-center gap-2">
+            <WifiOff size={16} className="shrink-0 text-red-400" />
             <span>Connection lost. Reconnecting to stage network...</span>
           </div>
         )}
 
         {/* Global Action Error Toast */}
         {actionError && (
-          <div className="rounded-lg border border-[#e5484d]/30 bg-[#19191b] p-3 text-xs text-[#e5484d] flex items-center justify-between">
+          <div className="rounded-2xl border border-red-500/30 bg-red-950/50 p-3 text-xs text-red-200 flex items-center justify-between shadow-lg">
             <div className="flex items-center gap-2">
-              <AlertTriangle size={15} strokeWidth={1.5} />
+              <AlertTriangle size={15} className="text-red-400 shrink-0" />
               <span>{actionError}</span>
             </div>
             <button
               onClick={() => setActionError(null)}
-              className="text-[#85858b] hover:text-[#ededed] p-1"
+              className="text-stone-400 hover:text-white p-1"
             >
               <X size={14} />
             </button>
@@ -408,12 +408,12 @@ function MusicianStageContent() {
         {/* LIVE REQUEST STATUS BANNER */}
         {activeRequest && (
           <div
-            className={`rounded-xl border p-4 transition-colors ${
+            className={`rounded-2xl border p-4 backdrop-blur-md transition-colors ${
               activeRequest.status === "acknowledged"
-                ? "border-[#4cc38a]/30 bg-[#19191b]"
+                ? "border-emerald-500/40 bg-emerald-950/30"
                 : activeRequest.priority === "urgent"
-                ? "border-[#e5484d]/40 bg-[#19191b]"
-                : "border-[#f59e0b]/30 bg-[#19191b]"
+                ? "border-[#FC3B00]/50 bg-red-950/40 shadow-lg shadow-[#FC3B00]/15"
+                : "border-[#FF6129]/35 bg-black/60 shadow-lg shadow-[#FF6129]/10"
             }`}
           >
             <div className="flex items-center justify-between">
@@ -421,21 +421,21 @@ function MusicianStageContent() {
                 <span
                   className={`h-2 w-2 rounded-full ${
                     activeRequest.status === "acknowledged"
-                      ? "bg-[#4cc38a]"
+                      ? "bg-emerald-400"
                       : activeRequest.priority === "urgent"
-                      ? "bg-[#e5484d]"
-                      : "bg-[#f59e0b]"
+                      ? "bg-[#FC3B00] animate-ping"
+                      : "bg-[#FF6129] animate-pulse"
                   }`}
                 />
-                <span className="text-xs font-medium text-[#ededed]">
+                <span className="text-xs font-bold text-white">
                   {activeRequest.status === "acknowledged"
-                    ? "FOH acknowledged"
+                    ? "FOH Acknowledged"
                     : activeRequest.priority === "urgent"
-                    ? "Urgent SOS pending"
-                    : "Request received by FOH"}
+                    ? "Urgent SOS Pending"
+                    : "Request Received by FOH"}
                 </span>
               </div>
-              <span className="text-[11px] font-mono text-[#85858b]">
+              <span className="text-[11px] font-mono text-stone-400">
                 {new Date(activeRequest.createdAt).toLocaleTimeString([], {
                   hour: "2-digit",
                   minute: "2-digit",
@@ -443,19 +443,19 @@ function MusicianStageContent() {
               </span>
             </div>
 
-            <p className="mt-2 text-sm font-medium text-[#ededed]">
+            <p className="mt-2 text-sm font-semibold text-white">
               {activeRequest.category}: &ldquo;{activeRequest.message}&rdquo;
             </p>
 
             <div className="mt-2 text-xs">
               {activeRequest.status === "acknowledged" ? (
-                <span className="text-[#4cc38a] flex items-center gap-1.5">
-                  <CheckCircle2 size={14} strokeWidth={1.5} />
+                <span className="text-emerald-400 flex items-center gap-1.5 font-medium">
+                  <CheckCircle2 size={14} />
                   FOH engineer is adjusting your mix
                 </span>
               ) : (
-                <span className="text-[#85858b] flex items-center gap-1.5">
-                  <Clock size={14} strokeWidth={1.5} />
+                <span className="text-stone-400 flex items-center gap-1.5">
+                  <Clock size={14} className="text-[#FF6129]" />
                   Awaiting sound engineer acknowledgement
                 </span>
               )}
@@ -469,22 +469,22 @@ function MusicianStageContent() {
             type="button"
             disabled={controlsDisabled}
             onClick={() => setShowSosModal(true)}
-            className="w-full min-h-[56px] flex items-center justify-between rounded-xl border border-[#e5484d]/35 bg-[#19191b] hover:bg-[#232325] px-4 py-3 text-left transition-colors disabled:opacity-40"
+            className="w-full min-h-[58px] flex items-center justify-between rounded-2xl border border-[#FC3B00]/35 bg-black/50 backdrop-blur-md hover:bg-black/70 hover:border-[#FC3B00]/60 p-4 text-left transition shadow-lg shadow-[#FC3B00]/10 disabled:opacity-40"
           >
             <div className="flex items-center gap-3">
-              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#2b1718] border border-[#e5484d]/30 text-[#e5484d]">
-                <AlertTriangle size={18} strokeWidth={1.5} />
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#FC3B00]/25 to-[#FF6129]/20 text-[#FC3B00] border border-[#FC3B00]/30">
+                <AlertTriangle size={20} />
               </div>
               <div>
-                <div className="text-xs font-semibold text-[#ededed]">
-                  {successFeedbackId === "sos" ? "SOS transmitted to FOH" : "Emergency SOS alert"}
+                <div className="text-xs font-bold text-white">
+                  {successFeedbackId === "sos" ? "SOS Transmitted to FOH" : "Emergency SOS Alert"}
                 </div>
-                <div className="text-[11px] text-[#85858b]">
+                <div className="text-[11px] text-stone-400">
                   Urgent stage alert • Tap to confirm
                 </div>
               </div>
             </div>
-            <span className="text-[11px] font-mono text-[#e5484d] uppercase px-2 py-0.5 rounded border border-[#e5484d]/30">
+            <span className="text-[11px] font-mono text-[#FF7145] uppercase px-3 py-1 rounded-full border border-[#FC3B00]/30 bg-[#FC3B00]/10 font-bold">
               SOS
             </span>
           </button>
@@ -493,13 +493,13 @@ function MusicianStageContent() {
         {/* PRESET REQUEST BUTTONS GRID */}
         <div>
           <div className="flex items-center justify-between mb-2.5">
-            <span className="text-xs font-medium text-[#a1a1a6]">
-              Monitor mix presets
+            <span className="text-xs font-bold uppercase tracking-wider text-stone-300">
+              Monitor Mix Presets
             </span>
-            <span className="text-[11px] text-[#85858b] font-mono">1-tap delivery</span>
+            <span className="text-[11px] text-[#FF7145] font-mono">1-tap delivery</span>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {PRESET_BUTTONS.map((preset) => {
               const Icon = preset.icon;
               const isSubmitting = submittingCategory === preset.id;
@@ -511,37 +511,37 @@ function MusicianStageContent() {
                   type="button"
                   disabled={controlsDisabled}
                   onClick={() => handleSendPreset(preset.category, preset.id)}
-                  className={`flex min-h-[54px] items-center justify-between rounded-xl border px-3.5 py-3 text-left transition-colors disabled:opacity-40 ${
+                  className={`flex min-h-[56px] items-center justify-between rounded-2xl border px-4 py-3.5 text-left transition disabled:opacity-40 backdrop-blur-md ${
                     isSent
-                      ? "border-[#4cc38a]/40 bg-[#16211a] text-[#4cc38a]"
-                      : "border-white/[0.08] bg-[#19191b] hover:bg-[#232325] text-[#ededed]"
+                      ? "border-emerald-500/50 bg-emerald-950/40 text-emerald-300 shadow-md shadow-emerald-500/10"
+                      : "border-white/10 bg-black/50 hover:border-[#FF6129]/50 hover:bg-white/[0.04] text-white"
                   }`}
                 >
-                  <div className="flex items-center gap-2.5">
+                  <div className="flex items-center gap-3">
                     <div
-                      className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${
+                      className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl transition ${
                         isSent
-                          ? "bg-[#4cc38a]/20 text-[#4cc38a]"
-                          : "bg-[#232325] text-[#a1a1a6] border border-white/[0.06]"
+                          ? "bg-emerald-900/40 text-emerald-300 border border-emerald-500/30"
+                          : "bg-white/5 text-stone-300 border border-white/10"
                       }`}
                     >
-                      {isSent ? <Check size={16} strokeWidth={1.5} /> : <Icon size={16} strokeWidth={1.5} />}
+                      {isSent ? <Check size={18} className="text-emerald-400" /> : <Icon size={18} className="text-[#FF7145]" />}
                     </div>
                     <div>
-                      <div className="text-xs font-medium text-[#ededed]">
+                      <div className="text-xs font-bold text-white">
                         {preset.label}
                       </div>
-                      <div className="text-[11px] text-[#85858b] line-clamp-1">
+                      <div className="text-[11px] text-stone-400 line-clamp-1">
                         {isSent ? "Sent to sound engineer" : preset.description}
                       </div>
                     </div>
                   </div>
 
                   {isSubmitting && (
-                    <Loader2 size={15} className="animate-spin text-[#fc3b00] shrink-0 ml-2" />
+                    <Loader2 size={16} className="animate-spin text-[#FC3B00] shrink-0 ml-2" />
                   )}
                   {isSent && (
-                    <span className="text-[10px] font-mono text-[#4cc38a] ml-2">
+                    <span className="text-[10px] font-mono text-emerald-400 font-bold ml-2">
                       SENT
                     </span>
                   )}
@@ -552,12 +552,12 @@ function MusicianStageContent() {
         </div>
 
         {/* CUSTOM MESSAGE INPUT */}
-        <div className="rounded-xl border border-white/[0.08] bg-[#19191b] p-4 space-y-3">
+        <div className="rounded-2xl border border-white/10 bg-black/50 backdrop-blur-md p-4 space-y-3">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-medium text-[#a1a1a6]">
-              Custom monitor cue
+            <label className="text-xs font-bold uppercase tracking-wider text-stone-300">
+              Custom Monitor Cue
             </label>
-            <span className="text-[11px] font-mono text-[#85858b]">
+            <span className="text-[11px] font-mono text-stone-500">
               {customText.length}/240
             </span>
           </div>
@@ -569,16 +569,16 @@ function MusicianStageContent() {
               disabled={controlsDisabled}
               placeholder="e.g. Add slightly more reverb to vocal..."
               rows={2}
-              className="w-full rounded-lg border border-white/[0.08] bg-[#0f0f10] p-3 text-xs text-[#ededed] placeholder-[#85858b]/60 outline-none transition-colors focus:border-[#fc3b00] disabled:opacity-50 resize-none"
+              className="w-full rounded-xl border border-white/15 bg-black/60 p-3.5 text-xs text-white placeholder-stone-500 outline-none transition focus:border-[#FC3B00] focus:ring-1 focus:ring-[#FC3B00] disabled:opacity-50 resize-none"
             />
 
             <div className="flex items-center justify-between">
               {customSuccess ? (
-                <span className="text-xs font-medium text-[#4cc38a] flex items-center gap-1.5">
+                <span className="text-xs font-bold text-emerald-400 flex items-center gap-1.5">
                   <Check size={14} /> Request sent to FOH
                 </span>
               ) : (
-                <span className="text-[11px] text-[#85858b]">
+                <span className="text-[11px] text-stone-400">
                   Sent directly to FOH mixing desk
                 </span>
               )}
@@ -586,61 +586,61 @@ function MusicianStageContent() {
               <button
                 type="submit"
                 disabled={controlsDisabled || !customText.trim()}
-                className="flex h-9 items-center gap-1.5 rounded-lg bg-[#fc3b00] px-3.5 text-xs font-medium text-white hover:bg-[#e03500] transition-colors shadow-[inset_0_1px_0_rgba(255,255,255,0.18)] disabled:opacity-40"
+                className="flex h-9 items-center gap-1.5 rounded-xl bg-gradient-to-r from-[#FC3B00] to-[#FF6129] px-4 text-xs font-bold text-white shadow-md shadow-[#FC3B00]/20 hover:from-[#E03500] hover:to-[#F2551D] transition disabled:opacity-40"
               >
                 {customSending ? (
-                  <Loader2 size={13} className="animate-spin" />
+                  <Loader2 size={14} className="animate-spin" />
                 ) : (
-                  <Send size={13} strokeWidth={1.5} />
+                  <Send size={14} />
                 )}
-                <span>Send cue</span>
+                <span>Send Cue</span>
               </button>
             </div>
           </form>
         </div>
 
         {/* MY RECENT REQUEST HISTORY */}
-        <div className="rounded-xl border border-white/[0.08] bg-[#19191b] p-4 space-y-3">
+        <div className="rounded-2xl border border-white/10 bg-black/50 backdrop-blur-md p-4 space-y-3">
           <button
             type="button"
             onClick={() => setIsHistoryExpanded(!isHistoryExpanded)}
             className="flex items-center justify-between w-full text-left"
           >
             <div className="flex items-center gap-2">
-              <History size={15} strokeWidth={1.5} className="text-[#a1a1a6]" />
-              <span className="text-xs font-medium text-[#a1a1a6]">
-                Request history
+              <History size={15} className="text-[#FF7145]" />
+              <span className="text-xs font-bold uppercase tracking-wider text-stone-300">
+                Request History
               </span>
-              <span className="rounded border border-white/[0.08] bg-[#232325] px-1.5 py-0.2 text-[10px] font-mono text-[#85858b]">
+              <span className="rounded-full border border-white/15 bg-white/5 px-2 py-0.5 text-[10px] font-mono text-[#FF7145] font-bold">
                 {myRequests?.length || 0}
               </span>
             </div>
-            <div className="text-[#85858b]">
-              {isHistoryExpanded ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
+            <div className="text-stone-400">
+              {isHistoryExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
             </div>
           </button>
 
           {isHistoryExpanded && (
-            <div className="pt-3 border-t border-white/[0.06] space-y-2">
+            <div className="pt-3 border-t border-white/10 space-y-2">
               {myRequests && myRequests.length > 0 ? (
                 myRequests.slice(0, 10).map((req) => (
                   <div
                     key={req._id}
-                    className="flex items-center justify-between rounded-lg border border-white/[0.06] bg-[#0f0f10] p-2.5 text-xs"
+                    className="flex items-center justify-between rounded-xl border border-white/10 bg-black/60 p-3 text-xs"
                   >
                     <div>
-                      <div className="font-medium text-[#ededed] flex items-center gap-2">
+                      <div className="font-bold text-white flex items-center gap-2">
                         <span>{req.category}</span>
                         {req.priority === "urgent" && (
-                          <span className="rounded bg-[#e5484d]/15 px-1.5 py-0.5 text-[9px] font-mono text-[#e5484d] border border-[#e5484d]/30">
+                          <span className="rounded-full bg-red-950/60 px-2 py-0.5 text-[9px] font-mono font-bold text-[#FC3B00] border border-red-500/30">
                             SOS
                           </span>
                         )}
                       </div>
-                      <div className="text-[11px] text-[#85858b] line-clamp-1 mt-0.5">
+                      <div className="text-[11px] text-stone-400 line-clamp-1 mt-0.5">
                         {req.message}
                       </div>
-                      <div className="text-[10px] text-[#85858b] font-mono mt-0.5">
+                      <div className="text-[10px] text-stone-500 font-mono mt-0.5">
                         {new Date(req.createdAt).toLocaleTimeString([], {
                           hour: "2-digit",
                           minute: "2-digit",
@@ -650,12 +650,12 @@ function MusicianStageContent() {
 
                     <div>
                       <span
-                        className={`rounded px-2 py-0.5 text-[10px] font-mono ${
+                        className={`rounded-full px-2.5 py-1 text-[10px] font-mono font-bold ${
                           req.status === "resolved"
-                            ? "bg-[#4cc38a]/10 text-[#4cc38a] border border-[#4cc38a]/20"
+                            ? "bg-emerald-950/60 text-emerald-400 border border-emerald-500/30"
                             : req.status === "acknowledged"
-                            ? "bg-[#fc3b00]/10 text-[#fc3b00] border border-[#fc3b00]/25"
-                            : "bg-[#f59e0b]/10 text-[#f59e0b] border border-[#f59e0b]/20"
+                            ? "bg-orange-950/60 text-[#FF6129] border border-orange-500/30"
+                            : "bg-amber-950/60 text-amber-400 border border-amber-500/30"
                         }`}
                       >
                         {req.status}
@@ -664,7 +664,7 @@ function MusicianStageContent() {
                   </div>
                 ))
               ) : (
-                <div className="py-4 text-center text-xs text-[#85858b]">
+                <div className="py-4 text-center text-xs text-stone-500">
                   No requests sent yet during this session
                 </div>
               )}
@@ -675,15 +675,15 @@ function MusicianStageContent() {
 
       {/* SOS CONFIRMATION MODAL */}
       {showSosModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 animate-in fade-in duration-150">
-          <div className="w-full max-w-sm rounded-xl border border-white/[0.08] bg-[#19191b] p-6 text-[#ededed] text-center space-y-4">
-            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-lg bg-[#2b1718] text-[#e5484d] border border-[#e5484d]/30">
-              <AlertTriangle size={24} strokeWidth={1.5} />
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-in fade-in duration-150">
+          <div className="w-full max-w-sm rounded-3xl border border-white/15 bg-[#0d0c0e] p-6 text-white text-center space-y-4 shadow-2xl">
+            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[#FC3B00]/30 to-red-950 text-[#FC3B00] border border-[#FC3B00]/40 shadow-lg shadow-[#FC3B00]/20">
+              <AlertTriangle size={28} />
             </div>
 
-            <h3 className="text-base font-semibold text-[#ededed]">Send urgent emergency SOS?</h3>
-            <p className="text-xs text-[#a1a1a6] leading-relaxed">
-              This triggers a high-visibility emergency alert across the FOH sound console for <strong className="text-[#ededed]">{participant.name}</strong> ({participant.instrument}).
+            <h3 className="text-lg font-bold text-white tracking-tight">Send Urgent Emergency SOS?</h3>
+            <p className="text-xs text-stone-300 leading-relaxed">
+              This triggers a high-visibility emergency alert across the FOH sound console for <strong className="text-white">{participant.name}</strong> ({participant.instrument}).
             </p>
 
             <div className="grid grid-cols-2 gap-2.5 pt-2">
@@ -691,7 +691,7 @@ function MusicianStageContent() {
                 type="button"
                 disabled={isSosSubmitting}
                 onClick={() => setShowSosModal(false)}
-                className="h-10 rounded-lg border border-white/[0.08] bg-[#232325] text-xs font-medium text-[#ededed] hover:bg-[#2b2b2e] transition-colors"
+                className="h-11 rounded-xl border border-white/15 bg-white/5 text-xs font-semibold text-stone-300 hover:bg-white/10 hover:text-white transition"
               >
                 Cancel
               </button>
@@ -699,11 +699,11 @@ function MusicianStageContent() {
                 type="button"
                 disabled={isSosSubmitting}
                 onClick={handleConfirmSos}
-                className="h-10 flex items-center justify-center gap-1.5 rounded-lg bg-[#e5484d] text-xs font-medium text-white hover:bg-[#d03d42] transition-colors disabled:opacity-50"
+                className="h-11 flex items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-[#FC3B00] to-[#FF6129] text-xs font-bold text-white shadow-lg shadow-[#FC3B00]/25 hover:from-[#E03500] hover:to-[#F2551D] transition disabled:opacity-50"
               >
                 {isSosSubmitting ? (
                   <>
-                    <Loader2 size={13} className="animate-spin" />
+                    <Loader2 size={14} className="animate-spin" />
                     <span>Transmitting...</span>
                   </>
                 ) : (
@@ -722,9 +722,9 @@ export default function MusicianPage() {
   return (
     <Suspense
       fallback={
-        <div className="grid min-h-screen place-items-center bg-[#141415] text-[#ededed]">
-          <div className="flex items-center gap-2 text-sm text-[#85858b]">
-            <Loader2 size={16} className="animate-spin text-[#fc3b00]" />
+        <div className="grid min-h-screen place-items-center bg-[#000000] bg-arounda-glow text-white">
+          <div className="flex items-center gap-2 text-sm text-stone-400">
+            <Loader2 size={16} className="animate-spin text-[#FC3B00]" />
             <span>Loading stage console...</span>
           </div>
         </div>

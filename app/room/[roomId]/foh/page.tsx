@@ -63,8 +63,8 @@ export default function FohConsolePage() {
   return (
     <Suspense
       fallback={
-        <div className="grid min-h-screen place-items-center bg-[#141415] text-[#ededed]">
-          <Loader2 className="animate-spin text-[#fc3b00]" size={24} />
+        <div className="grid min-h-screen place-items-center bg-[#000000] bg-arounda-glow text-white">
+          <Loader2 className="animate-spin text-[#FC3B00]" size={24} />
         </div>
       }
     >
@@ -475,13 +475,13 @@ function FohConsoleContent() {
   // 1. Loading state while checking localStorage credentials or awaiting Convex query
   if (!hasCheckedToken || (hostToken && room === undefined)) {
     return (
-      <main className="grid min-h-screen place-items-center bg-[#141415] text-[#ededed] px-4">
+      <main className="grid min-h-screen place-items-center bg-[#000000] bg-arounda-glow text-white px-4">
         <div className="flex flex-col items-center gap-3 text-center">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#19191b] border border-white/[0.08] text-[#fc3b00]">
-            <Radio size={20} className="animate-spin text-[#fc3b00]" />
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#FC3B00]/25 to-[#FF6129]/20 text-[#FC3B00] border border-[#FC3B00]/30 shadow-lg shadow-[#FC3B00]/10">
+            <Radio size={22} className="animate-spin text-[#FC3B00]" />
           </div>
-          <h2 className="text-base font-semibold">Connecting to FOH console...</h2>
-          <p className="text-xs text-[#85858b] font-mono">
+          <h2 className="text-base font-bold text-white tracking-tight">Connecting to FOH Console...</h2>
+          <p className="text-xs text-stone-400 font-mono">
             Verifying cryptographic host credentials for room ID: {roomId}
           </p>
         </div>
@@ -492,29 +492,29 @@ function FohConsoleContent() {
   // 2. Access Denied: Missing or Invalid Host Token
   if (!hostToken || !room) {
     return (
-      <main className="grid min-h-screen place-items-center bg-[#141415] p-5 text-[#ededed]">
-        <div className="w-full max-w-md rounded-xl border border-[#e5484d]/30 bg-[#19191b] p-8 text-center">
-          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-[#2b1718] text-[#e5484d] border border-[#e5484d]/30">
-            <ShieldAlert size={24} strokeWidth={1.5} />
+      <main className="grid min-h-screen place-items-center bg-[#000000] bg-arounda-glow p-5 text-white">
+        <div className="w-full max-w-md rounded-3xl border border-white/15 bg-[#0d0c0e] p-8 text-center space-y-4 shadow-2xl">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[#FC3B00]/25 to-red-950 text-[#FC3B00] border border-[#FC3B00]/30 shadow-lg shadow-[#FC3B00]/20">
+            <ShieldAlert size={28} strokeWidth={1.5} />
           </div>
-          <h1 className="text-xl font-semibold text-[#ededed]">Access denied</h1>
-          <p className="mt-2 text-xs text-[#a1a1a6] leading-relaxed">
+          <h1 className="text-xl font-bold text-white tracking-tight">Access Denied</h1>
+          <p className="text-xs text-stone-300 leading-relaxed">
             {!hostToken
               ? "Host session credentials were not found on this device. You can only manage this FOH console from the browser where the room was created."
               : "Invalid host session token. The cryptographic credentials presented do not match this stage room's host key."}
           </p>
-          <div className="mt-6 flex flex-col gap-2.5">
+          <div className="pt-2 flex flex-col gap-2.5">
             <Link
               href="/create-room"
-              className="h-10 flex items-center justify-center rounded-lg bg-[#fc3b00] text-xs font-medium text-white hover:bg-[#e03500] transition-colors"
+              className="h-11 flex items-center justify-center rounded-xl bg-gradient-to-r from-[#FC3B00] to-[#FF6129] text-xs font-bold text-white shadow-md shadow-[#FC3B00]/25 hover:from-[#E03500] hover:to-[#F2551D] transition"
             >
-              Create new stage room
+              Create New Stage Room
             </Link>
             <Link
               href="/"
-              className="h-10 flex items-center justify-center rounded-lg border border-white/[0.08] bg-[#232325] text-xs font-medium text-[#ededed] hover:bg-[#2b2b2e] transition-colors"
+              className="h-11 flex items-center justify-center rounded-xl border border-white/15 bg-white/5 text-xs font-semibold text-stone-300 hover:bg-white/10 hover:text-white transition"
             >
-              Return home
+              Return Home
             </Link>
           </div>
         </div>
@@ -537,33 +537,33 @@ function FohConsoleContent() {
   const isReadOnly = isRoomEnded || isRoomExpired;
 
   return (
-    <div className="min-h-screen bg-[#141415] text-[#ededed] flex flex-col no-overscroll selection:bg-[#fc3b00] selection:text-white">
+    <div className="min-h-screen bg-[#000000] bg-arounda-glow text-white flex flex-col no-overscroll selection:bg-[#FC3B00] selection:text-white">
       <OfflineBanner role="foh" />
 
       {/* Console Top Header — Minimal & Sleek */}
-      <header className="sticky top-0 z-30 border-b border-white/[0.08] bg-[#0f0f10] px-4 py-3 sm:px-6">
+      <header className="sticky top-0 z-30 border-b border-white/10 bg-black/75 backdrop-blur-md px-4 py-3 sm:px-6">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
           {/* Brand & Room Info with 1-Tap Copy Pill */}
           <div className="flex items-center gap-3">
             <Link href="/" className="flex items-center gap-2 group" title="Return to Overview">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#19191b] border border-white/[0.08] text-[#fc3b00]">
-                <Radio size={16} strokeWidth={1.5} />
+              <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-[#FC3B00]/25 to-[#FF6129]/20 text-[#FC3B00] border border-[#FC3B00]/30 shadow-md shadow-[#FC3B00]/10">
+                <Radio size={16} strokeWidth={2} />
               </div>
             </Link>
             <div>
               <div className="flex items-center gap-2.5">
-                <h1 className="text-sm sm:text-base font-semibold text-[#ededed]">
+                <h1 className="text-sm sm:text-base font-bold text-white tracking-tight">
                   {room.name}
                 </h1>
                 <button
                   type="button"
                   onClick={handleCopyCode}
                   title="Click to copy room code"
-                  className="inline-flex items-center gap-1.5 rounded border border-white/[0.08] bg-[#19191b] px-2 py-0.5 text-xs text-[#a1a1a6] hover:bg-[#232325] transition-colors"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-2.5 py-0.5 text-xs text-stone-300 hover:bg-white/10 transition"
                 >
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#4cc38a]" />
-                  <span className="font-mono text-[11px] text-[#ededed]">{room.code}</span>
-                  {copiedCode ? <Check size={11} className="text-[#4cc38a]" /> : <Copy size={11} className="text-[#85858b]" />}
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <span className="font-mono text-[11px] font-bold text-[#FF7145]">{room.code}</span>
+                  {copiedCode ? <Check size={11} className="text-emerald-400" /> : <Copy size={11} className="text-stone-400" />}
                 </button>
               </div>
             </div>
@@ -577,27 +577,27 @@ function FohConsoleContent() {
             <button
               type="button"
               onClick={() => setIsQrModalOpen(true)}
-              className="inline-flex items-center gap-1.5 rounded-lg border border-white/[0.08] bg-[#19191b] px-2.5 py-1 text-xs font-medium text-[#ededed] hover:bg-[#232325] transition-colors"
+              className="inline-flex items-center gap-1.5 rounded-xl border border-white/15 bg-white/5 px-3 py-1.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition"
               title="Musician QR Invitation"
             >
-              <QrCode size={13} strokeWidth={1.5} className="text-[#fc3b00]" />
-              <span className="hidden sm:inline">QR invite</span>
+              <QrCode size={13} className="text-[#FF7145]" />
+              <span className="hidden sm:inline">QR Invite</span>
             </button>
 
             {/* Compact Mini-Console View Toggle */}
             <button
               type="button"
               onClick={() => setIsCompactView(true)}
-              className="p-1.5 rounded-lg text-[#85858b] hover:text-[#ededed] hover:bg-[#19191b] transition-colors"
+              className="p-1.5 rounded-xl text-stone-400 hover:text-white hover:bg-white/10 transition"
               title="Compact View"
             >
-              <Minimize2 size={16} strokeWidth={1.5} />
+              <Minimize2 size={16} />
             </button>
 
             {/* Service History Link */}
             <Link
               href={`/room/${roomId}/history`}
-              className="p-1.5 rounded-lg text-[#85858b] hover:text-[#ededed] hover:bg-[#19191b] transition-colors"
+              className="p-1.5 rounded-xl text-stone-400 hover:text-white hover:bg-white/10 transition"
               title="Service History"
             >
               <History size={16} strokeWidth={1.5} />
@@ -608,7 +608,7 @@ function FohConsoleContent() {
               <button
                 type="button"
                 onClick={() => setIsEndModalOpen(true)}
-                className="rounded-lg border border-[#e5484d]/30 bg-[#2b1718] px-2.5 py-1 text-xs font-medium text-[#e5484d] hover:bg-[#361a1c] transition-colors"
+                className="rounded-full border border-red-500/30 bg-red-950/40 px-3 py-1 text-xs font-semibold text-red-400 hover:bg-red-900/50 transition"
               >
                 End
               </button>
@@ -621,7 +621,7 @@ function FohConsoleContent() {
       <main className="flex-1 mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 space-y-6">
         {/* Read-Only Alert Banner if Ended/Expired */}
         {isReadOnly && (
-          <div className="rounded-xl border border-amber-500/30 bg-amber-950/30 p-4 text-sm text-amber-200 flex items-start gap-3">
+          <div className="rounded-2xl border border-amber-500/30 bg-amber-950/30 p-4 text-sm text-amber-200 flex items-start gap-3 backdrop-blur-md">
             <AlertTriangle size={20} className="shrink-0 text-amber-400 mt-0.5" />
             <div>
               <p className="font-bold text-amber-300">
@@ -638,23 +638,23 @@ function FohConsoleContent() {
         {urgentSosRequests.length > 0 && (
           <section
             aria-label="Urgent SOS Alerts"
-            className="rounded-xl border border-[#e5484d] bg-[#2b1718] p-4 text-[#ededed] shadow-sm animate-in fade-in duration-200"
+            className="rounded-2xl border border-[#FC3B00]/50 bg-black/70 backdrop-blur-md p-4 sm:p-5 text-white shadow-xl shadow-[#FC3B00]/15 animate-in fade-in duration-200"
           >
             <div className="flex flex-col gap-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
-                  <span className="h-2.5 w-2.5 rounded-full bg-[#e5484d]" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-[#FC3B00] animate-ping" />
                   <div className="flex items-center gap-2">
-                    <h2 className="text-sm font-semibold text-[#ededed] flex items-center gap-1.5">
-                      <AlertTriangle size={16} strokeWidth={1.5} className="text-[#e5484d]" />
-                      Emergency SOS active
+                    <h2 className="text-sm font-bold text-white flex items-center gap-1.5">
+                      <AlertTriangle size={16} strokeWidth={2} className="text-[#FC3B00]" />
+                      Emergency SOS Active
                     </h2>
-                    <span className="rounded bg-[#e5484d]/20 px-2 py-0.5 text-xs font-mono font-medium text-[#e5484d] border border-[#e5484d]/30">
+                    <span className="rounded-full bg-[#FC3B00]/20 px-2.5 py-0.5 text-xs font-mono font-bold text-[#FF7145] border border-[#FC3B00]/30">
                       {urgentSosRequests.length} {urgentSosRequests.length === 1 ? "alert" : "alerts"}
                     </span>
                   </div>
                 </div>
-                <span className="text-[11px] text-[#a1a1a6] hidden sm:inline">
+                <span className="text-[11px] text-stone-400 hidden sm:inline font-mono">
                   Visual-only alert • Persistent until resolved
                 </span>
               </div>
@@ -667,25 +667,25 @@ function FohConsoleContent() {
                   return (
                     <div
                       key={sos._id}
-                      className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-lg border border-[#e5484d]/30 bg-[#19191b] p-3.5"
+                      className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-xl border border-[#FC3B00]/30 bg-black/60 backdrop-blur-md p-3.5"
                     >
                       <div className="flex items-start gap-3">
-                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#e5484d]/20 text-[#e5484d] font-mono font-semibold text-xs border border-[#e5484d]/30">
+                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#FC3B00]/30 to-red-950 text-[#FC3B00] font-mono font-bold text-xs border border-[#FC3B00]/40 shadow-md shadow-[#FC3B00]/10">
                           SOS
                         </div>
                         <div>
                           <div className="flex items-center gap-2 flex-wrap">
-                            <span className="text-sm font-medium text-[#ededed]">
+                            <span className="text-sm font-bold text-white">
                               {sos.musicianName}
                             </span>
-                            <span className="rounded border border-[#e5484d]/30 bg-[#2b1718] px-2 py-0.5 text-[10px] font-mono text-[#e5484d]">
+                            <span className="rounded-full border border-[#FC3B00]/30 bg-[#FC3B00]/10 px-2 py-0.5 text-[10px] font-mono font-bold text-[#FF7145]">
                               {sos.instrument}
                             </span>
-                            <span className="text-[11px] text-[#85858b] font-mono">
+                            <span className="text-[11px] text-stone-400 font-mono">
                               • {formatRelativeTime(sos.createdAt, currentTime)}
                             </span>
                           </div>
-                          <p className="mt-1 text-xs text-[#ededed] leading-snug">
+                          <p className="mt-1 text-xs text-stone-200 leading-snug">
                             &ldquo;{sos.message}&rdquo;
                           </p>
                         </div>
@@ -694,8 +694,8 @@ function FohConsoleContent() {
                       {/* Direct 1-tap actions right from persistent SOS banner */}
                       <div className="flex items-center gap-2 self-end sm:self-auto shrink-0">
                         {isAck ? (
-                          <span className="inline-flex items-center gap-1.5 rounded-lg border border-[#f59e0b]/30 bg-[#f59e0b]/10 px-3 py-1.5 text-xs font-medium text-[#f59e0b]">
-                            <span className="h-1.5 w-1.5 rounded-full bg-[#f59e0b]" />
+                          <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-950/40 px-3 py-1.5 text-xs font-semibold text-amber-300">
+                            <span className="h-1.5 w-1.5 rounded-full bg-amber-400 animate-pulse" />
                             <span>Acknowledged (adjusting)</span>
                           </span>
                         ) : (
@@ -703,12 +703,12 @@ function FohConsoleContent() {
                             type="button"
                             disabled={isBusy || isReadOnly || !canSend}
                             onClick={() => handleAcknowledgeRequest(sos._id)}
-                            className="flex items-center gap-1.5 rounded-lg bg-[#fc3b00] px-3 py-1.5 text-xs font-medium text-white hover:bg-[#e03500] transition-colors disabled:opacity-40 min-h-[40px]"
+                            className="flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-[#FC3B00] to-[#FF6129] px-3.5 py-1.5 text-xs font-bold text-white shadow-md shadow-[#FC3B00]/20 hover:from-[#E03500] hover:to-[#F2551D] transition-all disabled:opacity-40 min-h-[40px]"
                           >
                             {isBusy ? (
                               <Loader2 size={14} className="animate-spin" />
                             ) : (
-                              <Check size={14} strokeWidth={1.5} />
+                              <Check size={14} strokeWidth={2} />
                             )}
                             <span>Acknowledge</span>
                           </button>
@@ -718,12 +718,12 @@ function FohConsoleContent() {
                           type="button"
                           disabled={isBusy || isReadOnly || !canSend}
                           onClick={() => handleResolveRequest(sos._id)}
-                          className="flex items-center gap-1.5 rounded-lg bg-[#4cc38a] px-3 py-1.5 text-xs font-medium text-[#0f0f10] hover:bg-[#43ad7b] transition-colors disabled:opacity-40 min-h-[40px]"
+                          className="flex items-center gap-1.5 rounded-xl bg-[#4cc38a] px-3.5 py-1.5 text-xs font-bold text-black hover:bg-[#3fb07c] transition-all disabled:opacity-40 min-h-[40px]"
                         >
                           {isBusy ? (
                             <Loader2 size={14} className="animate-spin" />
                           ) : (
-                            <CheckCircle2 size={14} strokeWidth={1.5} />
+                            <CheckCircle2 size={14} strokeWidth={2} />
                           )}
                           <span>Resolve SOS</span>
                         </button>
@@ -738,14 +738,14 @@ function FohConsoleContent() {
 
         {/* Global Error Toast */}
         {queueError && (
-          <div className="rounded-lg border border-[#e5484d]/30 bg-[#19191b] p-3 text-xs text-[#e5484d] flex items-center justify-between">
+          <div className="rounded-2xl border border-red-500/30 bg-red-950/50 p-3 text-xs text-red-200 flex items-center justify-between shadow-lg">
             <div className="flex items-center gap-2">
-              <AlertTriangle size={15} strokeWidth={1.5} />
+              <AlertTriangle size={15} strokeWidth={1.5} className="text-red-400" />
               <span>{queueError}</span>
             </div>
             <button
               onClick={() => setQueueError(null)}
-              className="text-[#85858b] hover:text-[#ededed] p-1"
+              className="text-stone-400 hover:text-white p-1"
             >
               <X size={14} />
             </button>
@@ -753,19 +753,19 @@ function FohConsoleContent() {
         )}
 
         {/* Minimal Overview Strip */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/[0.08] pb-3 text-xs text-[#a1a1a6]">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-3 text-xs text-stone-300">
           <div className="flex items-center gap-3 flex-wrap">
             <span>
-              Queue: <strong className="text-[#ededed] font-mono">{openRequests.length}</strong> active
+              Queue: <strong className="text-white font-mono">{openRequests.length}</strong> active
             </span>
-            <span className="text-[#85858b]">•</span>
+            <span className="text-stone-500">•</span>
             <span>
-              Stage: <strong className="text-[#ededed] font-mono">{approvedParticipants.length}</strong> / {maxCapacity}
+              Stage: <strong className="text-white font-mono">{approvedParticipants.length}</strong> / {maxCapacity}
             </span>
             {pendingParticipants.length > 0 && (
               <>
-                <span className="text-[#85858b]">•</span>
-                <span className="text-[#fc3b00] font-medium">
+                <span className="text-stone-500">•</span>
+                <span className="text-[#FF7145] font-semibold">
                   {pendingParticipants.length} waiting to join
                 </span>
               </>
@@ -789,16 +789,18 @@ function FohConsoleContent() {
             {/* LIVE SOUND REQUEST QUEUE */}
             <section
               aria-label="Sound Request Queue"
-              className="rounded-xl border border-white/[0.08] bg-[#19191b] p-5 space-y-4"
+              className="rounded-2xl border border-white/10 bg-black/50 backdrop-blur-md p-5 sm:p-6 space-y-4 shadow-xl"
             >
               {/* Queue Header with Tabs and Search */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/[0.08] pb-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-4">
                 <div className="flex items-center gap-2.5">
-                  <Volume2 size={18} strokeWidth={1.5} className="text-[#fc3b00]" />
-                  <h3 className="font-semibold text-[#ededed] text-sm sm:text-base">
-                    Live sound cue queue
+                  <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-[#FC3B00]/25 to-[#FF6129]/20 text-[#FC3B00] border border-[#FC3B00]/30 shadow-md shadow-[#FC3B00]/10">
+                    <Volume2 size={16} strokeWidth={2} />
+                  </div>
+                  <h3 className="font-bold text-white text-sm sm:text-base tracking-tight">
+                    Live Sound Request Queue
                   </h3>
-                  <span className="rounded border border-white/[0.08] bg-[#232325] px-2 py-0.5 text-xs font-mono text-[#a1a1a6]">
+                  <span className="rounded-full border border-white/15 bg-white/5 px-2.5 py-0.5 text-xs font-mono font-bold text-[#FF7145]">
                     {filteredRequests.length}
                   </span>
                 </div>
@@ -808,7 +810,7 @@ function FohConsoleContent() {
                   {(
                     [
                       { id: "open" as const, label: "Open", count: openRequests.length },
-                      { id: "acknowledged" as const, label: "In progress", count: acknowledgedRequests.length },
+                      { id: "acknowledged" as const, label: "In Progress", count: acknowledgedRequests.length },
                       { id: "resolved" as const, label: "Resolved", count: resolvedRequests.length },
                       { id: "all" as const, label: "All", count: allRequests.length },
                     ]
@@ -819,14 +821,14 @@ function FohConsoleContent() {
                         key={tab.id}
                         type="button"
                         onClick={() => setRequestFilter(tab.id as RequestFilter)}
-                        className={`flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-medium transition-colors ${
+                        className={`flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold transition ${
                           isActive
-                            ? "bg-[#232325] text-[#ededed] border border-white/[0.12]"
-                            : "text-[#85858b] hover:text-[#ededed] hover:bg-[#232325]/50"
+                            ? "bg-gradient-to-r from-[#FC3B00] to-[#FF6129] text-white shadow-md shadow-[#FC3B00]/25"
+                            : "border border-white/10 bg-white/5 text-stone-300 hover:bg-white/10 hover:text-white"
                         }`}
                       >
                         <span>{tab.label}</span>
-                        <span className="text-[10px] font-mono opacity-60">
+                        <span className={`text-[10px] font-mono ${isActive ? "text-white/90 font-bold" : "text-stone-400"}`}>
                           ({tab.count})
                         </span>
                       </button>
@@ -836,10 +838,10 @@ function FohConsoleContent() {
                     <button
                       type="button"
                       onClick={() => setRequestFilter("sos")}
-                      className={`flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-medium transition-colors ${
+                      className={`flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold transition ${
                         requestFilter === "sos"
-                          ? "bg-[#e5484d] text-white"
-                          : "bg-[#2b1718] text-[#e5484d] border border-[#e5484d]/30"
+                          ? "bg-red-600 text-white shadow-md shadow-red-600/30"
+                          : "bg-red-950/60 text-red-400 border border-red-500/40"
                       }`}
                     >
                       <span>SOS</span>
@@ -877,16 +879,16 @@ function FohConsoleContent() {
               {/* Requests List */}
               {filteredRequests.length === 0 ? (
                 <div className="py-12 text-center">
-                  <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-[#0f0f10] border border-white/[0.08] text-[#85858b]">
+                  <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-white/5 border border-white/10 text-[#FF7145]">
                     {requestFilter === "sos" ? (
-                      <CheckCircle2 size={20} strokeWidth={1.5} className="text-[#4cc38a]" />
+                      <CheckCircle2 size={24} strokeWidth={1.5} className="text-[#4cc38a]" />
                     ) : (
-                      <Volume2 size={20} strokeWidth={1.5} />
+                      <Volume2 size={24} strokeWidth={1.5} />
                     )}
                   </div>
-                  <p className="text-sm font-medium text-[#a1a1a6]">
+                  <p className="text-sm font-bold text-white tracking-tight">
                     {requestFilter === "open"
-                      ? "All stage cues resolved"
+                      ? "All stage requests resolved"
                       : requestFilter === "sos"
                       ? "No active SOS alerts"
                       : requestFilter === "pending"
@@ -897,7 +899,7 @@ function FohConsoleContent() {
                       ? "No resolved cues yet"
                       : "No cues found"}
                   </p>
-                  <p className="mt-1 max-w-sm mx-auto text-xs text-[#85858b]">
+                  <p className="mt-1 max-w-sm mx-auto text-xs text-stone-400">
                     {requestFilter === "open"
                       ? "When musicians tap preset buttons or submit custom cues on their phones, they appear here instantly."
                       : "Monitor mix cues appear here in real time without refreshing."}
@@ -918,26 +920,26 @@ function FohConsoleContent() {
                     return (
                       <div
                         key={r._id}
-                        className={`rounded-lg border p-3.5 transition-colors ${
+                        className={`rounded-xl border p-3.5 transition-all backdrop-blur-md ${
                           isUrgent && !isResolved
-                            ? "border-[#e5484d]/50 bg-[#2b1718]"
+                            ? "border-[#FC3B00]/60 bg-red-950/40 shadow-lg shadow-[#FC3B00]/15"
                             : isRecent
-                            ? "border-[#fc3b00]/40 bg-[#0f0f10]"
-                            : "border-white/[0.06] bg-[#0f0f10] hover:border-white/[0.12]"
+                            ? "border-[#FF6129]/40 bg-black/70"
+                            : "border-white/10 bg-black/60 hover:border-white/20"
                         }`}
                       >
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                           {/* Left: Musician Identity, Instrument & Relative Time */}
                           <div className="flex items-start gap-3">
                             <div
-                              className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg font-mono text-xs font-semibold ${
+                              className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl font-mono text-xs font-bold ${
                                 isUrgent && !isResolved
-                                  ? "bg-[#e5484d] text-white"
+                                  ? "bg-gradient-to-br from-[#FC3B00] to-red-700 text-white shadow-md shadow-[#FC3B00]/30"
                                   : isAcknowledged
-                                  ? "bg-[#fc3b00]/15 text-[#fc3b00] border border-[#fc3b00]/30"
+                                  ? "bg-[#FC3B00]/15 text-[#FC3B00] border border-[#FC3B00]/30"
                                   : isResolved
                                   ? "bg-[#4cc38a]/15 text-[#4cc38a] border border-[#4cc38a]/30"
-                                  : "bg-[#232325] text-[#ededed] border border-white/[0.08]"
+                                  : "bg-white/5 text-white border border-white/10"
                               }`}
                             >
                               {isUrgent && !isResolved
@@ -947,19 +949,19 @@ function FohConsoleContent() {
 
                             <div className="space-y-1">
                               <div className="flex items-center gap-2 flex-wrap">
-                                <span className="font-medium text-[#ededed] text-sm">
+                                <span className="font-bold text-white text-sm">
                                   {r.musicianName}
                                 </span>
-                                <span className="rounded border border-white/[0.08] bg-[#19191b] px-2 py-0.5 text-[10px] font-mono text-[#a1a1a6]">
+                                <span className="rounded-full border border-white/15 bg-white/5 px-2.5 py-0.5 text-[10px] font-mono font-semibold text-[#FF7145]">
                                   {r.instrument}
                                 </span>
 
                                 {/* Category Badge */}
                                 <span
-                                  className={`rounded px-2 py-0.5 text-[10px] font-mono ${
+                                  className={`rounded-full px-2.5 py-0.5 text-[10px] font-mono font-medium ${
                                     isUrgent
-                                      ? "bg-[#e5484d]/20 text-[#e5484d] border border-[#e5484d]/30"
-                                      : "bg-[#232325] text-[#fc3b00] border border-white/[0.08]"
+                                      ? "bg-red-950/60 text-red-400 border border-red-500/30"
+                                      : "bg-white/5 text-stone-300 border border-white/10"
                                   }`}
                                 >
                                   {r.category}
@@ -967,21 +969,21 @@ function FohConsoleContent() {
 
                                 {/* Priority Badge if urgent */}
                                 {isUrgent && (
-                                  <span className="rounded bg-[#e5484d] px-1.5 py-0.5 text-[9px] font-mono font-medium text-white uppercase">
+                                  <span className="rounded-full bg-[#FC3B00] px-2 py-0.5 text-[9px] font-mono font-bold text-white uppercase shadow-sm shadow-[#FC3B00]/30">
                                     Urgent
                                   </span>
                                 )}
                               </div>
 
                               {/* Request Message */}
-                              <p className="text-xs text-[#ededed] leading-relaxed">
+                              <p className="text-xs font-medium text-stone-200 leading-relaxed">
                                 {r.message}
                               </p>
 
                               {/* Timestamps & Lifecycle */}
-                              <div className="flex items-center gap-3 text-[11px] text-[#85858b] font-mono pt-0.5">
+                              <div className="flex items-center gap-3 text-[11px] text-stone-400 font-mono pt-0.5">
                                 <span className="flex items-center gap-1">
-                                  <Clock size={11} strokeWidth={1.5} className="text-[#85858b]" />
+                                  <Clock size={11} strokeWidth={1.5} className="text-stone-500" />
                                   {formatRelativeTime(r.createdAt, currentTime)}
                                 </span>
 
@@ -996,7 +998,7 @@ function FohConsoleContent() {
                                 )}
 
                                 {r.resolvedAt && (
-                                  <span className="text-[#4cc38a]">
+                                  <span className="text-[#4cc38a] font-semibold">
                                     Resolved in {formatDuration(r.createdAt, r.resolvedAt)}
                                   </span>
                                 )}
@@ -1008,22 +1010,22 @@ function FohConsoleContent() {
                           <div className="flex items-center gap-2 self-end sm:self-auto shrink-0 pt-2 sm:pt-0">
                             {/* Current Status Pill */}
                             {isPending && (
-                              <span className="inline-flex items-center gap-1.5 rounded border border-[#f59e0b]/30 bg-[#f59e0b]/10 px-2.5 py-1 text-xs font-mono text-[#f59e0b]">
-                                <span className="h-1.5 w-1.5 rounded-full bg-[#f59e0b]" />
+                              <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-950/30 px-2.5 py-1 text-xs font-mono text-amber-300 font-medium">
+                                <span className="h-1.5 w-1.5 rounded-full bg-amber-400 animate-pulse" />
                                 Pending
                               </span>
                             )}
 
                             {isAcknowledged && (
-                              <span className="inline-flex items-center gap-1.5 rounded border border-[#fc3b00]/30 bg-[#fc3b00]/10 px-2.5 py-1 text-xs font-mono text-[#fc3b00]">
-                                <span className="h-1.5 w-1.5 rounded-full bg-[#fc3b00]" />
+                              <span className="inline-flex items-center gap-1.5 rounded-full border border-[#FC3B00]/30 bg-[#FC3B00]/10 px-2.5 py-1 text-xs font-mono text-[#FF7145] font-semibold">
+                                <span className="h-1.5 w-1.5 rounded-full bg-[#FC3B00]" />
                                 Adjusting mix
                               </span>
                             )}
 
                             {isResolved && (
-                              <span className="inline-flex items-center gap-1.5 rounded border border-[#4cc38a]/30 bg-[#4cc38a]/10 px-2.5 py-1 text-xs font-mono text-[#4cc38a]">
-                                <CheckCircle size={13} strokeWidth={1.5} />
+                              <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-950/30 px-2.5 py-1 text-xs font-mono text-emerald-400 font-semibold">
+                                <CheckCircle size={13} strokeWidth={2} />
                                 Resolved
                               </span>
                             )}
@@ -1036,13 +1038,13 @@ function FohConsoleContent() {
                                     type="button"
                                     disabled={isBusy || !canSend}
                                     onClick={() => handleAcknowledgeRequest(r._id)}
-                                    className="flex items-center gap-1.5 rounded-lg bg-[#fc3b00] px-3 py-1.5 text-xs font-medium text-white hover:bg-[#e03500] transition-colors disabled:opacity-40 min-h-[38px]"
+                                    className="flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-[#FC3B00] to-[#FF6129] px-3.5 py-1.5 text-xs font-bold text-white shadow-md shadow-[#FC3B00]/20 hover:from-[#E03500] hover:to-[#F2551D] transition-all disabled:opacity-40 min-h-[38px]"
                                     title="Acknowledge request: lets musician know FOH is adjusting"
                                   >
                                     {isBusy ? (
                                       <Loader2 size={13} className="animate-spin" />
                                     ) : (
-                                      <Check size={13} strokeWidth={1.5} />
+                                      <Check size={13} strokeWidth={2} />
                                     )}
                                     <span>Acknowledge</span>
                                   </button>
@@ -1052,13 +1054,13 @@ function FohConsoleContent() {
                                   type="button"
                                   disabled={isBusy || !canSend}
                                   onClick={() => handleResolveRequest(r._id)}
-                                  className="flex items-center gap-1.5 rounded-lg bg-[#4cc38a] px-3 py-1.5 text-xs font-medium text-[#0f0f10] hover:bg-[#43ad7b] transition-colors disabled:opacity-40 min-h-[38px]"
+                                  className="flex items-center gap-1.5 rounded-xl bg-[#4cc38a] px-3.5 py-1.5 text-xs font-bold text-black hover:bg-[#3fb07c] transition-all disabled:opacity-40 min-h-[38px]"
                                   title="Mark request resolved"
                                 >
                                   {isBusy ? (
                                     <Loader2 size={13} className="animate-spin" />
                                   ) : (
-                                    <CheckCircle2 size={13} strokeWidth={1.5} />
+                                    <CheckCircle2 size={13} strokeWidth={2} />
                                   )}
                                   <span>Resolve</span>
                                 </button>
@@ -1076,27 +1078,29 @@ function FohConsoleContent() {
             {/* LIVE Musician Approval Queue */}
             <section
               aria-label="Musician Join Queue"
-              className="rounded-xl border border-white/[0.08] bg-[#19191b] p-5 space-y-4"
+              className="rounded-2xl border border-white/10 bg-black/50 backdrop-blur-md p-5 sm:p-6 space-y-4 shadow-xl"
             >
-              <div className="flex items-center justify-between border-b border-white/[0.08] pb-3">
+              <div className="flex items-center justify-between border-b border-white/10 pb-3">
                 <div className="flex items-center gap-2.5">
-                  <Users size={16} strokeWidth={1.5} className="text-[#a1a1a6]" />
-                  <h3 className="font-semibold text-[#ededed] text-sm">
-                    Musician approval queue
+                  <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-white/5 text-[#FF7145] border border-white/10">
+                    <Users size={16} strokeWidth={2} />
+                  </div>
+                  <h3 className="font-bold text-white text-sm">
+                    Musician Approval Queue
                   </h3>
-                  <span className="rounded border border-white/[0.08] bg-[#232325] px-2 py-0.5 text-xs font-mono text-[#a1a1a6]">
+                  <span className="rounded-full border border-white/15 bg-white/5 px-2.5 py-0.5 text-xs font-mono font-bold text-[#FF7145]">
                     {pendingParticipants.length}
                   </span>
                 </div>
-                <span className="text-[11px] font-mono text-[#85858b]">
-                  Live queue
+                <span className="text-[11px] font-mono text-stone-400">
+                  Live reactive queue
                 </span>
               </div>
 
               {/* Room Full Warning in Queue */}
               {isRoomFull && (
-                <div className="rounded-lg border border-[#f59e0b]/30 bg-[#19191b] p-3 text-xs text-[#f59e0b] flex items-center gap-2">
-                  <AlertTriangle size={15} strokeWidth={1.5} className="shrink-0" />
+                <div className="rounded-xl border border-amber-500/30 bg-amber-950/40 p-3 text-xs text-amber-300 flex items-center gap-2">
+                  <AlertTriangle size={15} strokeWidth={2} className="shrink-0 text-amber-400" />
                   <span>
                     <strong>Room Full:</strong> Maximum capacity of {maxCapacity} approved musicians reached.
                   </span>
@@ -1106,11 +1110,11 @@ function FohConsoleContent() {
               {/* Pending Queue List */}
               {pendingParticipants.length === 0 ? (
                 <div className="py-6 text-center">
-                  <p className="text-xs font-medium text-[#85858b]">
+                  <p className="text-xs font-semibold text-stone-300">
                     No musicians waiting in queue
                   </p>
-                  <p className="mt-0.5 text-[11px] text-[#85858b]">
-                    When musicians scan the QR code or enter code <span className="font-mono text-[#ededed]">{room.code}</span>, their join requests will appear here.
+                  <p className="mt-0.5 text-[11px] text-stone-500">
+                    When musicians scan the QR code or enter code <span className="font-mono text-[#FF7145] font-bold">{room.code}</span>, their join requests will appear here.
                   </p>
                 </div>
               ) : (
@@ -1120,20 +1124,20 @@ function FohConsoleContent() {
                     return (
                       <div
                         key={p._id}
-                        className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-lg border border-white/[0.06] bg-[#0f0f10] p-3 transition-colors"
+                        className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-xl border border-white/10 bg-black/60 backdrop-blur-md p-3.5 transition-colors"
                       >
                         <div className="flex items-center gap-3">
-                          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#232325] border border-white/[0.08] text-[#ededed] font-mono text-xs">
+                          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white font-mono font-bold text-xs">
                             {p.name.charAt(0).toUpperCase()}
                           </div>
                           <div>
                             <div className="flex items-center gap-2">
-                              <span className="text-sm font-medium text-[#ededed]">{p.name}</span>
-                              <span className="rounded border border-white/[0.08] bg-[#19191b] px-2 py-0.5 text-[10px] font-mono text-[#a1a1a6]">
+                              <span className="text-sm font-bold text-white">{p.name}</span>
+                              <span className="rounded-full border border-white/15 bg-white/5 px-2.5 py-0.5 text-[10px] font-mono font-semibold text-[#FF7145]">
                                 {p.instrument}
                               </span>
                             </div>
-                            <span className="text-[11px] text-[#85858b] flex items-center gap-1 mt-0.5 font-mono">
+                            <span className="text-[11px] text-stone-400 flex items-center gap-1 mt-0.5 font-mono">
                               <Clock size={11} strokeWidth={1.5} /> Joined{" "}
                               {new Date(p.joinedAt).toLocaleTimeString([], {
                                 hour: "2-digit",
@@ -1149,13 +1153,13 @@ function FohConsoleContent() {
                             type="button"
                             disabled={isBusy || isReadOnly || isRoomFull}
                             onClick={() => handleApprove(p._id)}
-                            className="flex items-center gap-1.5 rounded-lg bg-[#4cc38a] px-3 py-1.5 text-xs font-medium text-[#0f0f10] hover:bg-[#43ad7b] transition-colors disabled:opacity-40 min-h-[36px]"
+                            className="flex items-center gap-1.5 rounded-xl bg-[#4cc38a] px-3.5 py-1.5 text-xs font-bold text-black hover:bg-[#3fb07c] transition-colors disabled:opacity-40 min-h-[36px]"
                             title={isRoomFull ? "Capacity limit reached" : "Approve musician"}
                           >
                             {isBusy ? (
                               <Loader2 size={13} className="animate-spin" />
                             ) : (
-                              <UserCheck size={13} strokeWidth={1.5} />
+                              <UserCheck size={13} strokeWidth={2} />
                             )}
                             <span>Approve</span>
                           </button>
@@ -1164,9 +1168,9 @@ function FohConsoleContent() {
                             type="button"
                             disabled={isBusy || isReadOnly}
                             onClick={() => handleReject(p._id)}
-                            className="flex items-center gap-1.5 rounded-lg border border-[#e5484d]/30 bg-[#2b1718] px-3 py-1.5 text-xs font-medium text-[#e5484d] hover:bg-[#361a1c] transition-colors disabled:opacity-40 min-h-[36px]"
+                            className="flex items-center gap-1.5 rounded-xl border border-red-500/30 bg-red-950/40 px-3 py-1.5 text-xs font-semibold text-red-400 hover:bg-red-900/50 transition-colors disabled:opacity-40 min-h-[36px]"
                           >
-                            <UserX size={13} strokeWidth={1.5} />
+                            <UserX size={13} strokeWidth={2} />
                             <span>Reject</span>
                           </button>
                         </div>
@@ -1183,29 +1187,31 @@ function FohConsoleContent() {
             {/* Approved Stage Roster */}
             <section
               aria-label="Approved Stage Roster"
-              className="rounded-xl border border-white/[0.08] bg-[#19191b] p-5 space-y-4"
+              className="rounded-2xl border border-white/10 bg-black/50 backdrop-blur-md p-5 sm:p-6 space-y-4 shadow-xl"
             >
-              <div className="flex items-center justify-between border-b border-white/[0.08] pb-3">
+              <div className="flex items-center justify-between border-b border-white/10 pb-3">
                 <div className="flex items-center gap-2.5">
-                  <CheckCircle2 size={16} strokeWidth={1.5} className="text-[#4cc38a]" />
-                  <h3 className="font-semibold text-[#ededed] text-sm">
-                    Approved stage roster
+                  <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-emerald-950/40 text-emerald-400 border border-emerald-500/30">
+                    <CheckCircle2 size={16} strokeWidth={2} />
+                  </div>
+                  <h3 className="font-bold text-white text-sm">
+                    Approved Stage Roster
                   </h3>
-                  <span className="rounded border border-white/[0.08] bg-[#232325] px-2 py-0.5 text-xs font-mono text-[#4cc38a]">
+                  <span className="rounded-full border border-emerald-500/30 bg-emerald-950/40 px-2.5 py-0.5 text-xs font-mono font-bold text-emerald-300">
                     {approvedParticipants.length} / {maxCapacity}
                   </span>
                 </div>
-                <span className="text-[11px] font-mono text-[#85858b]">
+                <span className="text-[11px] font-mono text-stone-400">
                   Presence live
                 </span>
               </div>
 
               {approvedParticipants.length === 0 ? (
                 <div className="py-6 text-center">
-                  <p className="text-xs font-medium text-[#85858b]">
+                  <p className="text-xs font-semibold text-stone-300">
                     No approved musicians on stage yet
                   </p>
-                  <p className="mt-0.5 text-[11px] text-[#85858b]">
+                  <p className="mt-0.5 text-[11px] text-stone-500">
                     Musicians approved from the queue appear here with live online status indicators.
                   </p>
                 </div>
@@ -1217,37 +1223,37 @@ function FohConsoleContent() {
                     return (
                       <div
                         key={p._id}
-                        className="flex items-center justify-between rounded-lg border border-white/[0.06] bg-[#0f0f10] p-2.5"
+                        className="flex items-center justify-between rounded-xl border border-white/10 bg-black/60 backdrop-blur-md p-3"
                       >
                         <div className="flex items-center gap-2.5">
                           <div
-                            className={`h-2 w-2 rounded-full shrink-0 ${
-                              isOnline ? "bg-[#4cc38a]" : "bg-[#85858b]"
+                            className={`h-2.5 w-2.5 rounded-full shrink-0 ${
+                              isOnline ? "bg-emerald-400 animate-pulse" : "bg-stone-500"
                             }`}
                             title={isOnline ? "Online on stage" : "Offline / inactive"}
                           />
                           <div>
-                            <div className="text-sm font-medium text-[#ededed] leading-tight">
+                            <div className="text-sm font-bold text-white leading-tight">
                               {p.name}
                             </div>
-                            <div className="text-[11px] text-[#a1a1a6] font-mono">
+                            <div className="text-[11px] text-[#FF7145] font-mono font-semibold">
                               {p.instrument}
                             </div>
                           </div>
                         </div>
 
                         <div className="flex items-center gap-2">
-                          <span className="text-[10px] font-mono text-[#85858b] hidden sm:inline">
+                          <span className="text-[10px] font-mono text-stone-400 hidden sm:inline">
                             {isOnline ? "Online" : "Inactive"}
                           </span>
                           <button
                             type="button"
                             disabled={isBusy || isReadOnly}
                             onClick={() => handleRemove(p._id)}
-                            className="rounded p-1 text-[#85858b] hover:text-[#e5484d] transition-colors"
+                            className="rounded-lg p-1.5 text-stone-400 hover:text-red-400 hover:bg-white/5 transition"
                             title="Remove musician from stage session"
                           >
-                            <Trash2 size={13} strokeWidth={1.5} />
+                            <Trash2 size={14} strokeWidth={1.5} />
                           </button>
                         </div>
                       </div>
@@ -1260,14 +1266,14 @@ function FohConsoleContent() {
             {/* Minimal Stage Access Card */}
             <section
               aria-label="Stage Access"
-              className="rounded-xl border border-white/[0.08] bg-[#19191b] p-5 space-y-3"
+              className="rounded-2xl border border-white/10 bg-black/50 backdrop-blur-md p-5 sm:p-6 space-y-4 shadow-xl"
             >
               <div className="flex items-center justify-between">
                 <div>
-                  <span className="text-[11px] font-mono text-[#85858b] block">
-                    Musician stage code
+                  <span className="text-[11px] font-mono text-stone-400 block uppercase font-bold tracking-wider">
+                    Stage room code
                   </span>
-                  <div className="font-mono text-xl font-semibold tracking-wider text-[#ededed] mt-0.5">
+                  <div className="font-mono text-2xl font-bold tracking-wider text-[#FF7145] mt-0.5">
                     {room.code}
                   </div>
                 </div>
@@ -1276,7 +1282,7 @@ function FohConsoleContent() {
                   <button
                     type="button"
                     onClick={handleCopyLink}
-                    className="inline-flex items-center gap-1.5 rounded-lg border border-white/[0.08] bg-[#232325] px-2.5 py-1.5 text-xs font-medium text-[#ededed] hover:bg-[#2b2b2e] transition-colors"
+                    className="inline-flex items-center gap-1.5 rounded-xl border border-white/15 bg-white/5 px-3 py-1.5 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition"
                     title="Copy join link to clipboard"
                   >
                     {copiedLink ? <Check size={12} className="text-[#4cc38a]" /> : <Copy size={12} strokeWidth={1.5} />}
@@ -1286,11 +1292,11 @@ function FohConsoleContent() {
                   <button
                     type="button"
                     onClick={() => setIsQrModalOpen(true)}
-                    className="inline-flex items-center gap-1.5 rounded-lg bg-[#fc3b00] px-3 py-1.5 text-xs font-medium text-white hover:bg-[#e03500] transition-colors shadow-[inset_0_1px_0_rgba(255,255,255,0.18)]"
+                    className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-[#FC3B00] to-[#FF6129] px-3.5 py-1.5 text-xs font-bold text-white shadow-md shadow-[#FC3B00]/25 hover:from-[#E03500] hover:to-[#F2551D] transition"
                     title="Open Fullscreen QR Invitation"
                   >
-                    <QrCode size={12} strokeWidth={1.5} />
-                    <span>QR code</span>
+                    <QrCode size={13} strokeWidth={2} />
+                    <span>QR Code</span>
                   </button>
                 </div>
               </div>
@@ -1310,13 +1316,13 @@ function FohConsoleContent() {
 
       {/* End Room Confirmation Dialog */}
       {isEndModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 animate-in fade-in duration-150">
-          <div className="w-full max-w-md rounded-xl border border-white/[0.08] bg-[#19191b] p-6 text-[#ededed] text-center space-y-4">
-            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-lg bg-[#2b1718] text-[#e5484d] border border-[#e5484d]/30">
-              <PowerOff size={22} strokeWidth={1.5} />
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-in fade-in duration-150">
+          <div className="w-full max-w-md rounded-3xl border border-white/15 bg-[#0d0c0e] p-6 text-white text-center space-y-4 shadow-2xl">
+            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[#FC3B00]/25 to-red-950 text-[#FC3B00] border border-[#FC3B00]/30 shadow-lg shadow-[#FC3B00]/20">
+              <PowerOff size={26} strokeWidth={1.5} />
             </div>
-            <h3 className="text-base font-semibold text-[#ededed]">End stage session?</h3>
-            <p className="text-xs text-[#a1a1a6] leading-relaxed">
+            <h3 className="text-lg font-bold text-white tracking-tight">End Stage Session?</h3>
+            <p className="text-xs text-stone-300 leading-relaxed">
               Ending this room will disconnect all musician devices and prevent any new sound requests. Service history and event logs will remain preserved.
             </p>
 
@@ -1325,7 +1331,7 @@ function FohConsoleContent() {
                 type="button"
                 disabled={endingRoom}
                 onClick={() => setIsEndModalOpen(false)}
-                className="h-10 rounded-lg border border-white/[0.08] bg-[#232325] text-xs font-medium text-[#ededed] hover:bg-[#2b2b2e] transition-colors"
+                className="h-11 rounded-xl border border-white/15 bg-white/5 text-xs font-semibold text-stone-300 hover:bg-white/10 hover:text-white transition"
               >
                 Cancel
               </button>
@@ -1333,7 +1339,7 @@ function FohConsoleContent() {
                 type="button"
                 disabled={endingRoom}
                 onClick={handleConfirmEndRoom}
-                className="h-10 flex items-center justify-center gap-1.5 rounded-lg bg-[#e5484d] text-xs font-medium text-white hover:bg-[#d03d42] transition-colors disabled:opacity-50"
+                className="h-11 flex items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-[#FC3B00] to-[#FF6129] text-xs font-bold text-white shadow-lg shadow-[#FC3B00]/25 hover:from-[#E03500] hover:to-[#F2551D] transition disabled:opacity-50"
               >
                 {endingRoom ? (
                   <>
@@ -1341,7 +1347,7 @@ function FohConsoleContent() {
                     <span>Ending...</span>
                   </>
                 ) : (
-                  <span>Confirm and end</span>
+                  <span>Confirm and End</span>
                 )}
               </button>
             </div>

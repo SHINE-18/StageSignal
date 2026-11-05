@@ -127,28 +127,28 @@ function JoinForm() {
   const isRoomValid = !!room && roomState === "active";
 
   return (
-    <div className="min-h-screen bg-[#141415] text-[#ededed] flex flex-col selection:bg-[#fc3b00] selection:text-white">
+    <div className="min-h-screen bg-[#000000] bg-arounda-glow text-white flex flex-col selection:bg-[#FC3B00] selection:text-white">
       <Navbar />
 
       <main className="flex-1 mx-auto w-full max-w-lg px-4 py-8 sm:py-12 flex flex-col justify-center">
         <Link
           href="/"
-          className="mb-6 inline-flex items-center gap-2 text-xs font-medium text-[#85858b] hover:text-[#ededed] transition-colors w-fit"
+          className="mb-6 inline-flex items-center gap-2 text-xs font-semibold text-stone-400 hover:text-white transition w-fit"
         >
-          <ArrowLeft size={14} strokeWidth={1.5} /> Back to overview
+          <ArrowLeft size={14} /> Back to overview
         </Link>
 
-        <div className="rounded-xl border border-white/[0.08] bg-[#19191b] p-6 sm:p-8">
+        <div className="rounded-3xl border border-white/10 bg-black/50 backdrop-blur-xl p-6 sm:p-8 shadow-2xl">
           {/* Header */}
-          <div className="inline-flex items-center gap-2 rounded-md border border-white/[0.08] bg-[#0f0f10] px-2.5 py-1 text-xs text-[#a1a1a6]">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#fc3b00]" />
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-semibold text-stone-200">
+            <span className="h-2 w-2 rounded-full bg-[#FC3B00] animate-pulse" />
             <span>Musician stage access</span>
           </div>
 
-          <h1 className="mt-3 text-2xl font-semibold tracking-tight text-[#ededed]">
-            Join worship stage
+          <h1 className="mt-3 text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
+            Join Worship Stage
           </h1>
-          <p className="mt-1 text-xs sm:text-sm text-[#a1a1a6] leading-relaxed">
+          <p className="mt-1 text-xs sm:text-sm text-stone-400 leading-relaxed">
             Connect your phone to the FOH audio console to send real-time monitor mix cues.
           </p>
 
@@ -174,34 +174,34 @@ function JoinForm() {
                 maxLength={14}
                 required
                 disabled={busy}
-                className="mt-1.5 w-full h-11 rounded-lg border border-white/[0.08] bg-[#0f0f10] px-3.5 font-mono text-base font-semibold tracking-wider text-[#ededed] placeholder-[#85858b]/60 outline-none transition-colors focus:border-[#fc3b00] disabled:opacity-50"
+                className="mt-1.5 w-full h-11 rounded-xl border border-white/15 bg-black/60 px-3.5 font-mono text-base font-semibold tracking-wider text-white placeholder-stone-500 outline-none transition focus:border-[#FC3B00] focus:ring-1 focus:ring-[#FC3B00] disabled:opacity-50"
               />
 
               {/* Room Live Verification Feedback */}
               {code.length >= 4 && (
                 <div className="mt-2">
                   {roomData === undefined ? (
-                    <span className="text-xs text-[#85858b] flex items-center gap-1.5">
-                      <Loader2 size={12} className="animate-spin text-[#fc3b00]" />
+                    <span className="text-xs text-stone-400 flex items-center gap-1.5">
+                      <Loader2 size={12} className="animate-spin text-[#FC3B00]" />
                       Checking code...
                     </span>
                   ) : room && roomState === "active" ? (
-                    <div className="flex items-center gap-2 rounded-lg border border-[#4cc38a]/30 bg-[#16211a] px-3 py-1.5 text-xs text-[#4cc38a]">
-                      <UserCheck size={14} strokeWidth={1.5} />
+                    <div className="flex items-center gap-2 rounded-xl border border-emerald-500/30 bg-emerald-950/40 px-3 py-1.5 text-xs text-emerald-300">
+                      <UserCheck size={14} strokeWidth={2} className="text-emerald-400" />
                       <span>
-                        Stage room verified: <strong className="text-[#ededed] font-medium">{room.name}</strong>
+                        Stage room verified: <strong className="text-white font-bold">{room.name}</strong>
                       </span>
                     </div>
                   ) : roomState === "ended" ? (
-                    <div className="rounded-lg border border-[#f59e0b]/30 bg-[#19191b] px-3 py-1.5 text-xs text-[#f59e0b]">
+                    <div className="rounded-xl border border-amber-500/30 bg-amber-950/40 px-3 py-1.5 text-xs text-amber-300">
                       This stage room has ended. Please ask FOH for the active code.
                     </div>
                   ) : roomState === "expired" ? (
-                    <div className="rounded-lg border border-[#f59e0b]/30 bg-[#19191b] px-3 py-1.5 text-xs text-[#f59e0b]">
+                    <div className="rounded-xl border border-amber-500/30 bg-amber-950/40 px-3 py-1.5 text-xs text-amber-300">
                       This room has expired after 12 hours. Please ask FOH to start a new session.
                     </div>
                   ) : (
-                    <div className="rounded-lg border border-[#e5484d]/30 bg-[#2b1718] px-3 py-1.5 text-xs text-[#e5484d]">
+                    <div className="rounded-xl border border-red-500/30 bg-red-950/40 px-3 py-1.5 text-xs text-red-300">
                       Room code not found. Please verify with FOH.
                     </div>
                   )}
@@ -211,11 +211,11 @@ function JoinForm() {
 
             {/* Profile Persistence Bar */}
             {isRemembered && (
-              <div className="flex items-center justify-between rounded-lg border border-white/[0.06] bg-[#0f0f10] px-3 py-2 text-xs text-[#a1a1a6]">
+              <div className="flex items-center justify-between rounded-xl border border-white/10 bg-black/60 px-3.5 py-2 text-xs text-stone-300">
                 <div className="flex items-center gap-2">
-                  <Check size={13} strokeWidth={1.5} className="text-[#4cc38a]" />
+                  <Check size={13} strokeWidth={2} className="text-[#4cc38a]" />
                   <span>
-                    Profile: <strong className="text-[#ededed] font-medium">{name}</strong> ({instrument})
+                    Profile: <strong className="text-white font-bold">{name}</strong> ({instrument})
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
@@ -278,12 +278,12 @@ function JoinForm() {
                         onClick={() => setInstrument(inst)}
                         className={`flex min-h-[50px] items-center gap-2.5 rounded-lg border px-3 py-2 text-left transition-colors ${
                           isSelected
-                            ? "border-[#fc3b00] bg-[#232325] text-[#ededed] font-medium"
-                            : "border-white/[0.08] bg-[#0f0f10] text-[#a1a1a6] hover:bg-[#19191b] hover:text-[#ededed]"
+                            ? "border-[#FC3B00] bg-[#FC3B00]/15 text-white ring-1 ring-[#FC3B00]"
+                            : "border-white/10 bg-white/[0.03] text-stone-300 hover:border-white/20 hover:bg-white/[0.06]"
                         }`}
                       >
                         <InstrumentIcon instrument={inst} />
-                        <span className="text-xs font-medium text-[#ededed] leading-tight">
+                        <span className="text-xs font-semibold text-white leading-tight">
                           {inst}
                         </span>
                       </button>
@@ -298,17 +298,17 @@ function JoinForm() {
               <button
                 type="submit"
                 disabled={busy || !isRoomValid || !name.trim()}
-                className="flex w-full h-11 items-center justify-center gap-2 rounded-lg bg-[#fc3b00] px-4 text-xs font-medium text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.18)] hover:bg-[#e03500] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                className="flex w-full h-12 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#FC3B00] to-[#FF6129] px-5 text-sm font-bold text-white shadow-lg shadow-[#FC3B00]/25 hover:from-[#E03500] hover:to-[#F2551D] transition active:scale-[0.99] disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 {busy ? (
                   <>
-                    <Loader2 size={15} className="animate-spin" />
-                    <span>Connecting to stage...</span>
+                    <Loader2 size={16} className="animate-spin" />
+                    <span>Connecting to Stage...</span>
                   </>
                 ) : (
                   <>
-                    <span>Request to join stage</span>
-                    <ArrowRight size={14} strokeWidth={1.5} />
+                    <span>Request to Join Stage</span>
+                    <ArrowRight size={16} />
                   </>
                 )}
               </button>
@@ -324,9 +324,9 @@ export default function JoinPage() {
   return (
     <Suspense
       fallback={
-        <div className="grid min-h-screen place-items-center bg-[#141415] text-[#ededed]">
-          <div className="flex items-center gap-2 text-sm text-[#85858b]">
-            <Loader2 size={16} className="animate-spin text-[#fc3b00]" />
+        <div className="grid min-h-screen place-items-center bg-[#000000] bg-arounda-glow text-white">
+          <div className="flex items-center gap-2 text-sm text-stone-400">
+            <Loader2 size={16} className="animate-spin text-[#FC3B00]" />
             <span>Loading...</span>
           </div>
         </div>

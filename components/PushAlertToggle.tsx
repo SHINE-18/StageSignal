@@ -59,10 +59,10 @@ export function PushAlertToggle({
           isSubscribed
             ? "border-emerald-500/30 bg-emerald-950/30 text-[#4cc38a]"
             : permission === "denied"
-            ? "border-red-500/30 bg-red-950/30 text-[#e5484d]"
+            ? "border-red-500/30 bg-red-950/30 text-red-400"
             : needsInstallGuide
             ? "border-amber-500/30 bg-amber-950/30 text-amber-300"
-            : "border-white/[0.08] bg-[#232325] text-[#ededed] hover:bg-[#2c2c2f]"
+            : "border-white/15 bg-white/5 text-stone-200 hover:bg-white/10 hover:text-white"
         }`}
       >
         {isLoading ? (
@@ -70,9 +70,9 @@ export function PushAlertToggle({
         ) : isSubscribed ? (
           <BellRing size={13} className="text-[#4cc38a]" />
         ) : permission === "denied" ? (
-          <BellOff size={13} className="text-[#e5484d]" />
+          <BellOff size={13} className="text-red-400" />
         ) : (
-          <Bell size={13} />
+          <Bell size={13} className="text-[#FF7145]" />
         )}
 
         <span>
@@ -94,36 +94,36 @@ export function PushAlertToggle({
 
       {/* Modal Dialog */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm animate-in fade-in duration-150">
-          <div className="w-full max-w-sm rounded-xl border border-white/[0.08] bg-[#19191b] p-6 text-[#ededed]">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-md animate-in fade-in duration-150">
+          <div className="w-full max-w-sm rounded-3xl border border-white/15 bg-[#0d0c0e] p-6 text-white shadow-2xl">
             {/* Header */}
-            <div className="flex items-center justify-between border-b border-white/[0.08] pb-3">
+            <div className="flex items-center justify-between border-b border-white/10 pb-3">
               <div className="flex items-center gap-2.5">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#232325] text-[#fc3b00] border border-white/[0.08]">
+                <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-[#FC3B00]/25 to-[#FF6129]/20 text-[#FC3B00] border border-[#FC3B00]/30 shadow-md shadow-[#FC3B00]/10">
                   {needsInstallGuide ? <Smartphone size={16} /> : <BellRing size={16} />}
                 </div>
-                <h3 className="text-sm font-semibold text-[#ededed] tracking-tight">
-                  {needsInstallGuide ? "Install to iPad Home Screen" : "FOH background alerts"}
+                <h3 className="text-sm font-bold text-white tracking-tight">
+                  {needsInstallGuide ? "Install to iPad Home Screen" : "FOH Background Alerts"}
                 </h3>
               </div>
               <button
                 onClick={() => setShowModal(false)}
-                className="rounded-lg p-1 text-[#85858b] hover:text-[#ededed] transition"
+                className="rounded-lg p-1 text-stone-400 hover:text-white transition"
               >
                 <X size={16} />
               </button>
             </div>
 
             {/* Content */}
-            <div className="py-4 text-xs text-[#a1a1a6] space-y-3 leading-relaxed">
+            <div className="py-4 text-xs text-stone-300 space-y-3 leading-relaxed">
               {needsInstallGuide ? (
                 <>
                   <p>
                     Apple iOS 16.4+ requires Web Apps to be installed on your Home Screen before they can send push notifications over other mixing apps:
                   </p>
-                  <ol className="list-decimal pl-4 space-y-2 text-[#ededed]">
+                  <ol className="list-decimal pl-4 space-y-2 text-white">
                     <li>
-                      Tap the <strong>Share</strong> button <span className="text-[#fc3b00] font-mono">(square with arrow)</span> in iPad Safari.
+                      Tap the <strong>Share</strong> button <span className="text-[#FF7145] font-mono">(square with arrow)</span> in iPad Safari.
                     </li>
                     <li>
                       Scroll down and tap <strong>&ldquo;Add to Home Screen&rdquo;</strong>.
@@ -138,11 +138,11 @@ export function PushAlertToggle({
                 </>
               ) : isSubscribed ? (
                 <>
-                  <div className="flex items-center gap-2 rounded-lg border border-emerald-500/20 bg-emerald-950/20 p-3 text-[#4cc38a]">
-                    <Check size={16} className="shrink-0 text-[#4cc38a]" />
+                  <div className="flex items-center gap-2 rounded-xl border border-emerald-500/20 bg-emerald-950/40 p-3 text-emerald-300">
+                    <Check size={16} className="shrink-0 text-emerald-400" />
                     <span>Push notifications are actively registered for this FOH session.</span>
                   </div>
-                  <p className="text-[11px] text-[#85858b] leading-relaxed">
+                  <p className="text-[11px] text-stone-400 leading-relaxed">
                     When you switch to your digital mixer app, new requests and urgent SOS calls will appear as visual system banners at the top of your iPad.
                   </p>
                 </>
@@ -153,7 +153,7 @@ export function PushAlertToggle({
               )}
 
               {error && (
-                <div className="flex items-start gap-2 rounded-lg border border-red-500/30 bg-red-950/40 p-2.5 text-[11px] text-red-300">
+                <div className="flex items-start gap-2 rounded-xl border border-red-500/30 bg-red-950/40 p-2.5 text-[11px] text-red-300">
                   <AlertTriangle size={14} className="shrink-0 mt-0.5" />
                   <span>{error}</span>
                 </div>
@@ -161,14 +161,14 @@ export function PushAlertToggle({
             </div>
 
             {/* Actions */}
-            <div className="flex items-center justify-end gap-2 border-t border-white/[0.08] pt-3">
+            <div className="flex items-center justify-end gap-2 border-t border-white/10 pt-3">
               {isSubscribed ? (
                 <button
                   onClick={async () => {
                     await disableAlerts();
                     setShowModal(false);
                   }}
-                  className="rounded-lg border border-red-500/30 bg-red-950/40 px-3 py-1.5 text-xs font-semibold text-red-300 hover:bg-red-900/40 transition"
+                  className="rounded-xl border border-red-500/30 bg-red-950/40 px-3.5 py-1.5 text-xs font-semibold text-red-300 hover:bg-red-900/40 transition"
                 >
                   Disable alerts
                 </button>
@@ -179,7 +179,7 @@ export function PushAlertToggle({
                     if (success) setShowModal(false);
                   }}
                   disabled={isLoading}
-                  className="rounded-lg bg-[#fc3b00] hover:bg-[#e03500] px-3.5 py-1.5 text-xs font-semibold text-white transition active:translate-y-px"
+                  className="rounded-xl bg-gradient-to-r from-[#FC3B00] to-[#FF6129] px-4 py-1.5 text-xs font-bold text-white shadow-md shadow-[#FC3B00]/25 transition hover:from-[#E03500] hover:to-[#F2551D]"
                 >
                   {isLoading ? "Enabling..." : "Allow alerts"}
                 </button>
@@ -187,7 +187,7 @@ export function PushAlertToggle({
 
               <button
                 onClick={() => setShowModal(false)}
-                className="rounded-lg border border-white/[0.08] bg-[#232325] px-3.5 py-1.5 text-xs font-semibold text-[#ededed] hover:bg-[#2c2c2f] transition"
+                className="rounded-xl border border-white/15 bg-white/5 px-3.5 py-1.5 text-xs font-semibold text-stone-300 hover:bg-white/10 hover:text-white transition"
               >
                 Close
               </button>
