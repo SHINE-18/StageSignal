@@ -293,13 +293,13 @@ function MusicianStageContent() {
   // Loading state
   if (!token || session === undefined) {
     return (
-      <main className="grid min-h-screen place-items-center bg-[#000000] text-white p-4 bg-arounda-glow">
+      <main className="grid min-h-screen place-items-center bg-[#141415] text-[#ededed] p-4">
         <div className="flex flex-col items-center gap-3 text-center">
-          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[#FC3B00]/20 to-[#FF6129]/15 text-[#FC3B00] border border-[#FC3B00]/30 shadow-xl shadow-[#FC3B00]/10">
-            <Radio size={28} className="animate-spin text-[#FC3B00]" />
+          <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#232325] text-[#fc3b00] border border-white/[0.08]">
+            <Radio size={22} className="animate-spin text-[#fc3b00]" />
           </div>
-          <h2 className="text-base font-bold text-white tracking-tight">Connecting to Stage...</h2>
-          <p className="text-xs text-stone-400 font-mono">
+          <h2 className="text-sm font-semibold text-[#ededed]">Connecting to stage...</h2>
+          <p className="text-xs text-[#85858b] font-mono">
             Verifying approved musician session
           </p>
         </div>
@@ -309,10 +309,10 @@ function MusicianStageContent() {
 
   if (!session.authorized || !session.participant) {
     return (
-      <main className="grid min-h-screen place-items-center bg-[#000000] text-white p-4 bg-arounda-glow">
-        <div className="flex items-center gap-2 text-sm text-stone-400">
-          <Loader2 size={16} className="animate-spin text-[#FC3B00]" />
-          <span>Redirecting to waiting room...</span>
+      <main className="grid min-h-screen place-items-center bg-[#141415] text-[#ededed] p-4">
+        <div className="flex items-center gap-2 text-sm text-[#85858b]">
+          <Loader2 size={16} className="animate-spin text-[#fc3b00]" />
+          <span>Connecting to stage session...</span>
         </div>
       </main>
     );
@@ -326,26 +326,26 @@ function MusicianStageContent() {
   const isHostOnline = lastHostSeenAt ? currentTime - lastHostSeenAt < 75_000 : true;
 
   return (
-    <div className="min-h-screen bg-[#000000] text-white flex flex-col no-overscroll select-none bg-arounda-glow">
+    <div className="min-h-screen bg-[#141415] text-[#ededed] flex flex-col no-overscroll select-none">
       <OfflineBanner role="musician" />
 
       {/* Musician Top Bar */}
-      <header className="sticky top-0 z-30 border-b border-white/10 bg-black/60 backdrop-blur-xl px-4 py-3.5">
+      <header className="sticky top-0 z-30 border-b border-white/[0.08] bg-[#0f0f10] px-4 py-3">
         <div className="mx-auto flex max-w-lg items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[#FC3B00]/25 to-[#FF6129]/20 text-[#FC3B00] border border-[#FC3B00]/30 shadow-md">
-              <Radio size={18} className={isOnline ? "animate-pulse" : "text-stone-500"} />
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#19191b] border border-white/[0.08] text-[#fc3b00]">
+              <Radio size={16} strokeWidth={1.5} />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-sm font-extrabold text-white tracking-tight">
+                <span className="text-sm font-semibold text-[#ededed]">
                   {participant.name}
                 </span>
-                <span className="rounded-full border border-white/15 bg-white/5 px-2.5 py-0.5 text-[10px] font-bold text-[#FF7145]">
+                <span className="rounded border border-white/[0.08] bg-[#19191b] px-2 py-0.5 text-[10px] font-mono text-[#a1a1a6]">
                   {participant.instrument}
                 </span>
               </div>
-              <div className="text-[11px] text-stone-400 font-mono">
+              <div className="text-[11px] text-[#85858b] font-mono">
                 {participant.roomName} • {participant.roomCode}
               </div>
             </div>
@@ -354,13 +354,13 @@ function MusicianStageContent() {
           {/* Connection Chip */}
           <div>
             {isOnline ? (
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-950/40 px-3 py-1 text-xs font-semibold text-emerald-300">
-                <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="inline-flex items-center gap-1.5 rounded-md border border-[#4cc38a]/20 bg-[#4cc38a]/10 px-2.5 py-1 text-xs font-medium text-[#4cc38a]">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#4cc38a]" />
                 <span className="text-[11px]">Connected</span>
               </span>
             ) : (
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-red-500/30 bg-red-950/40 px-3 py-1 text-xs font-semibold text-red-300">
-                <WifiOff size={12} />
+              <span className="inline-flex items-center gap-1.5 rounded-md border border-[#e5484d]/20 bg-[#e5484d]/10 px-2.5 py-1 text-xs font-medium text-[#e5484d]">
+                <WifiOff size={12} strokeWidth={1.5} />
                 <span className="text-[11px]">Offline</span>
               </span>
             )}
@@ -368,74 +368,76 @@ function MusicianStageContent() {
         </div>
       </header>
 
-      {/* Main Stage Communication Interface — Spacious & Uncrowded */}
-      <main className="flex-1 mx-auto w-full max-w-lg px-4 py-5 sm:py-6 space-y-5">
-        {/* Non-Blocking Host Presence Warning (PRD Section 8 & 16) */}
+      {/* Main Stage Communication Interface */}
+      <main className="flex-1 mx-auto w-full max-w-lg px-4 py-5 space-y-4">
+        {/* Non-Blocking Host Presence Warning */}
         {lastHostSeenAt && !isHostOnline && (
-          <div className="rounded-2xl border border-amber-500/30 bg-amber-950/30 p-4 text-xs text-amber-200 flex items-start gap-3 shadow-lg animate-in fade-in">
-            <AlertTriangle size={18} className="text-amber-400 shrink-0 mt-0.5" />
+          <div className="rounded-lg border border-[#f59e0b]/25 bg-[#19191b] p-3.5 text-xs text-[#f59e0b] flex items-start gap-2.5">
+            <AlertTriangle size={16} strokeWidth={1.5} className="shrink-0 mt-0.5" />
             <div>
-              <span className="font-bold text-amber-300">FOH may be disconnected</span>
-              <p className="mt-0.5 text-[11px] text-amber-200/80 leading-relaxed">
-                The sound engineer&apos;s console hasn&apos;t checked in recently. You can still send cues, and FOH will see them as soon as their console reconnects.
+              <span className="font-medium">FOH console may be offline</span>
+              <p className="mt-0.5 text-[11px] text-[#a1a1a6] leading-relaxed">
+                The sound engineer hasn&apos;t checked in recently. Cues sent now will queue on the server for when FOH reconnects.
               </p>
             </div>
           </div>
         )}
 
-        {/* Offline Warning Banner (Disables all submissions) */}
+        {/* Offline Warning Banner */}
         {!canSend && (
-          <div className="rounded-2xl border border-red-500/30 bg-red-950/40 p-4 text-xs text-red-200 flex items-center gap-2.5">
-            <WifiOff size={18} className="text-red-400 shrink-0" />
-            <span>
-              <strong>Disconnected from network:</strong> Request submission is disabled until connection is restored.
-            </span>
+          <div className="rounded-lg border border-[#e5484d]/25 bg-[#19191b] p-3.5 text-xs text-[#e5484d] flex items-center gap-2">
+            <WifiOff size={16} strokeWidth={1.5} className="shrink-0" />
+            <span>Connection lost. Reconnecting to stage network...</span>
           </div>
         )}
 
         {/* Global Action Error Toast */}
         {actionError && (
-          <div className="rounded-2xl border border-red-500/40 bg-red-950/50 p-4 text-xs text-red-200 flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <AlertTriangle size={16} className="text-red-400 shrink-0" />
+          <div className="rounded-lg border border-[#e5484d]/30 bg-[#19191b] p-3 text-xs text-[#e5484d] flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <AlertTriangle size={15} strokeWidth={1.5} />
               <span>{actionError}</span>
             </div>
             <button
               onClick={() => setActionError(null)}
-              className="text-stone-400 hover:text-white"
+              className="text-[#85858b] hover:text-[#ededed] p-1"
             >
-              <X size={16} />
+              <X size={14} />
             </button>
           </div>
         )}
 
-        {/* LIVE REQUEST STATUS BANNER (When a request is open) */}
+        {/* LIVE REQUEST STATUS BANNER */}
         {activeRequest && (
           <div
-            className={`rounded-2xl border p-4 shadow-xl transition-all ${
+            className={`rounded-xl border p-4 transition-colors ${
               activeRequest.status === "acknowledged"
-                ? "border-[#FF6129]/50 bg-[#FF6129]/15 text-white shadow-lg shadow-[#FF6129]/10"
+                ? "border-[#4cc38a]/30 bg-[#19191b]"
                 : activeRequest.priority === "urgent"
-                ? "border-[#FC3B00]/60 bg-[#FC3B00]/20 text-white shadow-lg shadow-[#FC3B00]/20"
-                : "border-amber-500/40 bg-amber-950/40 text-white"
+                ? "border-[#e5484d]/40 bg-[#19191b]"
+                : "border-[#f59e0b]/30 bg-[#19191b]"
             }`}
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                {activeRequest.status === "acknowledged" ? (
-                  <span className="flex h-2.5 w-2.5 rounded-full bg-[#FF6129] animate-pulse" />
-                ) : (
-                  <span className="flex h-2.5 w-2.5 rounded-full bg-amber-400 animate-ping" />
-                )}
-                <span className="text-xs font-bold uppercase tracking-wider">
+                <span
+                  className={`h-2 w-2 rounded-full ${
+                    activeRequest.status === "acknowledged"
+                      ? "bg-[#4cc38a]"
+                      : activeRequest.priority === "urgent"
+                      ? "bg-[#e5484d]"
+                      : "bg-[#f59e0b]"
+                  }`}
+                />
+                <span className="text-xs font-medium text-[#ededed]">
                   {activeRequest.status === "acknowledged"
-                    ? "FOH Acknowledged"
+                    ? "FOH acknowledged"
                     : activeRequest.priority === "urgent"
-                    ? "Urgent SOS Pending"
-                    : "Request Pending"}
+                    ? "Urgent SOS pending"
+                    : "Request received by FOH"}
                 </span>
               </div>
-              <span className="text-[11px] font-mono opacity-70">
+              <span className="text-[11px] font-mono text-[#85858b]">
                 {new Date(activeRequest.createdAt).toLocaleTimeString([], {
                   hour: "2-digit",
                   minute: "2-digit",
@@ -443,56 +445,63 @@ function MusicianStageContent() {
               </span>
             </div>
 
-            <p className="mt-2 text-sm font-semibold text-white">
+            <p className="mt-2 text-sm font-medium text-[#ededed]">
               {activeRequest.category}: &ldquo;{activeRequest.message}&rdquo;
             </p>
 
-            <div className="mt-2 text-xs font-medium">
+            <div className="mt-2 text-xs">
               {activeRequest.status === "acknowledged" ? (
-                <span className="text-[#FF7145] flex items-center gap-1.5">
-                  <CheckCircle2 size={14} className="text-[#FF6129]" />
-                  FOH engineer is adjusting your mix right now.
+                <span className="text-[#4cc38a] flex items-center gap-1.5">
+                  <CheckCircle2 size={14} strokeWidth={1.5} />
+                  FOH engineer is adjusting your mix
                 </span>
               ) : (
-                <span className="text-amber-300 flex items-center gap-1.5">
-                  <Clock size={14} className="text-amber-400" />
-                  Received by sound booth · Awaiting engineer acknowledgement
+                <span className="text-[#85858b] flex items-center gap-1.5">
+                  <Clock size={14} strokeWidth={1.5} />
+                  Awaiting sound engineer acknowledgement
                 </span>
               )}
             </div>
           </div>
         )}
 
-        {/* SOS BUTTON (Prominent, High Contrast, Separated from Grid) */}
+        {/* SOS BUTTON (Studio Emergency Switch) */}
         <div>
           <button
             type="button"
             disabled={controlsDisabled}
             onClick={() => setShowSosModal(true)}
-            className="w-full min-h-[64px] flex items-center justify-center gap-3.5 rounded-2xl border-2 border-[#FC3B00]/60 bg-gradient-to-r from-[#FC3B00]/20 via-red-950/80 to-[#FC3B00]/20 px-5 py-4 text-white shadow-xl shadow-[#FC3B00]/20 hover:border-[#FC3B00] active:scale-[0.98] transition disabled:opacity-40 disabled:cursor-not-allowed"
+            className="w-full min-h-[56px] flex items-center justify-between rounded-xl border border-[#e5484d]/35 bg-[#19191b] hover:bg-[#232325] px-4 py-3 text-left transition-colors disabled:opacity-40"
           >
-            <AlertTriangle size={26} className="text-[#FC3B00] animate-pulse" />
-            <div className="text-left">
-              <div className="text-sm font-black tracking-wider uppercase text-white">
-                {successFeedbackId === "sos" ? "SOS Transmitted to FOH!" : "SOS Urgent Alert"}
+            <div className="flex items-center gap-3">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#2b1718] border border-[#e5484d]/30 text-[#e5484d]">
+                <AlertTriangle size={18} strokeWidth={1.5} />
               </div>
-              <div className="text-[11px] text-stone-300 leading-tight">
-                Immediate stage emergency • Tap for confirmation
+              <div>
+                <div className="text-xs font-semibold text-[#ededed]">
+                  {successFeedbackId === "sos" ? "SOS transmitted to FOH" : "Emergency SOS alert"}
+                </div>
+                <div className="text-[11px] text-[#85858b]">
+                  Urgent stage alert • Tap to confirm
+                </div>
               </div>
             </div>
+            <span className="text-[11px] font-mono text-[#e5484d] uppercase px-2 py-0.5 rounded border border-[#e5484d]/30">
+              SOS
+            </span>
           </button>
         </div>
 
-        {/* PRESET REQUEST BUTTONS GRID (10 Preset Buttons with Spacious Touch Targets >= 58px) */}
+        {/* PRESET REQUEST BUTTONS GRID */}
         <div>
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-bold uppercase tracking-wider text-stone-400">
-              One-Tap Monitor Presets
+          <div className="flex items-center justify-between mb-2.5">
+            <span className="text-xs font-medium text-[#a1a1a6]">
+              Monitor mix presets
             </span>
-            <span className="text-[11px] text-stone-500 font-mono">1 tap = sent</span>
+            <span className="text-[11px] text-[#85858b] font-mono">1-tap delivery</span>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
             {PRESET_BUTTONS.map((preset) => {
               const Icon = preset.icon;
               const isSubmitting = submittingCategory === preset.id;
@@ -504,37 +513,37 @@ function MusicianStageContent() {
                   type="button"
                   disabled={controlsDisabled}
                   onClick={() => handleSendPreset(preset.category, preset.id)}
-                  className={`flex min-h-[58px] items-center justify-between rounded-2xl border px-4 py-3.5 text-left transition active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed ${
+                  className={`flex min-h-[54px] items-center justify-between rounded-xl border px-3.5 py-3 text-left transition-colors disabled:opacity-40 ${
                     isSent
-                      ? "border-emerald-500 bg-emerald-950/50 text-emerald-300 ring-1 ring-emerald-500"
-                      : "border-white/10 bg-white/[0.04] text-white hover:border-white/20 hover:bg-white/[0.08]"
+                      ? "border-[#4cc38a]/40 bg-[#16211a] text-[#4cc38a]"
+                      : "border-white/[0.08] bg-[#19191b] hover:bg-[#232325] text-[#ededed]"
                   }`}
                 >
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2.5">
                     <div
-                      className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ${
+                      className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${
                         isSent
-                          ? "bg-emerald-500/20 text-emerald-400"
-                          : "bg-white/[0.06] text-[#FF6129] border border-white/10"
+                          ? "bg-[#4cc38a]/20 text-[#4cc38a]"
+                          : "bg-[#232325] text-[#a1a1a6] border border-white/[0.06]"
                       }`}
                     >
-                      {isSent ? <Check size={18} /> : <Icon size={18} />}
+                      {isSent ? <Check size={16} strokeWidth={1.5} /> : <Icon size={16} strokeWidth={1.5} />}
                     </div>
                     <div>
-                      <div className="text-sm font-bold text-white leading-tight">
+                      <div className="text-xs font-medium text-[#ededed]">
                         {preset.label}
                       </div>
-                      <div className="text-[11px] text-stone-400 line-clamp-1 leading-snug">
-                        {isSent ? "Sent to FOH console" : preset.description}
+                      <div className="text-[11px] text-[#85858b] line-clamp-1">
+                        {isSent ? "Sent to sound engineer" : preset.description}
                       </div>
                     </div>
                   </div>
 
                   {isSubmitting && (
-                    <Loader2 size={16} className="animate-spin text-[#FF6129] shrink-0 ml-2" />
+                    <Loader2 size={15} className="animate-spin text-[#fc3b00] shrink-0 ml-2" />
                   )}
                   {isSent && (
-                    <span className="text-[11px] font-bold text-emerald-400 font-mono ml-2">
+                    <span className="text-[10px] font-mono text-[#4cc38a] ml-2">
                       SENT
                     </span>
                   )}
@@ -545,12 +554,12 @@ function MusicianStageContent() {
         </div>
 
         {/* CUSTOM MESSAGE INPUT */}
-        <div className="rounded-3xl border border-white/10 bg-black/50 backdrop-blur-xl p-5 shadow-xl space-y-3">
+        <div className="rounded-xl border border-white/[0.08] bg-[#19191b] p-4 space-y-3">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-bold uppercase tracking-wider text-stone-300">
-              Custom Monitor Request
+            <label className="text-xs font-medium text-[#a1a1a6]">
+              Custom monitor cue
             </label>
-            <span className="text-[11px] font-mono text-stone-500">
+            <span className="text-[11px] font-mono text-[#85858b]">
               {customText.length}/240
             </span>
           </div>
@@ -560,80 +569,80 @@ function MusicianStageContent() {
               value={customText}
               onChange={(e) => setCustomText(e.target.value.slice(0, 240))}
               disabled={controlsDisabled}
-              placeholder="e.g. Please add a touch of reverb to acoustic guitar..."
+              placeholder="e.g. Add slightly more reverb to vocal..."
               rows={2}
-              className="w-full rounded-xl border border-white/15 bg-white/[0.04] p-3.5 text-xs sm:text-sm text-white placeholder-stone-600 outline-none transition focus:border-[#FC3B00] focus:ring-1 focus:ring-[#FC3B00] disabled:opacity-50 resize-none"
+              className="w-full rounded-lg border border-white/[0.08] bg-[#0f0f10] p-3 text-xs text-[#ededed] placeholder-[#85858b]/60 outline-none transition-colors focus:border-[#fc3b00] disabled:opacity-50 resize-none"
             />
 
             <div className="flex items-center justify-between">
               {customSuccess ? (
-                <span className="text-xs font-semibold text-emerald-400 flex items-center gap-1.5">
+                <span className="text-xs font-medium text-[#4cc38a] flex items-center gap-1.5">
                   <Check size={14} /> Request sent to FOH
                 </span>
               ) : (
-                <span className="text-[11px] text-stone-500">
-                  Specific cue for sound engineer
+                <span className="text-[11px] text-[#85858b]">
+                  Sent directly to FOH mixing desk
                 </span>
               )}
 
               <button
                 type="submit"
                 disabled={controlsDisabled || !customText.trim()}
-                className="flex min-h-[44px] items-center gap-1.5 rounded-xl bg-gradient-to-r from-[#FC3B00] to-[#FF6129] px-4 py-2 text-xs font-bold text-white shadow-lg shadow-[#FC3B00]/25 hover:from-[#E03500] hover:to-[#F2551D] active:scale-95 transition disabled:opacity-40 disabled:cursor-not-allowed"
+                className="flex h-9 items-center gap-1.5 rounded-lg bg-[#fc3b00] px-3.5 text-xs font-medium text-white hover:bg-[#e03500] transition-colors shadow-[inset_0_1px_0_rgba(255,255,255,0.18)] disabled:opacity-40"
               >
                 {customSending ? (
-                  <Loader2 size={14} className="animate-spin" />
+                  <Loader2 size={13} className="animate-spin" />
                 ) : (
-                  <Send size={14} />
+                  <Send size={13} strokeWidth={1.5} />
                 )}
-                <span>Send Request</span>
+                <span>Send cue</span>
               </button>
             </div>
           </form>
         </div>
 
-        {/* MY RECENT REQUEST HISTORY (Collapsible Drawer / Section) */}
-        <div className="rounded-3xl border border-white/10 bg-black/50 backdrop-blur-xl p-5 shadow-xl space-y-3">
+        {/* MY RECENT REQUEST HISTORY */}
+        <div className="rounded-xl border border-white/[0.08] bg-[#19191b] p-4 space-y-3">
           <button
             type="button"
             onClick={() => setIsHistoryExpanded(!isHistoryExpanded)}
             className="flex items-center justify-between w-full text-left"
           >
             <div className="flex items-center gap-2">
-              <History size={16} className="text-[#FF6129]" />
-              <span className="text-xs font-bold uppercase tracking-wider text-stone-300">
-                My Request History
+              <History size={15} strokeWidth={1.5} className="text-[#a1a1a6]" />
+              <span className="text-xs font-medium text-[#a1a1a6]">
+                Request history
               </span>
-              <span className="rounded-full border border-white/15 bg-white/5 px-2.5 py-0.5 text-[10px] font-mono text-stone-300">
+              <span className="rounded border border-white/[0.08] bg-[#232325] px-1.5 py-0.2 text-[10px] font-mono text-[#85858b]">
                 {myRequests?.length || 0}
               </span>
             </div>
-            <div className="text-stone-400">
-              {isHistoryExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+            <div className="text-[#85858b]">
+              {isHistoryExpanded ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
             </div>
           </button>
 
           {isHistoryExpanded && (
-            <div className="pt-3 border-t border-white/10 space-y-2.5">
+            <div className="pt-3 border-t border-white/[0.06] space-y-2">
               {myRequests && myRequests.length > 0 ? (
                 myRequests.slice(0, 10).map((req) => (
                   <div
                     key={req._id}
-                    className="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.03] p-3 text-xs"
+                    className="flex items-center justify-between rounded-lg border border-white/[0.06] bg-[#0f0f10] p-2.5 text-xs"
                   >
                     <div>
-                      <div className="font-semibold text-white flex items-center gap-2">
+                      <div className="font-medium text-[#ededed] flex items-center gap-2">
                         <span>{req.category}</span>
                         {req.priority === "urgent" && (
-                          <span className="rounded-full bg-red-950 px-2 py-0.2 text-[9px] font-bold text-red-400 border border-red-500/30">
+                          <span className="rounded bg-[#e5484d]/15 px-1.5 py-0.5 text-[9px] font-mono text-[#e5484d] border border-[#e5484d]/30">
                             SOS
                           </span>
                         )}
                       </div>
-                      <div className="text-[11px] text-stone-400 line-clamp-1 mt-0.5">
+                      <div className="text-[11px] text-[#85858b] line-clamp-1 mt-0.5">
                         {req.message}
                       </div>
-                      <div className="text-[10px] text-stone-500 font-mono mt-0.5">
+                      <div className="text-[10px] text-[#85858b] font-mono mt-0.5">
                         {new Date(req.createdAt).toLocaleTimeString([], {
                           hour: "2-digit",
                           minute: "2-digit",
@@ -643,12 +652,12 @@ function MusicianStageContent() {
 
                     <div>
                       <span
-                        className={`rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${
+                        className={`rounded px-2 py-0.5 text-[10px] font-mono ${
                           req.status === "resolved"
-                            ? "bg-emerald-950/50 text-emerald-300 border border-emerald-500/30"
+                            ? "bg-[#4cc38a]/10 text-[#4cc38a] border border-[#4cc38a]/20"
                             : req.status === "acknowledged"
-                            ? "bg-[#FF6129]/20 text-[#FF7145] border border-[#FF6129]/40"
-                            : "bg-amber-950/50 text-amber-300 border border-amber-500/30"
+                            ? "bg-[#fc3b00]/10 text-[#fc3b00] border border-[#fc3b00]/25"
+                            : "bg-[#f59e0b]/10 text-[#f59e0b] border border-[#f59e0b]/20"
                         }`}
                       >
                         {req.status}
@@ -657,8 +666,8 @@ function MusicianStageContent() {
                   </div>
                 ))
               ) : (
-                <div className="py-4 text-center text-xs text-stone-500">
-                  No requests sent yet during this session.
+                <div className="py-4 text-center text-xs text-[#85858b]">
+                  No requests sent yet during this session
                 </div>
               )}
             </div>
@@ -668,23 +677,23 @@ function MusicianStageContent() {
 
       {/* SOS CONFIRMATION MODAL */}
       {showSosModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-md animate-in fade-in duration-200">
-          <div className="w-full max-w-sm rounded-3xl border border-white/15 bg-[#0F0E11] p-6 sm:p-7 text-white shadow-2xl text-center space-y-4">
-            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[#FC3B00]/25 to-red-950 text-[#FC3B00] border border-[#FC3B00]/40">
-              <AlertTriangle size={32} className="animate-pulse" />
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 animate-in fade-in duration-150">
+          <div className="w-full max-w-sm rounded-xl border border-white/[0.08] bg-[#19191b] p-6 text-[#ededed] text-center space-y-4">
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-lg bg-[#2b1718] text-[#e5484d] border border-[#e5484d]/30">
+              <AlertTriangle size={24} strokeWidth={1.5} />
             </div>
 
-            <h3 className="text-xl font-extrabold text-white tracking-tight">Send Urgent SOS?</h3>
-            <p className="text-xs text-stone-300 leading-relaxed">
-              This will trigger a persistent red emergency alert across the FOH sound engineer&apos;s console for <strong className="text-white">{participant.name}</strong> ({participant.instrument}).
+            <h3 className="text-base font-semibold text-[#ededed]">Send urgent emergency SOS?</h3>
+            <p className="text-xs text-[#a1a1a6] leading-relaxed">
+              This triggers a high-visibility emergency alert across the FOH sound console for <strong className="text-[#ededed]">{participant.name}</strong> ({participant.instrument}).
             </p>
 
-            <div className="grid grid-cols-2 gap-3 pt-2">
+            <div className="grid grid-cols-2 gap-2.5 pt-2">
               <button
                 type="button"
                 disabled={isSosSubmitting}
                 onClick={() => setShowSosModal(false)}
-                className="rounded-xl border border-white/15 bg-white/5 py-3 text-xs font-semibold text-stone-300 hover:bg-white/10 hover:text-white transition"
+                className="h-10 rounded-lg border border-white/[0.08] bg-[#232325] text-xs font-medium text-[#ededed] hover:bg-[#2b2b2e] transition-colors"
               >
                 Cancel
               </button>
@@ -692,12 +701,12 @@ function MusicianStageContent() {
                 type="button"
                 disabled={isSosSubmitting}
                 onClick={handleConfirmSos}
-                className="flex items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-[#FC3B00] to-[#FF6129] py-3 text-xs font-bold text-white shadow-lg shadow-[#FC3B00]/30 hover:from-[#E03500] hover:to-[#F2551D] transition disabled:opacity-50"
+                className="h-10 flex items-center justify-center gap-1.5 rounded-lg bg-[#e5484d] text-xs font-medium text-white hover:bg-[#d03d42] transition-colors disabled:opacity-50"
               >
                 {isSosSubmitting ? (
                   <>
-                    <Loader2 size={14} className="animate-spin" />
-                    <span>Sending...</span>
+                    <Loader2 size={13} className="animate-spin" />
+                    <span>Transmitting...</span>
                   </>
                 ) : (
                   <span>Confirm SOS</span>
@@ -715,10 +724,10 @@ export default function MusicianPage() {
   return (
     <Suspense
       fallback={
-        <div className="grid min-h-screen place-items-center bg-[#000000] text-white">
-          <div className="flex items-center gap-2 text-sm text-stone-400">
-            <Loader2 size={18} className="animate-spin text-[#FC3B00]" />
-            <span>Loading Stage Controls...</span>
+        <div className="grid min-h-screen place-items-center bg-[#141415] text-[#ededed]">
+          <div className="flex items-center gap-2 text-sm text-[#85858b]">
+            <Loader2 size={16} className="animate-spin text-[#fc3b00]" />
+            <span>Loading stage console...</span>
           </div>
         </div>
       }

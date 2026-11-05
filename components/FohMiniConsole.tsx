@@ -17,12 +17,12 @@ import {
   Volume2,
   CheckCircle,
   Clock,
+  AlertTriangle,
 } from "lucide-react";
 import { LiveClock } from "./LiveClock";
 import { OfflineBanner } from "./OfflineBanner";
 import { PushAlertToggle } from "./PushAlertToggle";
 import { PipAlertButton } from "./PipAlertButton";
-import { useConnectionState } from "../hooks/useConnectionState";
 
 function formatRelativeTime(timestamp: number, currentNow: number): string {
   const diffSec = Math.max(0, Math.floor((currentNow - timestamp) / 1000));
@@ -42,11 +42,10 @@ export function FohMiniConsole({
   roomId: Id<"rooms">;
   hostToken: string;
   onSwitchToFull?: () => void;
+  isStandaloneRoute?: boolean;
 }) {
-  const { isOnline } = useConnectionState();
   const [copiedCode, setCopiedCode] = useState(false);
   const [currentTime, setCurrentTime] = useState(() => Date.now());
-  const [edgeGlow, setEdgeGlow] = useState<"blue" | "red" | null>(null);
   const [actionError, setActionError] = useState<string | null>(null);
 
   // Queries
@@ -98,11 +97,11 @@ export function FohMiniConsole({
 
   // Reactive ticking interval
   useEffect(() => {
-    const timer = setInterval(() => setCurrentTime(Date.now()), 3000);
-    return () => clearInterval(timer);
+    const t = setInterval(() => setCurrentTime(Date.now()), 3000);
+    return () => clearInterval(t);
   }, []);
 
-  // Filter requests
+  // Filter open & SOS requests
   const openRequests = useMemo(() => {
     if (!allRequests) return [];
     return allRequests
@@ -111,74 +110,47 @@ export function FohMiniConsole({
   }, [allRequests]);
 
   const activeSos = useMemo(() => {
-    return openRequests.filter((r) => r.priority === "urgent");
-  }, [openRequests]);
+    if (!allRequests) return [];
+    return allRequests.filter((r) => r.priority === "urgent" && r.status !== "resolved");
+  }, [allRequests]);
 
   const pendingParticipants = useMemo(() => {
     if (!participants) return [];
     return participants.filter((p) => p.status === "pending");
   }, [participants]);
 
-  // Edge glow detection on new incoming requests
-  const prevReqCountRef = useRef<number>(0);
+  // Dynamic window title count badge
   useEffect(() => {
-    if (!allRequests) return;
-    if (prevReqCountRef.current > 0 && allRequests.length > prevReqCountRef.current) {
-      const newest = allRequests[0];
-      const isUrgent = newest?.priority === "urgent";
-      setEdgeGlow(isUrgent ? "red" : "blue");
-      const timeout = setTimeout(() => setEdgeGlow(null), isUrgent ? 2200 : 1600);
-      return () => clearTimeout(timeout);
-    }
-    prevReqCountRef.current = allRequests.length;
-  }, [allRequests]);
-
-  // Document title and App badge updates
-  useEffect(() => {
-    const openCount = openRequests.length;
-    const hasUnackSos = activeSos.some((s) => s.status === "pending");
-
-    if (hasUnackSos) {
-      document.title = `🚨 (${openCount}) SOS — StageSignal`;
-    } else if (openCount > 0) {
-      document.title = `(${openCount}) StageSignal Mini`;
+    if (openRequests.length > 0) {
+      document.title = `(${openRequests.length}) StageSignal FOH`;
     } else {
-      document.title = "StageSignal — FOH Mini";
+      document.title = "StageSignal FOH Mini";
     }
-
     if ("setAppBadge" in navigator) {
-      if (openCount > 0) {
-        (navigator as any).setAppBadge(openCount).catch(() => {});
-      } else if ("clearAppBadge" in navigator) {
+      if (openRequests.length > 0) {
+        (navigator as any).setAppBadge(openRequests.length).catch(() => {});
+      } else {
         (navigator as any).clearAppBadge().catch(() => {});
       }
     }
-  }, [openRequests.length, activeSos]);
+  }, [openRequests.length]);
 
-  // Request actions
+  // Handlers
   const handleAcknowledge = async (requestId: Id<"requests">) => {
     setActionError(null);
     try {
-      await updateStatusMutation({
-        requestId,
-        hostToken,
-        status: "acknowledged",
-      });
-    } catch (err: any) {
-      setActionError(err?.message || "Failed to acknowledge request.");
+      await updateStatusMutation({ requestId, hostToken, status: "acknowledged" });
+    } catch (e: any) {
+      setActionError(e.message || "Failed to acknowledge");
     }
   };
 
   const handleResolve = async (requestId: Id<"requests">) => {
     setActionError(null);
     try {
-      await updateStatusMutation({
-        requestId,
-        hostToken,
-        status: "resolved",
-      });
-    } catch (err: any) {
-      setActionError(err?.message || "Failed to resolve request.");
+      await updateStatusMutation({ requestId, hostToken, status: "resolved" });
+    } catch (e: any) {
+      setActionError(e.message || "Failed to resolve");
     }
   };
 
@@ -186,8 +158,8 @@ export function FohMiniConsole({
     setActionError(null);
     try {
       await approveMutation({ participantId, hostToken });
-    } catch (err: any) {
-      setActionError(err?.message || "Failed to approve musician.");
+    } catch (e: any) {
+      setActionError(e.message || "Failed to approve");
     }
   };
 
@@ -195,8 +167,8 @@ export function FohMiniConsole({
     setActionError(null);
     try {
       await rejectMutation({ participantId, hostToken });
-    } catch (err: any) {
-      setActionError(err?.message || "Failed to reject musician.");
+    } catch (e: any) {
+      setActionError(e.message || "Failed to reject");
     }
   };
 
@@ -209,10 +181,10 @@ export function FohMiniConsole({
 
   if (!room) {
     return (
-      <div className="grid min-h-screen place-items-center bg-[#000000] bg-arounda-glow p-4 text-white">
+      <div className="grid min-h-screen place-items-center bg-[#141415] p-4 text-[#ededed]">
         <div className="flex flex-col items-center gap-3">
-          <Loader2 className="animate-spin text-[#FF6129]" size={28} />
-          <p className="text-xs text-stone-500 font-mono">Loading Mini Console...</p>
+          <Loader2 className="animate-spin text-[#fc3b00]" size={24} />
+          <p className="text-xs text-[#85858b] font-mono">Loading mini console...</p>
         </div>
       </div>
     );
@@ -222,38 +194,32 @@ export function FohMiniConsole({
 
   return (
     <div
-      className={`min-h-screen bg-[#000000] bg-arounda-glow text-white flex flex-col no-overscroll transition-all duration-300 ${
+      className={`min-h-screen bg-[#141415] text-[#ededed] flex flex-col no-overscroll transition-colors ${
         hasPersistentSos
-          ? "border-2 border-red-500/80 shadow-[inset_0_0_20px_rgba(239,68,68,0.3)]"
-          : "border-x border-white/10"
-      } ${
-        edgeGlow === "red"
-          ? "animate-edge-glow-red"
-          : edgeGlow === "blue"
-          ? "animate-edge-glow-blue"
-          : ""
+          ? "border-2 border-[#e5484d]"
+          : "border-x border-white/[0.08]"
       }`}
     >
       <OfflineBanner role="foh" />
 
       {/* Slim Mini Header */}
-      <header className="sticky top-0 z-30 border-b border-white/10 bg-[#000000] bg-arounda-glow/95 backdrop-blur-md px-3 py-2.5">
+      <header className="sticky top-0 z-30 border-b border-white/[0.08] bg-[#0f0f10] px-3 py-2.5">
         <div className="flex items-center justify-between gap-2">
           {/* Left: Radio + Code */}
           <div className="flex items-center gap-2 min-w-0">
-            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[#FC3B00]/15 to-[#FF6129]/15 text-[#FF6129] border border-orange-500/30">
-              <Radio size={15} className={isOnline ? "animate-pulse" : "text-slate-500"} />
+            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#19191b] text-[#fc3b00] border border-white/[0.08]">
+              <Radio size={14} strokeWidth={1.5} />
             </div>
             <button
               onClick={handleCopyCode}
               title="Click to copy room code"
-              className="flex items-center gap-1 font-mono text-xs font-black tracking-wider text-white hover:text-[#FF6129] transition-colors"
+              className="flex items-center gap-1 font-mono text-xs font-semibold text-[#ededed] hover:text-[#fc3b00] transition-colors"
             >
               <span>{room.code}</span>
               {copiedCode ? (
-                <Check size={12} className="text-emerald-400" />
+                <Check size={12} className="text-[#4cc38a]" />
               ) : (
-                <Copy size={11} className="text-stone-500" />
+                <Copy size={11} strokeWidth={1.5} className="text-[#85858b]" />
               )}
             </button>
           </div>
@@ -271,19 +237,19 @@ export function FohMiniConsole({
             {onSwitchToFull ? (
               <button
                 onClick={onSwitchToFull}
-                title="Expand to Full FOH Dashboard"
-                className="flex items-center gap-1 rounded-lg border border-white/10 bg-black/50 backdrop-blur-xl px-2 py-1 text-xs font-semibold text-stone-400 hover:border-orange-500/40 hover:text-white transition-all"
+                title="Expand to full dashboard"
+                className="flex items-center gap-1 rounded-lg border border-white/[0.08] bg-[#19191b] px-2 py-1 text-xs font-medium text-[#ededed] hover:bg-[#232325] transition-colors"
               >
-                <Maximize2 size={13} />
+                <Maximize2 size={12} strokeWidth={1.5} />
                 <span className="hidden xs:inline">Full</span>
               </button>
             ) : (
               <Link
                 href={`/room/${roomId}/foh`}
-                title="Expand to Full FOH Dashboard"
-                className="flex items-center gap-1 rounded-lg border border-white/10 bg-black/50 backdrop-blur-xl px-2 py-1 text-xs font-semibold text-stone-400 hover:border-orange-500/40 hover:text-white transition-all"
+                title="Expand to full dashboard"
+                className="flex items-center gap-1 rounded-lg border border-white/[0.08] bg-[#19191b] px-2 py-1 text-xs font-medium text-[#ededed] hover:bg-[#232325] transition-colors"
               >
-                <Maximize2 size={13} />
+                <Maximize2 size={12} strokeWidth={1.5} />
                 <span className="hidden xs:inline">Full</span>
               </Link>
             )}
@@ -291,35 +257,36 @@ export function FohMiniConsole({
         </div>
 
         {/* Status Bar */}
-        <div className="mt-2 flex items-center justify-between border-t border-white/10 pt-2 text-[11px]">
+        <div className="mt-2 flex items-center justify-between border-t border-white/[0.06] pt-2 text-[11px]">
           <div className="flex items-center gap-2">
             {/* Open Badge */}
             <span
-              className={`inline-flex items-center gap-1 rounded-md px-2 py-0.5 font-bold ${
+              className={`inline-flex items-center gap-1 rounded px-2 py-0.5 font-mono ${
                 openRequests.length > 0
-                  ? "bg-orange-500/20 text-[#FF6129] border border-orange-500/30"
-                  : "bg-slate-800 text-stone-500"
+                  ? "bg-[#fc3b00]/15 text-[#fc3b00] border border-[#fc3b00]/30"
+                  : "bg-[#232325] text-[#85858b]"
               }`}
             >
-              <span>{openRequests.length} Open</span>
+              <span>{openRequests.length} open</span>
             </span>
 
             {/* SOS Badge */}
             {activeSos.length > 0 && (
-              <span className="inline-flex items-center gap-1 rounded-md border border-red-500/40 bg-red-500/20 px-2 py-0.5 font-bold text-red-700 animate-pulse">
-                <span>🚨 {activeSos.length} SOS</span>
+              <span className="inline-flex items-center gap-1 rounded border border-[#e5484d]/40 bg-[#2b1718] px-2 py-0.5 font-mono text-[#e5484d]">
+                <AlertTriangle size={11} strokeWidth={1.5} />
+                <span>{activeSos.length} SOS</span>
               </span>
             )}
 
             {/* Join Queue Badge */}
             {pendingParticipants.length > 0 && (
-              <span className="inline-flex items-center gap-1 rounded-md border border-amber-500/40 bg-amber-500/20 px-2 py-0.5 font-bold text-amber-800">
-                <span>{pendingParticipants.length} Waiting</span>
+              <span className="inline-flex items-center gap-1 rounded border border-[#f59e0b]/40 bg-[#f59e0b]/15 px-2 py-0.5 font-mono text-[#f59e0b]">
+                <span>{pendingParticipants.length} waiting</span>
               </span>
             )}
           </div>
 
-          <div className="text-stone-500 font-mono text-[10px]">
+          <div className="text-[#85858b] font-mono text-[10px]">
             <LiveClock />
           </div>
         </div>
@@ -327,9 +294,9 @@ export function FohMiniConsole({
 
       {/* Action Error Banner */}
       {actionError && (
-        <div className="mx-3 mt-2 flex items-center justify-between rounded-lg border border-red-500/40 bg-red-950/70 p-2 text-xs text-red-800">
+        <div className="mx-3 mt-2 flex items-center justify-between rounded-lg border border-[#e5484d]/30 bg-[#2b1718] p-2 text-xs text-[#e5484d]">
           <span>{actionError}</span>
-          <button onClick={() => setActionError(null)} className="text-red-400 hover:text-white">
+          <button onClick={() => setActionError(null)} className="text-[#85858b] hover:text-[#ededed]">
             ✕
           </button>
         </div>
@@ -337,52 +304,52 @@ export function FohMiniConsole({
 
       {/* Main Content Area */}
       <main className="flex-1 p-3 space-y-3 overflow-y-auto">
-        {/* 1. Urgent SOS Section (Top Priority) */}
+        {/* 1. Urgent SOS Section */}
         {activeSos.length > 0 && (
           <section className="space-y-2">
             {activeSos.map((sos) => (
               <div
                 key={sos._id}
-                className="rounded-xl border-2 border-red-300 bg-red-50 p-3.5 shadow-sm animate-pulse-subtle"
+                className="rounded-xl border border-[#e5484d] bg-[#2b1718] p-3.5"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-1.5">
-                    <span className="inline-flex items-center gap-1 rounded bg-red-600 px-1.5 py-0.5 text-[10px] font-black tracking-wider uppercase text-white">
-                      🚨 URGENT SOS
+                    <span className="inline-flex items-center gap-1 rounded bg-[#e5484d] px-1.5 py-0.5 text-[9px] font-mono uppercase text-white">
+                      SOS
                     </span>
-                    <span className="font-bold text-white text-sm">{sos.musicianName}</span>
+                    <span className="font-medium text-[#ededed] text-sm">{sos.musicianName}</span>
                   </div>
-                  <span className="text-[11px] font-mono text-red-300">
+                  <span className="text-[11px] font-mono text-[#e5484d]">
                     {formatRelativeTime(sos.createdAt, currentTime)}
                   </span>
                 </div>
 
-                <div className="mt-1 text-xs text-red-200 font-medium">
+                <div className="mt-1 text-xs text-[#a1a1a6]">
                   {sos.instrument} • {sos.message}
                 </div>
 
-                {/* Big Action Buttons (min 48px height) */}
+                {/* Action Buttons */}
                 <div className="mt-3 grid grid-cols-2 gap-2">
                   {sos.status === "pending" ? (
                     <button
                       onClick={() => handleAcknowledge(sos._id)}
-                      className="min-h-[48px] rounded-lg border border-orange-400 bg-gradient-to-r from-[#FC3B00] to-[#FF6129] hover:from-[#E03500] hover:to-[#F2551D] px-3 py-2 text-xs font-bold text-white shadow active:scale-98 transition-all flex items-center justify-center gap-1.5"
+                      className="min-h-[44px] rounded-lg bg-[#fc3b00] hover:bg-[#e03500] px-3 py-2 text-xs font-medium text-white transition-colors flex items-center justify-center gap-1.5"
                     >
-                      <CheckCircle2 size={16} />
+                      <CheckCircle2 size={15} strokeWidth={1.5} />
                       <span>Acknowledge</span>
                     </button>
                   ) : (
-                    <div className="min-h-[48px] rounded-lg border border-orange-500/40 bg-orange-500/20 px-3 py-2 text-xs font-bold text-[#FF6129] flex items-center justify-center gap-1.5">
-                      <Volume2 size={16} className="animate-pulse" />
-                      <span>FOH Adjusting</span>
+                    <div className="min-h-[44px] rounded-lg border border-[#f59e0b]/30 bg-[#f59e0b]/10 px-3 py-2 text-xs font-medium text-[#f59e0b] flex items-center justify-center gap-1.5 font-mono">
+                      <Volume2 size={15} strokeWidth={1.5} />
+                      <span>Adjusting mix</span>
                     </div>
                   )}
 
                   <button
                     onClick={() => handleResolve(sos._id)}
-                    className="min-h-[48px] rounded-lg border border-emerald-400 bg-emerald-600 px-3 py-2 text-xs font-bold text-white shadow hover:bg-emerald-500 active:scale-98 transition-all flex items-center justify-center gap-1.5"
+                    className="min-h-[44px] rounded-lg bg-[#4cc38a] hover:bg-[#43ad7b] px-3 py-2 text-xs font-medium text-[#0f0f10] transition-colors flex items-center justify-center gap-1.5"
                   >
-                    <Check size={18} />
+                    <Check size={16} strokeWidth={1.5} />
                     <span>Resolve SOS</span>
                   </button>
                 </div>
@@ -391,37 +358,37 @@ export function FohMiniConsole({
           </section>
         )}
 
-        {/* 2. Join Requests Tray (If any pending) */}
+        {/* 2. Join Requests Tray */}
         {pendingParticipants.length > 0 && (
-          <section className="rounded-xl border border border-amber-200 bg-amber-50/60 p-3.5 space-y-2">
-            <div className="flex items-center justify-between text-xs font-bold text-amber-300">
+          <section className="rounded-xl border border-white/[0.08] bg-[#19191b] p-3.5 space-y-2">
+            <div className="flex items-center justify-between text-xs font-medium text-[#f59e0b]">
               <span className="flex items-center gap-1.5">
-                <span className="h-2 w-2 rounded-full bg-amber-400 animate-ping" />
-                <span>Musicians Requesting Access ({pendingParticipants.length})</span>
+                <span className="h-1.5 w-1.5 rounded-full bg-[#f59e0b]" />
+                <span>Musicians waiting to join ({pendingParticipants.length})</span>
               </span>
             </div>
 
-            <div className="space-y-2 divide-y divide-white/5">
+            <div className="space-y-2 divide-y divide-white/[0.06]">
               {pendingParticipants.map((p) => (
                 <div key={p._id} className="pt-2 first:pt-0 flex items-center justify-between gap-2">
                   <div className="min-w-0">
-                    <div className="font-bold text-xs text-white truncate">{p.name}</div>
-                    <div className="text-[10px] text-stone-500">{p.instrument}</div>
+                    <div className="font-medium text-xs text-[#ededed] truncate">{p.name}</div>
+                    <div className="text-[10px] text-[#85858b] font-mono">{p.instrument}</div>
                   </div>
                   <div className="flex items-center gap-1.5 shrink-0">
                     <button
                       onClick={() => handleApproveJoin(p._id)}
                       title="Approve musician"
-                      className="min-h-[38px] min-w-[38px] rounded-lg border border-emerald-500/40 bg-emerald-600/30 text-emerald-300 hover:bg-emerald-600 hover:text-white flex items-center justify-center transition-colors"
+                      className="min-h-[36px] min-w-[36px] rounded-lg bg-[#4cc38a] text-[#0f0f10] hover:bg-[#43ad7b] flex items-center justify-center transition-colors"
                     >
-                      <UserCheck size={16} />
+                      <UserCheck size={15} strokeWidth={1.5} />
                     </button>
                     <button
                       onClick={() => handleRejectJoin(p._id)}
                       title="Reject musician"
-                      className="min-h-[38px] min-w-[38px] rounded-lg border border-red-500/40 bg-red-600/20 text-red-300 hover:bg-red-600 hover:text-white flex items-center justify-center transition-colors"
+                      className="min-h-[36px] min-w-[36px] rounded-lg border border-[#e5484d]/30 bg-[#2b1718] text-[#e5484d] hover:bg-[#361a1c] flex items-center justify-center transition-colors"
                     >
-                      <UserX size={16} />
+                      <UserX size={15} strokeWidth={1.5} />
                     </button>
                   </div>
                 </div>
@@ -431,20 +398,20 @@ export function FohMiniConsole({
         )}
 
         {/* 3. Open Stage Requests List */}
-        <section className="space-y-2.5">
-          <div className="flex items-center justify-between text-xs text-stone-500 font-bold uppercase tracking-wider px-1">
-            <span>Stage Request Queue</span>
+        <section className="space-y-2">
+          <div className="flex items-center justify-between text-xs text-[#85858b] px-1 font-mono">
+            <span>Stage cues</span>
             <span>{openRequests.length} active</span>
           </div>
 
           {openRequests.length === 0 ? (
-            <div className="rounded-2xl border border-white/10 bg-black/50 backdrop-blur-xl p-6 text-center space-y-2">
-              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                <CheckCircle size={24} />
+            <div className="rounded-xl border border-white/[0.08] bg-[#19191b] p-6 text-center space-y-2">
+              <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-lg bg-[#0f0f10] text-[#4cc38a] border border-[#4cc38a]/20">
+                <CheckCircle size={20} strokeWidth={1.5} />
               </div>
-              <h4 className="text-sm font-bold text-white">Queue Clear</h4>
-              <p className="text-xs text-stone-500 max-w-xs mx-auto">
-                No active stage requests. When musicians tap monitor buttons on stage, cues appear here instantly.
+              <h4 className="text-sm font-medium text-[#ededed]">Queue clear</h4>
+              <p className="text-xs text-[#85858b] max-w-xs mx-auto">
+                No active stage requests. When musicians tap buttons on stage, cues appear here instantly.
               </p>
             </div>
           ) : (
@@ -455,72 +422,72 @@ export function FohMiniConsole({
               return (
                 <div
                   key={req._id}
-                  className={`rounded-xl border p-3.5 transition-all animate-request-entrance ${
+                  className={`rounded-lg border p-3.5 transition-colors ${
                     isUrgent
-                      ? "border-red-200 bg-red-50"
+                      ? "border-[#e5484d]/50 bg-[#2b1718]"
                       : isAck
-                      ? "border-orange-200 bg-orange-50"
-                      : "border-white/10 bg-black/50 backdrop-blur-xl hover:border-orange-500/30"
+                      ? "border-[#fc3b00]/30 bg-[#0f0f10]"
+                      : "border-white/[0.08] bg-[#19191b]"
                   }`}
                 >
                   {/* Top: Name, Instrument, Time */}
                   <div className="flex items-center justify-between gap-2">
                     <div className="flex items-center gap-2 min-w-0">
-                      <span className="font-extrabold text-sm text-white truncate">
+                      <span className="font-medium text-sm text-[#ededed] truncate">
                         {req.musicianName}
                       </span>
-                      <span className="rounded bg-black/50 backdrop-blur-xl/10 px-1.5 py-0.5 text-[10px] font-bold text-[#FF6129] truncate">
+                      <span className="rounded border border-white/[0.08] bg-[#232325] px-1.5 py-0.5 text-[10px] font-mono text-[#a1a1a6] truncate">
                         {req.instrument}
                       </span>
                     </div>
-                    <span className="shrink-0 text-[11px] font-mono text-stone-500 flex items-center gap-1">
-                      <Clock size={11} />
+                    <span className="shrink-0 text-[11px] font-mono text-[#85858b] flex items-center gap-1">
+                      <Clock size={11} strokeWidth={1.5} />
                       {formatRelativeTime(req.createdAt, currentTime)}
                     </span>
                   </div>
 
                   {/* Message */}
-                  <div className="mt-2 text-xs text-stone-100 font-medium leading-relaxed">
+                  <div className="mt-1.5 text-xs text-[#ededed] leading-relaxed">
                     {req.message}
                   </div>
 
                   {/* Status Indicator */}
-                  <div className="mt-2.5 flex items-center gap-2">
+                  <div className="mt-2 flex items-center gap-2">
                     {isAck ? (
-                      <span className="inline-flex items-center gap-1 rounded bg-orange-500/20 px-2 py-0.5 text-[10px] font-bold text-[#FF6129] border border-orange-500/30">
-                        <Volume2 size={12} className="animate-pulse" />
-                        <span>FOH Adjusting</span>
+                      <span className="inline-flex items-center gap-1 rounded border border-[#fc3b00]/30 bg-[#fc3b00]/10 px-2 py-0.5 text-[10px] font-mono text-[#fc3b00]">
+                        <Volume2 size={11} strokeWidth={1.5} />
+                        <span>Adjusting mix</span>
                       </span>
                     ) : (
-                      <span className="inline-flex items-center gap-1 rounded bg-amber-500/20 px-2 py-0.5 text-[10px] font-bold text-amber-300 border border-amber-500/30">
-                        <span className="h-1.5 w-1.5 rounded-full bg-amber-400 animate-ping" />
-                        <span>Pending Action</span>
+                      <span className="inline-flex items-center gap-1 rounded border border-[#f59e0b]/30 bg-[#f59e0b]/10 px-2 py-0.5 text-[10px] font-mono text-[#f59e0b]">
+                        <span className="h-1 w-1 rounded-full bg-[#f59e0b]" />
+                        <span>Pending</span>
                       </span>
                     )}
                   </div>
 
-                  {/* Large Touch Actions (min 48px height) */}
-                  <div className="mt-3 grid grid-cols-2 gap-2">
+                  {/* Actions */}
+                  <div className="mt-2.5 grid grid-cols-2 gap-2">
                     {!isAck && (
                       <button
                         onClick={() => handleAcknowledge(req._id)}
-                        className="min-h-[48px] rounded-lg border border-orange-500/40 bg-gradient-to-r from-[#FC3B00] to-[#FF6129] hover:from-[#E03500] hover:to-[#F2551D] text-white font-bold text-xs active:scale-98 transition-all flex items-center justify-center gap-1.5"
+                        className="min-h-[42px] rounded-lg bg-[#fc3b00] hover:bg-[#e03500] text-white font-medium text-xs transition-colors flex items-center justify-center gap-1.5"
                       >
-                        <CheckCircle2 size={16} />
+                        <CheckCircle2 size={14} strokeWidth={1.5} />
                         <span>Acknowledge</span>
                       </button>
                     )}
 
                     <button
                       onClick={() => handleResolve(req._id)}
-                      className={`min-h-[48px] rounded-lg font-bold text-xs active:scale-98 transition-all flex items-center justify-center gap-1.5 ${
+                      className={`min-h-[42px] rounded-lg font-medium text-xs transition-colors flex items-center justify-center gap-1.5 ${
                         isAck
-                          ? "col-span-2 border border-emerald-400 bg-emerald-600 text-white shadow-md hover:bg-emerald-500"
-                          : "border border-emerald-500/40 bg-emerald-600/20 text-emerald-300 hover:bg-emerald-600 hover:text-white"
+                          ? "col-span-2 bg-[#4cc38a] hover:bg-[#43ad7b] text-[#0f0f10]"
+                          : "border border-white/[0.08] bg-[#232325] hover:bg-[#2b2b2e] text-[#ededed]"
                       }`}
                     >
-                      <Check size={18} />
-                      <span>{isAck ? "Mark Done (Resolved)" : "Resolve"}</span>
+                      <Check size={15} strokeWidth={1.5} />
+                      <span>{isAck ? "Mark resolved" : "Resolve"}</span>
                     </button>
                   </div>
                 </div>

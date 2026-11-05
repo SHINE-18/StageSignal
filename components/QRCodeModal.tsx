@@ -75,75 +75,75 @@ export function QRCodeModal({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="relative w-full max-w-md rounded-3xl border border-white/15 bg-[#0F0E11] p-6 sm:p-8 text-white shadow-2xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm animate-in fade-in duration-150">
+      <div className="relative w-full max-w-md rounded-xl border border-white/[0.08] bg-[#19191b] p-6 sm:p-8 text-[#ededed]">
         <button
           onClick={onClose}
-          className="absolute right-4 top-4 rounded-xl border border-white/10 bg-white/5 p-2 text-stone-400 hover:bg-white/10 hover:text-white transition"
+          className="absolute right-4 top-4 rounded-lg border border-white/[0.08] bg-[#232325] p-1.5 text-[#a1a1a6] hover:text-[#ededed] transition"
           aria-label="Close dialog"
         >
-          <X size={18} />
+          <X size={16} />
         </button>
 
         <div className="text-center">
-          <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#FC3B00]/25 to-[#FF6129]/20 text-[#FC3B00] border border-[#FC3B00]/30 shadow-lg shadow-[#FC3B00]/10">
-            <QrCode size={24} />
+          <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-[#232325] text-[#fc3b00] border border-white/[0.08]">
+            <QrCode size={20} />
           </div>
-          <p className="text-xs font-bold uppercase tracking-wider text-[#FF7145]">
-            Musician Invitation QR
+          <p className="text-xs font-medium text-[#fc3b00]">
+            Musician invitation QR
           </p>
-          <h2 className="mt-1 text-2xl font-extrabold text-white tracking-tight">{roomName}</h2>
-          <p className="mt-1 text-xs text-stone-400 leading-relaxed">
+          <h2 className="mt-1 text-xl font-bold text-[#ededed] tracking-tight">{roomName}</h2>
+          <p className="mt-1 text-xs text-[#a1a1a6] leading-relaxed">
             Musicians can scan this code with their smartphone camera to connect to the stage queue.
           </p>
         </div>
 
         {/* QR Code Canvas */}
         <div className="mt-6 flex flex-col items-center justify-center">
-          <div className="rounded-2xl border border-white/20 bg-white p-3.5 shadow-xl">
-            <canvas ref={canvasRef} className="rounded-xl" />
+          <div className="rounded-lg border border-white/[0.08] bg-white p-3">
+            <canvas ref={canvasRef} className="rounded" />
           </div>
           <div className="mt-4 text-center">
-            <span className="text-[11px] uppercase tracking-wider text-stone-400 font-semibold">
-              Stage Room Code
+            <span className="text-[11px] text-[#85858b] font-medium">
+              Stage room code
             </span>
-            <div className="font-mono text-3xl font-extrabold tracking-[0.2em] text-[#FF7145] mt-0.5">
+            <div className="font-mono text-3xl font-bold tracking-[0.15em] text-[#fc3b00] mt-0.5 tabular-nums">
               {roomCode}
             </div>
           </div>
         </div>
 
         {/* Action Buttons */}
-        <div className="mt-6 grid grid-cols-2 gap-2.5">
+        <div className="mt-6 grid grid-cols-2 gap-2">
           <button
             type="button"
             onClick={handleCopyLink}
-            className="flex items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/5 py-3 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition active:scale-95"
+            className="flex items-center justify-center gap-2 rounded-lg border border-white/[0.08] bg-[#232325] py-2.5 text-xs font-semibold text-[#ededed] hover:bg-[#2c2c2f] transition active:translate-y-px"
           >
-            {copiedLink ? <Check size={16} className="text-emerald-400" /> : <Copy size={16} />}
-            {copiedLink ? "Link Copied" : "Copy Link"}
+            {copiedLink ? <Check size={14} className="text-[#4cc38a]" /> : <Copy size={14} />}
+            <span>{copiedLink ? "Link copied" : "Copy link"}</span>
           </button>
           <button
             type="button"
             onClick={handleCopyCode}
-            className="flex items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/5 py-3 text-xs font-semibold text-stone-200 hover:bg-white/10 hover:text-white transition active:scale-95"
+            className="flex items-center justify-center gap-2 rounded-lg border border-white/[0.08] bg-[#232325] py-2.5 text-xs font-semibold text-[#ededed] hover:bg-[#2c2c2f] transition active:translate-y-px"
           >
-            {copiedCode ? <Check size={16} className="text-emerald-400" /> : <Copy size={16} />}
-            {copiedCode ? "Code Copied" : "Copy Code"}
+            {copiedCode ? <Check size={14} className="text-[#4cc38a]" /> : <Copy size={14} />}
+            <span>{copiedCode ? "Code copied" : "Copy code"}</span>
           </button>
         </div>
 
         <button
           type="button"
           onClick={handleDownload}
-          className="mt-2.5 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#FC3B00] to-[#FF6129] py-3.5 text-xs font-bold text-white shadow-lg shadow-[#FC3B00]/25 hover:from-[#E03500] hover:to-[#F2551D] transition active:scale-95"
+          className="mt-2 flex w-full items-center justify-center gap-2 rounded-lg bg-[#fc3b00] hover:bg-[#e03500] py-2.5 text-xs font-semibold text-white transition active:translate-y-px min-h-[40px]"
         >
-          <Download size={16} /> Save QR Image (PNG)
+          <Download size={14} /> <span>Save QR image (PNG)</span>
         </button>
 
-        <div className="mt-4 rounded-xl bg-white/[0.04] px-3.5 py-2.5 border border-white/10 flex items-center justify-between text-[11px] text-stone-400 font-mono">
+        <div className="mt-4 rounded-lg bg-[#0f0f10] px-3 py-2 border border-white/[0.08] flex items-center justify-between text-[11px] text-[#85858b] font-mono">
           <span className="truncate mr-2">{joinUrl}</span>
-          <ExternalLink size={12} className="shrink-0 text-stone-500" />
+          <ExternalLink size={12} className="shrink-0 text-[#85858b]" />
         </div>
       </div>
     </div>
