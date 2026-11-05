@@ -23,6 +23,7 @@ import { LiveClock } from "./LiveClock";
 import { OfflineBanner } from "./OfflineBanner";
 import { PushAlertToggle } from "./PushAlertToggle";
 import { PipAlertButton } from "./PipAlertButton";
+import { formatActionError } from "../lib/errors";
 
 function formatRelativeTime(timestamp: number, currentNow: number): string {
   const diffSec = Math.max(0, Math.floor((currentNow - timestamp) / 1000));
@@ -141,7 +142,7 @@ export function FohMiniConsole({
     try {
       await updateStatusMutation({ requestId, hostToken, status: "acknowledged" });
     } catch (e: any) {
-      setActionError(e.message || "Failed to acknowledge");
+      setActionError(formatActionError(e, "Failed to acknowledge request"));
     }
   };
 
@@ -150,7 +151,7 @@ export function FohMiniConsole({
     try {
       await updateStatusMutation({ requestId, hostToken, status: "resolved" });
     } catch (e: any) {
-      setActionError(e.message || "Failed to resolve");
+      setActionError(formatActionError(e, "Failed to resolve request"));
     }
   };
 
@@ -159,7 +160,7 @@ export function FohMiniConsole({
     try {
       await approveMutation({ participantId, hostToken });
     } catch (e: any) {
-      setActionError(e.message || "Failed to approve");
+      setActionError(formatActionError(e, "Failed to approve musician"));
     }
   };
 
@@ -168,7 +169,7 @@ export function FohMiniConsole({
     try {
       await rejectMutation({ participantId, hostToken });
     } catch (e: any) {
-      setActionError(e.message || "Failed to reject");
+      setActionError(formatActionError(e, "Failed to reject musician"));
     }
   };
 

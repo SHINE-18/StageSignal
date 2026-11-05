@@ -28,6 +28,7 @@ import {
 import { getOrCreateRoomParticipantToken } from "../../../../lib/profile";
 import { OfflineBanner } from "../../../../components/OfflineBanner";
 import { useConnectionState } from "../../../../hooks/useConnectionState";
+import { formatActionError } from "../../../../lib/errors";
 
 interface PresetItem {
   id: string;
@@ -222,8 +223,7 @@ function MusicianStageContent() {
       }, 2500);
     } catch (err) {
       console.error("Failed to send preset request:", err);
-      const msg = err instanceof Error ? err.message : "Failed to send request.";
-      setActionError(msg.replace(/^Error:\s*/, ""));
+      setActionError(formatActionError(err, "Failed to send request."));
     } finally {
       setSubmittingCategory(null);
     }
@@ -248,8 +248,7 @@ function MusicianStageContent() {
       }, 2500);
     } catch (err) {
       console.error("Failed to send SOS:", err);
-      const msg = err instanceof Error ? err.message : "Failed to send urgent SOS.";
-      setActionError(msg.replace(/^Error:\s*/, ""));
+      setActionError(formatActionError(err, "Failed to send urgent SOS."));
     } finally {
       setIsSosSubmitting(false);
     }
@@ -277,8 +276,7 @@ function MusicianStageContent() {
       setTimeout(() => setCustomSuccess(false), 2500);
     } catch (err) {
       console.error("Failed to send custom message:", err);
-      const msg = err instanceof Error ? err.message : "Unable to send message.";
-      setActionError(msg.replace(/^Error:\s*/, ""));
+      setActionError(formatActionError(err, "Unable to send message."));
     } finally {
       setCustomSending(false);
     }

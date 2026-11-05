@@ -36,6 +36,7 @@ import { useConnectionState } from "../../../../hooks/useConnectionState";
 import { FohMiniConsole } from "../../../../components/FohMiniConsole";
 import { PushAlertToggle } from "../../../../components/PushAlertToggle";
 import { PipAlertButton } from "../../../../components/PipAlertButton";
+import { formatActionError } from "../../../../lib/errors";
 
 type RequestFilter = "open" | "sos" | "pending" | "acknowledged" | "resolved" | "all";
 
@@ -399,8 +400,7 @@ function FohConsoleContent() {
       await approveParticipantMutation({ participantId, hostToken });
     } catch (err) {
       console.error("Failed to approve participant:", err);
-      const msg = err instanceof Error ? err.message : "Unable to approve participant.";
-      setQueueError(msg.replace(/^Error:\s*/, ""));
+      setQueueError(formatActionError(err, "Unable to approve participant."));
     } finally {
       setActionBusyId(null);
     }
@@ -414,8 +414,7 @@ function FohConsoleContent() {
       await rejectParticipantMutation({ participantId, hostToken });
     } catch (err) {
       console.error("Failed to reject participant:", err);
-      const msg = err instanceof Error ? err.message : "Unable to reject participant.";
-      setQueueError(msg.replace(/^Error:\s*/, ""));
+      setQueueError(formatActionError(err, "Unable to reject participant."));
     } finally {
       setActionBusyId(null);
     }
@@ -430,8 +429,7 @@ function FohConsoleContent() {
       await removeParticipantMutation({ participantId, hostToken });
     } catch (err) {
       console.error("Failed to remove participant:", err);
-      const msg = err instanceof Error ? err.message : "Unable to remove participant.";
-      setQueueError(msg.replace(/^Error:\s*/, ""));
+      setQueueError(formatActionError(err, "Unable to remove participant."));
     } finally {
       setActionBusyId(null);
     }
@@ -450,8 +448,7 @@ function FohConsoleContent() {
       });
     } catch (err) {
       console.error("Failed to acknowledge request:", err);
-      const msg = err instanceof Error ? err.message : "Failed to acknowledge request.";
-      setQueueError(msg.replace(/^Error:\s*/, ""));
+      setQueueError(formatActionError(err, "Failed to acknowledge request."));
     } finally {
       setRequestBusyId(null);
     }
@@ -469,8 +466,7 @@ function FohConsoleContent() {
       });
     } catch (err) {
       console.error("Failed to resolve request:", err);
-      const msg = err instanceof Error ? err.message : "Failed to resolve request.";
-      setQueueError(msg.replace(/^Error:\s*/, ""));
+      setQueueError(formatActionError(err, "Failed to resolve request."));
     } finally {
       setRequestBusyId(null);
     }

@@ -1,6 +1,6 @@
 import { mutation, query } from "./_generated/server";
 import { internal } from "./_generated/api";
-import { v } from "convex/values";
+import { v, ConvexError } from "convex/values";
 import {
   assertTokenFormat,
   getVerifiedHostRoom,
@@ -36,7 +36,7 @@ export const requestJoin = mutation({
     // 2. Normalize and validate room code
     const normalizedCode = args.code.trim().toUpperCase().replace(/[^A-Z0-9-]/g, "");
     if (!normalizedCode || normalizedCode.length < 4) {
-      throw new Error("ROOM_NOT_FOUND: Please provide a valid room code.");
+      throw new ConvexError("ROOM_NOT_FOUND: Please provide a valid room code.");
     }
 
     const room = await ctx.db
@@ -45,26 +45,26 @@ export const requestJoin = mutation({
       .first();
 
     if (!room) {
-      throw new Error("ROOM_NOT_FOUND: Stage room code not found. Please verify with FOH.");
+      throw new ConvexError("ROOM_NOT_FOUND: Stage room code not found. Please verify with FOH.");
     }
 
     if (room.status === "ended") {
-      throw new Error("ROOM_ENDED: This stage session has already ended.");
+      throw new ConvexError("ROOM_ENDED: This stage session has already ended.");
     }
 
     if (Date.now() > room.expiresAt) {
-      throw new Error("ROOM_EXPIRED: This stage room has expired after 12 hours.");
+      throw new ConvexError("ROOM_EXPIRED: This stage room has expired after 12 hours.");
     }
 
     // 3. Validate name (1-40 trimmed characters)
     const trimmedName = args.name.trim();
     if (trimmedName.length < 1 || trimmedName.length > 40) {
-      throw new Error("INVALID_NAME: Display name must be between 1 and 40 characters.");
+      throw new ConvexError("INVALID_NAME: Display name must be between 1 and 40 characters.");
     }
 
     // 4. Validate instrument
     if (!VALID_INSTRUMENTS.includes(args.instrument as ValidInstrument)) {
-      throw new Error("INVALID_INSTRUMENT: Please select a valid stage instrument.");
+      throw new ConvexError("INVALID_INSTRUMENT: Please select a valid stage instrument.");
     }
 
     // 5. Server-side SHA-256 hash of participant token (never store raw token)
@@ -81,7 +81,7 @@ export const requestJoin = mutation({
       (p) => now - p.joinedAt < 60_000
     );
     if (recentJoinsInLastMinute.length > 25) {
-      throw new Error("RATE_LIMITED: Stage queue is receiving too many requests. Please wait a moment.");
+      throw new ConvexError("RATE_LIMITED: Stage queue is receiving too many requests. Please wait a moment.");
     }
 
     // 7. Check if participant already exists in this room with this token
@@ -92,7 +92,7 @@ export const requestJoin = mutation({
     if (existing) {
       // If previously rejected or removed by FOH, deny re-entry with same token
       if (existing.status === "removed" || existing.status === "rejected") {
-        throw new Error(
+        throw new ConvexError(
           "ACCESS_DENIED: Your access to this room was rejected or removed by FOH. Please contact the sound engineer."
         );
       }
@@ -201,7 +201,7 @@ export const approveParticipant = mutation({
     const maxCapacity = room.capacity ?? room.maxApproved ?? 8;
 
     if (currentlyApproved.length >= maxCapacity) {
-      throw new Error(`ROOM_FULL: Maximum approved musician capacity reached (${maxCapacity}).`);
+      throw new ConvexError(`ROOM_FULL: Maximum approved musician capacity reached (${maxCapacity}).`);
     }
 
     await ctx.db.patch(args.participantId, {

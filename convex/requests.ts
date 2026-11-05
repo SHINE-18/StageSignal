@@ -1,6 +1,6 @@
 import { mutation, query } from "./_generated/server";
 import { internal } from "./_generated/api";
-import { v } from "convex/values";
+import { v, ConvexError } from "convex/values";
 import {
   assertTokenFormat,
   getVerifiedHostRoom,
@@ -51,14 +51,29 @@ export const PRESET_DEFINITIONS: Record<
     message: "Please increase drums in my monitor.",
     priority: "normal",
   },
+  "less-drums": {
+    label: "Less Drums",
+    message: "Please decrease drums in my monitor.",
+    priority: "normal",
+  },
   "more-keys": {
     label: "More Keys",
     message: "Please increase keyboard in my monitor.",
     priority: "normal",
   },
+  "less-keys": {
+    label: "Less Keys",
+    message: "Please decrease keyboard in my monitor.",
+    priority: "normal",
+  },
   "more-vocal": {
     label: "More Vocal",
     message: "Please increase vocals in my monitor.",
+    priority: "normal",
+  },
+  "less-vocal": {
+    label: "Less Vocal",
+    message: "Please decrease vocals in my monitor.",
     priority: "normal",
   },
   "cant-hear": {
@@ -96,13 +111,13 @@ export const createRequest = mutation({
     // 2. Validate room status
     const room = await ctx.db.get(args.roomId);
     if (!room) {
-      throw new Error("ROOM_NOT_FOUND: Stage room not found.");
+      throw new ConvexError("ROOM_NOT_FOUND: Stage room not found.");
     }
     if (room.status === "ended") {
-      throw new Error("ROOM_ENDED: This stage session has ended.");
+      throw new ConvexError("ROOM_ENDED: This stage session has ended.");
     }
     if (Date.now() > room.expiresAt) {
-      throw new Error("ROOM_EXPIRED: This stage room has expired after 12 hours.");
+      throw new ConvexError("ROOM_EXPIRED: This stage room has expired after 12 hours.");
     }
 
     // 3. Verify participant token server-side and check approved status
@@ -117,11 +132,11 @@ export const createRequest = mutation({
     );
 
     if (!participant) {
-      throw new Error("UNAUTHORIZED: Invalid participant token for this room.");
+      throw new ConvexError("UNAUTHORIZED: Invalid participant token for this room.");
     }
 
     if (participant.status !== "approved") {
-      throw new Error("NOT_APPROVED: You must be approved by FOH to submit stage requests.");
+      throw new ConvexError("NOT_APPROVED: You must be approved by FOH to submit stage requests.");
     }
 
     // 4. Resolve Category, Server-Controlled Message, and Priority
@@ -142,14 +157,14 @@ export const createRequest = mutation({
       finalPriority = "normal"; // Custom requests cannot claim urgent priority
       const customTrimmed = (args.message || "").trim();
       if (!customTrimmed || customTrimmed.length === 0) {
-        throw new Error("INVALID_MESSAGE: Custom message cannot be empty.");
+        throw new ConvexError("INVALID_MESSAGE: Custom message cannot be empty.");
       }
       if (customTrimmed.length > 240) {
-        throw new Error("INVALID_MESSAGE: Custom message exceeds 240 characters.");
+        throw new ConvexError("INVALID_MESSAGE: Custom message exceeds 240 characters.");
       }
       finalMessage = customTrimmed;
     } else {
-      throw new Error("INVALID_CATEGORY: Unrecognized request category.");
+      throw new ConvexError("INVALID_CATEGORY: Unrecognized request category.");
     }
 
     // 5. Rate Limiting: reject flooding (> 5 requests within 10 seconds)
@@ -163,7 +178,7 @@ export const createRequest = mutation({
       (r) => now - r.createdAt < 10_000
     );
     if (requestsLast10Sec.length >= 5) {
-      throw new Error("RATE_LIMITED: You are sending requests too quickly. Please wait a moment.");
+      throw new ConvexError("RATE_LIMITED: You are sending requests too quickly. Please wait a moment.");
     }
 
     // 6. Anti-Duplicate Guard: drop exact identical pending requests within 15 seconds
@@ -175,7 +190,7 @@ export const createRequest = mutation({
         now - r.createdAt < 15_000
     );
     if (pendingDuplicate) {
-      throw new Error("DUPLICATE_REQUEST: This request is already pending in the FOH queue.");
+      throw new ConvexError("DUPLICATE_REQUEST: This request is already pending in the FOH queue.");
     }
 
     // 7. Insert the request
@@ -278,17 +293,17 @@ export const updateRequestStatus = mutation({
   handler: async (ctx, args) => {
     assertTokenFormat(args.hostToken);
     const request = await ctx.db.get(args.requestId);
-    if (!request) throw new Error("Request not found.");
+    if (!request) throw new ConvexError("Request not found.");
 
     const room = await getVerifiedHostRoom(ctx, request.roomId, args.hostToken);
     if (!room) {
-      throw new Error("Unauthorized: Invalid host token.");
+      throw new ConvexError("Unauthorized: Invalid host token.");
     }
     if (room.status === "ended") {
-      throw new Error("ROOM_ENDED: Cannot update requests in an ended room.");
+      throw new ConvexError("ROOM_ENDED: Cannot update requests in an ended room.");
     }
     if (Date.now() > room.expiresAt) {
-      throw new Error("ROOM_EXPIRED: Cannot update requests in an expired room.");
+      throw new ConvexError("ROOM_EXPIRED: Cannot update requests in an expired room.");
     }
 
     const now = Date.now();
